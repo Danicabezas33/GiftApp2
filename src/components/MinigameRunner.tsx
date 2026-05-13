@@ -535,9 +535,9 @@ export function MinigameRunner({ onWin }: MinigameRunnerProps) {
         
         {!isPlaying && timeLeft === 30 && !isGameOver && !isWon && (
           <div className="absolute inset-0 flex flex-col items-center justify-center bg-white/60 backdrop-blur-sm z-10">
-            <h3 className="font-serif text-xl text-rose-800 mb-2">Paseo de Flores</h3>
+            <h3 className="font-serif text-xl text-rose-800 mb-2">¡Escapa Nala!</h3>
             <p className="text-gray-700 mb-6 max-w-xs text-center">
-              ¡Ayuda al bichón maltés a esquivar las hojas, zorros y mariposas durante 30 segundos!
+              ¡Ayuda a Nala a esquivar las hojas, zorros y mariposas durante 30 segundos!
             </p>
             <button 
               onClick={startGame}
