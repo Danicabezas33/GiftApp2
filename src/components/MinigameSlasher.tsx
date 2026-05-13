@@ -683,7 +683,7 @@ export function MinigameSlasher({ onWin }: MinigameSlasherProps) {
         
         {!isPlaying && glowPower === 0 && !isGameOver && !isWon && (
           <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/60 backdrop-blur-sm z-10">
-            <h3 className="font-sans text-2xl text-cyan-400 mb-2 font-bold uppercase tracking-widest drop-shadow-[0_0_10px_rgba(0,255,255,0.8)]">K-Drama City</h3>
+            <h3 className="font-sans text-2xl text-cyan-400 mb-2 font-bold uppercase tracking-widest drop-shadow-[0_0_10px_rgba(0,255,255,0.8)]">Seoul Slicer</h3>
             <p className="text-pink-100 mb-6 max-w-xs text-center text-sm px-4 shadow-black drop-shadow-md">
               Desliza tu dedo para destruir los Cristales Oscuros.<br/>Enciende la ciudad.<br/>Corta 3 a la vez para Bullet Time.
             </p>

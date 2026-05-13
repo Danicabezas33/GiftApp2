@@ -10,11 +10,11 @@ import { MinigameMaze } from './MinigameMaze';
 import { MinigameRhythm } from './MinigameRhythm';
 
 const gifts = [
-  { id: 1, title: 'Regalo 1', icon: Globe, description: 'Supera la primera prueba para desbloquear un paseo virtual a través de nuestra historia.' },
-  { id: 2, title: 'Regalo 2', icon: Sparkles, description: 'Recuerda que siempre debemos cuidarnos adecuadamente.' },
-  { id: 3, title: 'Regalo 3', icon: UtensilsCrossed, description: '¡Apila sin parar!.' },
-  { id: 4, title: 'Regalo 4', icon: Flame, description: 'La intimidad y la calma es la base del alma.' },
-  { id: 5, title: 'Regalo 5', icon: Waves, description: 'Relajación máxima y desconexión total. Te lo mereces.' },
+  { id: 1, title: 'Web Pistas', icon: Globe, description: 'La búsqueda comienza. Has logrado descifrar el primer paso.' },
+  { id: 2, title: 'Beauty Egg', icon: Sparkles, description: 'Un toque de magia para realzar tu belleza natural.' },
+  { id: 3, title: 'Cena Sushi', icon: UtensilsCrossed, description: 'Prepárate para disfrutar de tus rolls favoritos.' },
+  { id: 4, title: 'Velas Aromáticas', icon: Flame, description: 'Un ambiente cálido y relajante solo para los dos.' },
+  { id: 5, title: 'Día de Spa', icon: Waves, description: 'Relajación máxima y desconexión total. Te lo mereces.' },
 ];
 
 interface GamesProps {
@@ -94,7 +94,7 @@ export function Games({ onUnlockWeb }: GamesProps) {
       className="max-w-5xl mx-auto px-4 py-8"
     >
       <div className="text-center mb-12">
-        <h2 className="text-4xl md:text-5xl font-script font-bold text-rose-600 mb-4">¡Difruta de los regalos!</h2>
+        <h2 className="text-4xl md:text-5xl font-script font-bold text-rose-600 mb-4">Game Center</h2>
         <p className="text-gray-600 font-serif text-lg">Supera los retos para descubrir las sorpresas que te esperan.</p>
       </div>
 
@@ -242,4 +242,3 @@ export function Games({ onUnlockWeb }: GamesProps) {
     </motion.section>
   );
 }
- 
