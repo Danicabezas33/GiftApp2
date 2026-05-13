@@ -38,7 +38,7 @@ export function MinigameSushiStacker({ onWin }: MinigameSushiStackerProps) {
 
     const BLOCK_H = 25;
     const INITIAL_W = 120;
-    const MAX_PIECES = 15;
+    const MAX_PIECES = 12;
 
     const types = ['plate', 'rice', 'salmon', 'nori', 'tuna', 'rice', 'tamago', 'salmon'];
 
@@ -73,7 +73,7 @@ export function MinigameSushiStacker({ onWin }: MinigameSushiStackerProps) {
 
     // Helper: spawn rice/juice
     const spawnParticles = (cx: number, cy: number, color: string) => {
-      for (let i = 0; i < 15; i++) {
+      for (let i = 0; i < 12; i++) {
         particles.push({
           x: cx + (Math.random() - 0.5) * 10,
           y: cy + (Math.random() - 0.5) * 10,
@@ -254,7 +254,7 @@ export function MinigameSushiStacker({ onWin }: MinigameSushiStackerProps) {
          // Salmon stripes
          ctx.strokeStyle = '#fecaca'; // red-200
          ctx.lineWidth = 2;
-         for (let i = piece.x + 10; i < piece.x + piece.w; i += 15) {
+         for (let i = piece.x + 10; i < piece.x + piece.w; i += 12) {
              ctx.beginPath();
              ctx.moveTo(i, piece.y);
              ctx.lineTo(i - 5, piece.y + BLOCK_H);
@@ -320,7 +320,7 @@ export function MinigameSushiStacker({ onWin }: MinigameSushiStackerProps) {
       if (isPlaying && !inWinCutscene) {
         // Update current block
         let windMultiplier = 1;
-        if (score + 1 >= 15) {
+        if (score + 1 >= 12) {
             windMultiplier = 1.0 + Math.sin(clock * 6 + currentBlock.x * 0.01) * 0.5; // Wind erratic effect
         }
         currentBlock.x += currentBlock.speed * currentBlock.direction * windMultiplier * dt;
@@ -485,9 +485,9 @@ export function MinigameSushiStacker({ onWin }: MinigameSushiStackerProps) {
         
         {!isPlaying && score === 0 && !isGameOver && !isWon && (
           <div className="absolute inset-0 flex flex-col items-center justify-center bg-white/80 backdrop-blur-sm z-10 pointer-events-none">
-            <h3 className="font-serif text-2xl text-rose-800 mb-2 font-bold">Sushi Stacker</h3>
+            <h3 className="font-serif text-2xl text-rose-800 mb-2 font-bold">Sushi Tower</h3>
             <p className="font-sans text-sm text-gray-700 mb-6 px-6 text-center max-w-sm">
-              Toca la pantalla para apilar. Si no centras bien las piezas, la torre podría desestabilizarse. Construye 15 pisos perfectos.
+              Toca la pantalla para apilar. Si no centras bien las piezas, la torre podría desestabilizarse. Construye 12 pisos perfectos.
             </p>
             <button 
               onClick={(e) => { e.stopPropagation(); startGame(); }}
@@ -523,7 +523,7 @@ export function MinigameSushiStacker({ onWin }: MinigameSushiStackerProps) {
 
         {isPlaying && !isWon && (
           <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-md px-4 py-2 rounded-full text-rose-700 font-bold text-sm shadow-sm z-10 border border-rose-100 flex items-center gap-2 pointer-events-none">
-            <span className="text-lg">🍣</span> {score} / 15
+            <span className="text-lg">🍣</span> {score} / 12
           </div>
         )}
       </div>
