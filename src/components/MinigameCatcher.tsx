@@ -88,6 +88,7 @@ export function MinigameCatcher({ onWin }: MinigameCatcherProps) {
     const handlePointerMove = (e: PointerEvent | MouseEvent | TouchEvent) => {
       if (!playing) return;
       e.preventDefault();
+      if (typeof canvas.getBoundingClientRect !== 'function') return;
       const rect = canvas.getBoundingClientRect();
       let clientX;
       if ('touches' in e) {

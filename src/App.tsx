@@ -20,6 +20,7 @@ export default function App() {
 
   const handleUnlockWeb = useCallback(() => {
     setUnlockedWeb(true);
+    localStorage.setItem('web_unlocked_v4', 'true');
   }, []);
 
   const handleNavigateHome = useCallback(() => {
@@ -41,9 +42,9 @@ export default function App() {
       window.location.href = window.location.pathname;
     }
 
-    // Check if web is generally unlocked (if level >= 2 is unlocked)
-    const unlockedLevels = JSON.parse(localStorage.getItem('unlocked_levels_v4') || '[]');
-    if (unlockedLevels.includes(2) || unlockedLevels.some((l: number) => l >= 2)) {
+    // Check if web is generally unlocked (from localstorage)
+    const storedWebUnlocked = localStorage.getItem('web_unlocked_v4') === 'true';
+    if (storedWebUnlocked) {
       setUnlockedWeb(true);
       if (!params.has('section')) {
          setCurrentSection('home');

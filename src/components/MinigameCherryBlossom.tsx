@@ -78,15 +78,17 @@ export function MinigameCherryBlossom({ onWin }: MinigameCherryProps) {
   };
 
   const handleDragEnd = (event: any, info: any) => {
-    const holeRect = holeRef.current?.getBoundingClientRect();
-    if (holeRect) {
-      if (
-        info.point.x > holeRect.left - 40 &&
-        info.point.x < holeRect.right + 40 &&
-        info.point.y > holeRect.top - 40 &&
-        info.point.y < holeRect.bottom + 40
-      ) {
-        setPhase('water');
+    if (holeRef.current && typeof holeRef.current.getBoundingClientRect === 'function') {
+      const holeRect = holeRef.current.getBoundingClientRect();
+      if (holeRect) {
+        if (
+          info.point.x > holeRect.left - 100 &&
+          info.point.x < holeRect.right + 100 &&
+          info.point.y > holeRect.top - 100 &&
+          info.point.y < holeRect.bottom + 200
+        ) {
+          setPhase('water');
+        }
       }
     }
   };

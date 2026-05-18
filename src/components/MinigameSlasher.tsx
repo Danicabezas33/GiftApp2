@@ -218,6 +218,7 @@ export function MinigameSlasher({ onWin }: MinigameSlasherProps) {
     // Input handlers
     const handlePointerDown = (e: MouseEvent | TouchEvent) => {
       isSwiping = true;
+      if (typeof canvas.getBoundingClientRect !== 'function') return;
       const rect = canvas.getBoundingClientRect();
       let clientX, clientY;
       if ('touches' in e) {
@@ -234,6 +235,7 @@ export function MinigameSlasher({ onWin }: MinigameSlasherProps) {
     const handlePointerMove = (e: MouseEvent | TouchEvent) => {
         if (!isSwiping) return;
         e.preventDefault(); // stop scrolling
+        if (typeof canvas.getBoundingClientRect !== 'function') return;
         const rect = canvas.getBoundingClientRect();
         let clientX, clientY;
         if ('touches' in e) {

@@ -59,8 +59,6 @@ export function Games({ onUnlockWeb, onNavigateHome }: GamesProps) {
   }, [onUnlockWeb]);
 
   const handleNfcComplete = (id: number) => {
-    const isNewUnlockForWeb = (id === 2 && !unlockedLevels.includes(2));
-
     // Permanently unlock it
     const newUnlocked = [...new Set([...unlockedLevels, id])];
     setUnlockedLevels(newUnlocked);
@@ -68,13 +66,7 @@ export function Games({ onUnlockWeb, onNavigateHome }: GamesProps) {
     
     setIncomingLevelId(null);
     setRevealedGift(id);
-
-    if (isNewUnlockForWeb) {
-      setModalPhase('web_unlocked');
-    } else {
-      setModalPhase('minigame');
-      if (onUnlockWeb) onUnlockWeb();
-    }
+    setModalPhase('minigame');
   };
 
   const abrirNivel = (id: number) => {
@@ -87,6 +79,13 @@ export function Games({ onUnlockWeb, onNavigateHome }: GamesProps) {
   };
 
   const handleScratchComplete = () => {
+    if (activeGift && activeGift.id === 1) {
+       const isWebUnlocked = localStorage.getItem('web_unlocked_v4') === 'true';
+       if (!isWebUnlocked) {
+           setModalPhase('web_unlocked');
+           return;
+       }
+    }
     setModalPhase('none');
     setRevealedGift(null);
   };

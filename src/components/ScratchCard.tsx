@@ -43,6 +43,9 @@ export function ScratchCard({ tipoRegalo, imagenRegalo, onClose, onComplete }: S
   }, []);
 
   const getPointerPos = (e: React.MouseEvent | React.TouchEvent, canvas: HTMLCanvasElement) => {
+    if (typeof canvas.getBoundingClientRect !== 'function') {
+      return { x: 0, y: 0 };
+    }
     const rect = canvas.getBoundingClientRect();
     let clientX, clientY;
 
