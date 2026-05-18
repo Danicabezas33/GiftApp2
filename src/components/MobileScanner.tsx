@@ -5,14 +5,16 @@ import { CheckCircle2, Loader2 } from 'lucide-react';
 
 export function MobileScanner({ id }: { id: number }) {
   const [status, setStatus] = useState<'sending' | 'success' | 'error'>('sending');
+  const [errorMsg, setErrorMsg] = useState<string>('');
 
   useEffect(() => {
     const sendPulse = async () => {
       try {
         await setLatestUnlock(id);
         setStatus('success');
-      } catch (err) {
-        console.error(err);
+      } catch (err: any) {
+        console.error("Firebase write error:", err);
+        setErrorMsg(err.message || String(err));
         setStatus('error');
       }
     };
@@ -66,7 +68,8 @@ export function MobileScanner({ id }: { id: number }) {
               <span className="text-2xl font-bold">!</span>
             </div>
             <h2 className="text-2xl font-bold mb-2">Error de conexión</h2>
-            <p className="text-stone-400">Por favor, inténtalo de nuevo.</p>
+            <p className="text-stone-400 mb-2">Por favor, inténtalo de nuevo.</p>
+            {errorMsg && <p className="text-xs text-red-400 bg-red-950/50 p-2 rounded max-w-full break-words">{errorMsg}</p>}
           </>
         )}
       </motion.div>

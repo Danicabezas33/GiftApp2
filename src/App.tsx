@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { AnimatePresence } from 'motion/react';
 import { Navbar } from './components/Navbar';
 import { Home } from './components/Home';
@@ -17,6 +17,10 @@ export default function App() {
   const [currentSection, setCurrentSection] = useState('games');
   const [unlockedWeb, setUnlockedWeb] = useState(false);
   const [scannerId, setScannerId] = useState<number | null>(null);
+
+  const handleUnlockWeb = useCallback(() => {
+    setUnlockedWeb(true);
+  }, []);
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -56,7 +60,7 @@ export default function App() {
           {unlockedWeb && currentSection === 'home' && <Home key="home" />}
           {unlockedWeb && currentSection === 'roadmap' && <Roadmap key="roadmap" />}
           {unlockedWeb && currentSection === 'memories' && <Memories key="memories" />}
-          {currentSection === 'games' && <Games key="games" onUnlockWeb={() => setUnlockedWeb(true)} />}
+          {currentSection === 'games' && <Games key="games" onUnlockWeb={handleUnlockWeb} />}
         </AnimatePresence>
       </main>
 

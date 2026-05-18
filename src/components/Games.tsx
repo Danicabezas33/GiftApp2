@@ -25,16 +25,16 @@ interface GamesProps {
 }
 
 export function Games({ onUnlockWeb }: GamesProps) {
-  const [unlockedLevels, setUnlockedLevels] = useState<number[]>([]);
+  const [unlockedLevels, setUnlockedLevels] = useState<number[]>(() => {
+    return JSON.parse(localStorage.getItem('unlocked_levels_v4') || '[]');
+  });
   const [revealedGift, setRevealedGift] = useState<number | null>(null);
   const [modalPhase, setModalPhase] = useState<'none' | 'minigame' | 'scratch' | 'nfc'>('none');
   const [incomingLevelId, setIncomingLevelId] = useState<number | null>(null);
 
   useEffect(() => {
-    // 1. Read stored progress
-    const stored = JSON.parse(localStorage.getItem('unlocked_levels_v4') || '[]');
-    setUnlockedLevels(stored);
-    if (stored.length > 0 && onUnlockWeb) {
+    // 1. Trigger web unlock if levels are open
+    if (unlockedLevels.length > 0 && onUnlockWeb) {
       onUnlockWeb();
     }
 
@@ -42,16 +42,20 @@ export function Games({ onUnlockWeb }: GamesProps) {
     const unsubscribe = listenToLatestUnlock((data) => {
       if (data && data.levelId && typeof data.levelId === 'number') {
         const id = data.levelId;
-        // Only trigger if it's a valid ID and we aren't already dealing with it
-        if (id >= 1 && id <= 5 && !unlockedLevels.includes(id)) {
-          setIncomingLevelId(id);
-          setModalPhase('nfc');
-        }
+        // Check if it's a valid ID by reading the most recent state using functional update
+        // We use setUnlockedLevels just to access the latest state without putting it in dependency array
+        setUnlockedLevels(currentLevels => {
+          if (id >= 1 && id <= 5 && !currentLevels.includes(id)) {
+            setIncomingLevelId(id);
+            setModalPhase('nfc');
+          }
+          return currentLevels;
+        });
       }
     });
 
     return () => unsubscribe();
-  }, [unlockedLevels, onUnlockWeb]);
+  }, [onUnlockWeb]);
 
   const handleNfcComplete = (id: number) => {
     // Permanently unlock it
