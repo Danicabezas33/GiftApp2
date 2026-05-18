@@ -100,82 +100,133 @@ export function Games({ onUnlockWeb, onNavigateHome }: GamesProps) {
       exit={{ opacity: 0, y: -20 }}
       className="max-w-5xl mx-auto px-4 py-8"
     >
-      <div className="text-center mb-12">
-        <h2 className="text-4xl md:text-5xl font-script font-bold text-rose-600 mb-4">¡Difruta de los regalos!</h2>
-        
-        <div className="flex items-center justify-center gap-3 text-cyan-600 bg-cyan-50 border border-cyan-200 py-3 px-6 rounded-full max-w-sm mx-auto shadow-sm mt-6">
+      {unlockedLevels.length === 0 ? (
+        <div className="flex flex-col items-center justify-center min-h-[75vh] text-center px-4 w-full max-w-2xl mx-auto">
           <motion.div
-            animate={{ scale: [1, 1.2, 1], opacity: [0.5, 1, 0.5] }}
-            transition={{ repeat: Infinity, duration: 2 }}
+             initial={{ scale: 0.5, opacity: 0 }}
+             animate={{ scale: 1, opacity: 1 }}
+             transition={{ duration: 0.8, ease: "easeOut" }}
+             className="relative mb-12"
           >
-            <RadioReceiver className="w-5 h-5" />
-          </motion.div>
-          <span className="font-mono text-sm tracking-wide">Esperando conexión con objeto físico...</span>
-        </div>
-      </div>
-
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 justify-center">
-        {gifts.map((gift) => {
-          const isUnlocked = unlockedLevels.includes(gift.id);
-          return (
             <motion.div
-              key={gift.id}
-              whileHover={isUnlocked ? { y: -5 } : {}}
-              onClick={() => isUnlocked && abrirNivel(gift.id)}
-              className={`relative overflow-hidden rounded-3xl p-8 transition-all duration-300 md:min-h-[240px] flex flex-col items-center justify-center text-center
-                ${isUnlocked 
-                  ? 'bg-white shadow-xl shadow-rose-100 hover:shadow-2xl hover:shadow-rose-200 border-2 border-rose-100 cursor-pointer group' 
-                  : 'bg-stone-50/50 shadow-sm border border-stone-200 pointer-events-none opacity-60'
-                }`}
-            >
-              {!isUnlocked && (
-                <div className="absolute top-4 right-4 text-stone-400">
-                  <Lock className="w-6 h-6" />
-                </div>
-              )}
-              {isUnlocked && (
-                <div className="absolute top-4 right-4 text-rose-300 opacity-0 group-hover:opacity-100 transition-opacity">
-                  <Unlock className="w-6 h-6" />
-                </div>
-              )}
+               animate={{ scale: [1, 1.1, 1], opacity: [0.5, 0.8, 0.5] }}
+               transition={{ repeat: Infinity, duration: 3, ease: "easeInOut" }}
+               className="absolute inset-0 bg-cyan-400 rounded-full blur-[80px] -z-10"
+            />
+            <div className="w-56 h-56 bg-white/40 backdrop-blur-md rounded-full flex items-center justify-center border-[8px] border-white/60 shadow-[0_0_50px_rgba(255,255,255,0.3)]">
+               <motion.div
+                  animate={{ rotate: 360 }}
+                  transition={{ repeat: Infinity, duration: 20, ease: "linear" }}
+                  className="absolute inset-2 rounded-full border-2 border-dashed border-cyan-400/30"
+               />
+               <RadioReceiver className="w-28 h-28 text-cyan-600" strokeWidth={1} />
+            </div>
+          </motion.div>
+          
+          <motion.div
+            initial={{ y: 20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ delay: 0.4, duration: 0.8 }}
+          >
+            <h2 className="text-4xl md:text-6xl font-script font-bold text-rose-600 mb-6 drop-shadow-sm">
+              Tu regalo te espera
+            </h2>
+            <p className="text-xl md:text-2xl text-stone-600 max-w-lg mx-auto font-serif leading-relaxed mb-10 decoration-rose-200 decoration-wavy underline underline-offset-8">
+              Acerca el primer objeto al escáner NFC para comenzar el viaje...
+            </p>
+            
+            <div className="inline-flex items-center gap-4 bg-white/60 backdrop-blur-sm border border-cyan-100 py-3 px-8 rounded-full shadow-lg">
+               <div className="flex space-x-1">
+                  <motion.div animate={{ opacity: [0, 1, 0] }} transition={{ repeat: Infinity, duration: 1.5, times: [0, 0.5, 1] }} className="w-2 h-2 bg-cyan-400 rounded-full" />
+                  <motion.div animate={{ opacity: [0, 1, 0] }} transition={{ repeat: Infinity, duration: 1.5, delay: 0.2, times: [0, 0.5, 1] }} className="w-2 h-2 bg-cyan-400 rounded-full" />
+                  <motion.div animate={{ opacity: [0, 1, 0] }} transition={{ repeat: Infinity, duration: 1.5, delay: 0.4, times: [0, 0.5, 1] }} className="w-2 h-2 bg-cyan-400 rounded-full" />
+               </div>
+               <span className="text-sm font-mono font-bold text-cyan-600 uppercase tracking-widest">Escaneando...</span>
+            </div>
+          </motion.div>
+        </div>
+      ) : (
+        <>
+          <div className="text-center mb-12">
+            <h2 className="text-4xl md:text-5xl font-script font-bold text-rose-600 mb-4">¡Difruta de los regalos!</h2>
+            
+            <div className="flex items-center justify-center gap-3 text-cyan-600 bg-cyan-50 border border-cyan-200 py-3 px-6 rounded-full max-w-sm mx-auto shadow-sm mt-6">
+              <motion.div
+                animate={{ scale: [1, 1.2, 1], opacity: [0.5, 1, 0.5] }}
+                transition={{ repeat: Infinity, duration: 2 }}
+              >
+                <RadioReceiver className="w-5 h-5" />
+              </motion.div>
+              <span className="font-mono text-sm tracking-wide">Esperando conexión con objeto físico...</span>
+            </div>
+          </div>
 
-              <div className={`w-16 h-16 rounded-full flex items-center justify-center mb-4 transition-colors ${
-                isUnlocked ? 'bg-rose-100 text-rose-500 group-hover:bg-rose-500 group-hover:text-white' : 'bg-stone-200 text-stone-400'
-              }`}>
-                <gift.icon className="w-8 h-8" />
-              </div>
-              
-              <h3 className={`text-xl font-serif font-bold mb-2 ${isUnlocked ? 'text-gray-800' : 'text-stone-400'}`}>
-                Nivel {gift.id}
-              </h3>
-              <p className={`font-medium ${isUnlocked ? 'text-rose-600' : 'text-stone-400'}`}>
-                {isUnlocked ? gift.title : 'Bloqueado'}
-              </p>
-            </motion.div>
-          );
-        })}
-      </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 justify-center">
+            {gifts.map((gift) => {
+              const isUnlocked = unlockedLevels.includes(gift.id);
+              return (
+                <motion.div
+                  key={gift.id}
+                  whileHover={isUnlocked ? { y: -5 } : {}}
+                  onClick={() => isUnlocked && abrirNivel(gift.id)}
+                  className={`relative overflow-hidden rounded-3xl p-8 transition-all duration-300 md:min-h-[240px] flex flex-col items-center justify-center text-center
+                    ${isUnlocked 
+                      ? 'bg-white shadow-xl shadow-rose-100 hover:shadow-2xl hover:shadow-rose-200 border-2 border-rose-100 cursor-pointer group' 
+                      : 'bg-stone-50/50 shadow-sm border border-stone-200 pointer-events-none opacity-60'
+                    }`}
+                >
+                  {!isUnlocked && (
+                    <div className="absolute top-4 right-4 text-stone-400">
+                      <Lock className="w-6 h-6" />
+                    </div>
+                  )}
+                  {isUnlocked && (
+                    <div className="absolute top-4 right-4 text-rose-300 opacity-0 group-hover:opacity-100 transition-opacity">
+                      <Unlock className="w-6 h-6" />
+                    </div>
+                  )}
 
-      <div className="mt-20 flex flex-col sm:flex-row items-center justify-center gap-6">
-        <button
-          onClick={() => {
-            localStorage.removeItem('unlocked_levels_v4');
-            window.location.reload();
-          }}
-          className="text-stone-400 hover:text-rose-400 text-sm font-serif transition-colors"
-        >
-          Resetear Progreso de Juegos
-        </button>
-        <button
-          onClick={() => {
-            localStorage.setItem('unlocked_levels_v4', JSON.stringify([1,2,3,4,5]));
-            window.location.reload();
-          }}
-          className="text-stone-400 hover:text-rose-400 text-sm font-serif transition-colors"
-        >
-          Forzar Desbloqueo (Tablet)
-        </button>
-      </div>
+                  <div className={`w-16 h-16 rounded-full flex items-center justify-center mb-4 transition-colors ${
+                    isUnlocked ? 'bg-rose-100 text-rose-500 group-hover:bg-rose-500 group-hover:text-white' : 'bg-stone-200 text-stone-400'
+                  }`}>
+                    <gift.icon className="w-8 h-8" />
+                  </div>
+                  
+                  <h3 className={`text-xl font-serif font-bold mb-2 ${isUnlocked ? 'text-gray-800' : 'text-stone-400'}`}>
+                    Nivel {gift.id}
+                  </h3>
+                  <p className={`font-medium ${isUnlocked ? 'text-rose-600' : 'text-stone-400'}`}>
+                    {isUnlocked ? gift.title : 'Bloqueado'}
+                  </p>
+                </motion.div>
+              );
+            })}
+          </div>
+        </>
+      )}
+
+      {unlockedLevels.length > 0 && (
+        <div className="mt-20 flex flex-col sm:flex-row items-center justify-center gap-6">
+          <button
+            onClick={() => {
+              localStorage.removeItem('unlocked_levels_v4');
+              window.location.reload();
+            }}
+            className="text-stone-400 hover:text-rose-400 text-sm font-serif transition-colors"
+          >
+            Resetear Progreso de Juegos
+          </button>
+          <button
+            onClick={() => {
+              localStorage.setItem('unlocked_levels_v4', JSON.stringify([1,2,3,4,5]));
+              window.location.reload();
+            }}
+            className="text-stone-400 hover:text-rose-400 text-sm font-serif transition-colors"
+          >
+            Forzar Desbloqueo (Tablet)
+          </button>
+        </div>
+      )}
 
       <AnimatePresence>
         {modalPhase === 'nfc' && incomingLevelId && (
