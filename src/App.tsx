@@ -11,33 +11,41 @@ import { Roadmap } from './components/Roadmap';
 import { Memories } from './components/Memories';
 import { Games } from './components/Games';
 import { MusicPlayer } from './components/MusicPlayer';
+import { MobileScanner } from './components/MobileScanner';
 
 export default function App() {
   const [currentSection, setCurrentSection] = useState('games');
   const [unlockedWeb, setUnlockedWeb] = useState(false);
+  const [scannerId, setScannerId] = useState<number | null>(null);
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     
+    const scannerUnlock = params.get('scanner_unlock');
+    if (scannerUnlock) {
+      setScannerId(parseInt(scannerUnlock, 10));
+      return; // Skip normal app loading for mobile
+    }
+
     // Check reset flag
     if (params.has('reset')) {
-      localStorage.removeItem('giftLevel_v3');
+      localStorage.removeItem('unlocked_levels_v4');
       window.location.href = window.location.pathname;
     }
 
-    const storedLevel = parseInt(localStorage.getItem('giftLevel_v3') || '1', 10);
-    
-    if (storedLevel > 1) {
+    // Check if web is generally unlocked (if level > 1)
+    const unlockedLevels = JSON.parse(localStorage.getItem('unlocked_levels_v4') || '[]');
+    if (unlockedLevels.length > 0) {
       setUnlockedWeb(true);
-      if (params.has('unlock')) {
-        setCurrentSection('games');
-      } else {
-        setCurrentSection('home');
-      }
+      setCurrentSection('home');
     } else {
       setCurrentSection('games');
     }
   }, []);
+
+  if (scannerId !== null && !isNaN(scannerId)) {
+    return <MobileScanner id={scannerId} />;
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-rose-50 via-pink-50 to-rose-100 selection:bg-rose-200">

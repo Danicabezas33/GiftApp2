@@ -1,6 +1,8 @@
 import { motion, AnimatePresence } from 'motion/react';
 import { useState, useEffect } from 'react';
-import { Lock, Unlock, Globe, Sparkles, UtensilsCrossed, Flame, Waves, X } from 'lucide-react';
+import { Lock, Unlock, Globe, Sparkles, UtensilsCrossed, Flame, Waves, X, RadioReceiver } from 'lucide-react';
+import { listenToLatestUnlock } from '../firebaseHelper';
+import { NfcScannerModal } from './NfcScannerModal';
 
 import { ScratchCard } from './ScratchCard';
 import { MinigameRunner } from './MinigameRunner';
@@ -23,43 +25,46 @@ interface GamesProps {
 }
 
 export function Games({ onUnlockWeb }: GamesProps) {
-  const [currentLevel, setCurrentLevel] = useState<number>(1);
+  const [unlockedLevels, setUnlockedLevels] = useState<number[]>([]);
   const [revealedGift, setRevealedGift] = useState<number | null>(null);
-  const [modalPhase, setModalPhase] = useState<'none' | 'minigame' | 'scratch'>('none');
+  const [modalPhase, setModalPhase] = useState<'none' | 'minigame' | 'scratch' | 'nfc'>('none');
+  const [incomingLevelId, setIncomingLevelId] = useState<number | null>(null);
 
   useEffect(() => {
     // 1. Read stored progress
-    const storedLevel = parseInt(localStorage.getItem('giftLevel_v3') || '1', 10);
-    let newLevel = storedLevel;
-
-    // 2. Check URL for unlock parameter
-    const params = new URLSearchParams(window.location.search);
-    const unlockParam = params.get('unlock');
-    
-    if (unlockParam) {
-      const unlockedId = parseInt(unlockParam, 10);
-      if (!isNaN(unlockedId) && unlockedId >= 1 && unlockedId <= 5) {
-        newLevel = Math.max(storedLevel, unlockedId);
-        
-        // Clean up URL
-        const newUrl = window.location.pathname;
-        window.history.replaceState({}, document.title, newUrl);
-        
-        const unGift = gifts.find(g => g.id === unlockedId);
-        if (unGift) {
-          setRevealedGift(unGift.id);
-          setModalPhase('minigame');
-        }
-      }
-    }
-
-    // 3. Save and set level
-    localStorage.setItem('giftLevel_v3', newLevel.toString());
-    setCurrentLevel(newLevel);
-    if (newLevel > 1 && onUnlockWeb) {
+    const stored = JSON.parse(localStorage.getItem('unlocked_levels_v4') || '[]');
+    setUnlockedLevels(stored);
+    if (stored.length > 0 && onUnlockWeb) {
       onUnlockWeb();
     }
-  }, [onUnlockWeb]);
+
+    // 2. Listen to Firebase for MFC unlock
+    const unsubscribe = listenToLatestUnlock((data) => {
+      if (data && data.levelId && typeof data.levelId === 'number') {
+        const id = data.levelId;
+        // Only trigger if it's a valid ID and we aren't already dealing with it
+        if (id >= 1 && id <= 5 && !unlockedLevels.includes(id)) {
+          setIncomingLevelId(id);
+          setModalPhase('nfc');
+        }
+      }
+    });
+
+    return () => unsubscribe();
+  }, [unlockedLevels, onUnlockWeb]);
+
+  const handleNfcComplete = (id: number) => {
+    // Permanently unlock it
+    const newUnlocked = [...new Set([...unlockedLevels, id])];
+    setUnlockedLevels(newUnlocked);
+    localStorage.setItem('unlocked_levels_v4', JSON.stringify(newUnlocked));
+    
+    setIncomingLevelId(null);
+    setRevealedGift(id);
+    setModalPhase('minigame');
+    
+    if (onUnlockWeb) onUnlockWeb();
+  };
 
   const abrirNivel = (id: number) => {
     setRevealedGift(id);
@@ -71,14 +76,6 @@ export function Games({ onUnlockWeb }: GamesProps) {
   };
 
   const handleScratchComplete = () => {
-    if (activeGift && activeGift.id === currentLevel) {
-      const nextLevel = Math.min(currentLevel + 1, 5);
-      setCurrentLevel(nextLevel);
-      localStorage.setItem('giftLevel_v3', nextLevel.toString());
-      if (nextLevel > 1 && onUnlockWeb) {
-        onUnlockWeb();
-      }
-    }
     setModalPhase('none');
     setRevealedGift(null);
   };
@@ -95,12 +92,21 @@ export function Games({ onUnlockWeb }: GamesProps) {
     >
       <div className="text-center mb-12">
         <h2 className="text-4xl md:text-5xl font-script font-bold text-rose-600 mb-4">¡Difruta de los regalos!</h2>
-        <p className="text-gray-600 font-serif text-lg">Supera los retos para descubrir las sorpresas que te esperan.</p>
+        
+        <div className="flex items-center justify-center gap-3 text-cyan-600 bg-cyan-50 border border-cyan-200 py-3 px-6 rounded-full max-w-sm mx-auto shadow-sm mt-6">
+          <motion.div
+            animate={{ scale: [1, 1.2, 1], opacity: [0.5, 1, 0.5] }}
+            transition={{ repeat: Infinity, duration: 2 }}
+          >
+            <RadioReceiver className="w-5 h-5" />
+          </motion.div>
+          <span className="font-mono text-sm tracking-wide">Esperando conexión con objeto físico...</span>
+        </div>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 justify-center">
         {gifts.map((gift) => {
-          const isUnlocked = gift.id <= currentLevel;
+          const isUnlocked = unlockedLevels.includes(gift.id);
           return (
             <motion.div
               key={gift.id}
@@ -109,11 +115,11 @@ export function Games({ onUnlockWeb }: GamesProps) {
               className={`relative overflow-hidden rounded-3xl p-8 transition-all duration-300 md:min-h-[240px] flex flex-col items-center justify-center text-center
                 ${isUnlocked 
                   ? 'bg-white shadow-xl shadow-rose-100 hover:shadow-2xl hover:shadow-rose-200 border-2 border-rose-100 cursor-pointer group' 
-                  : 'bg-gray-50/80 shadow-md border-2 border-gray-100 pointer-events-none opacity-80'
+                  : 'bg-stone-50/50 shadow-sm border border-stone-200 pointer-events-none opacity-60'
                 }`}
             >
               {!isUnlocked && (
-                <div className="absolute top-4 right-4 text-gray-400">
+                <div className="absolute top-4 right-4 text-stone-400">
                   <Lock className="w-6 h-6" />
                 </div>
               )}
@@ -124,15 +130,15 @@ export function Games({ onUnlockWeb }: GamesProps) {
               )}
 
               <div className={`w-16 h-16 rounded-full flex items-center justify-center mb-4 transition-colors ${
-                isUnlocked ? 'bg-rose-100 text-rose-500 group-hover:bg-rose-500 group-hover:text-white' : 'bg-gray-200 text-gray-400'
+                isUnlocked ? 'bg-rose-100 text-rose-500 group-hover:bg-rose-500 group-hover:text-white' : 'bg-stone-200 text-stone-400'
               }`}>
                 <gift.icon className="w-8 h-8" />
               </div>
               
-              <h3 className={`text-xl font-serif font-bold mb-2 ${isUnlocked ? 'text-gray-800' : 'text-gray-400'}`}>
+              <h3 className={`text-xl font-serif font-bold mb-2 ${isUnlocked ? 'text-gray-800' : 'text-stone-400'}`}>
                 Nivel {gift.id}
               </h3>
-              <p className={`font-medium ${isUnlocked ? 'text-rose-600' : 'text-gray-400'}`}>
+              <p className={`font-medium ${isUnlocked ? 'text-rose-600' : 'text-stone-400'}`}>
                 {isUnlocked ? gift.title : 'Bloqueado'}
               </p>
             </motion.div>
@@ -143,29 +149,36 @@ export function Games({ onUnlockWeb }: GamesProps) {
       <div className="mt-20 flex flex-col sm:flex-row items-center justify-center gap-6">
         <button
           onClick={() => {
-            localStorage.removeItem('giftLevel_v3');
+            localStorage.removeItem('unlocked_levels_v4');
             window.location.reload();
           }}
-          className="text-gray-400 hover:text-rose-400 text-sm font-serif transition-colors"
+          className="text-stone-400 hover:text-rose-400 text-sm font-serif transition-colors"
         >
           Resetear Progreso de Juegos
         </button>
         <button
           onClick={() => {
-            localStorage.setItem('giftLevel_v3', '6');
+            localStorage.setItem('unlocked_levels_v4', JSON.stringify([1,2,3,4,5]));
             window.location.reload();
           }}
-          className="text-gray-400 hover:text-rose-400 text-sm font-serif transition-colors"
+          className="text-stone-400 hover:text-rose-400 text-sm font-serif transition-colors"
         >
-          Desbloquear todos los juegos
+          Forzar Desbloqueo (Tablet)
         </button>
       </div>
 
       <AnimatePresence>
+        {modalPhase === 'nfc' && incomingLevelId && (
+          <NfcScannerModal 
+            levelId={incomingLevelId} 
+            onComplete={handleNfcComplete} 
+          />
+        )}
+
         {revealedGift && activeGift && modalPhase === 'scratch' && (
           <ScratchCard
             tipoRegalo={activeGift.title}
-            imagenRegalo={`/photos/year1-1.jpg`} // Assuming placeholder or some image mapping
+            imagenRegalo={`/photos/year1-1.jpg`} 
             onClose={() => {
               setRevealedGift(null);
               setModalPhase('none');
@@ -203,10 +216,8 @@ export function Games({ onUnlockWeb }: GamesProps) {
               </button>
 
               <div className="bg-rose-500 py-10 px-6 relative overflow-hidden">
-                {/* Decorative bubbles */}
                 <div className="absolute -top-6 -right-6 w-24 h-24 bg-white/10 rounded-full blur-xl"></div>
                 <div className="absolute -bottom-8 -left-8 w-32 h-32 bg-white/20 rounded-full blur-2xl"></div>
-                
                 <activeGift.icon className="w-20 h-20 text-white mx-auto relative z-10" />
               </div>
 
