@@ -16,8 +16,8 @@ export function Navbar({ currentSection, setCurrentSection }: NavbarProps) {
   return (
     <nav className="fixed top-0 left-0 w-full bg-white/80 backdrop-blur-md shadow-sm z-50 border-b border-rose-100/50">
       <div className="max-w-4xl mx-auto px-4 h-16 flex items-center justify-between">
-        <div className="text-3xl font-script font-bold text-rose-600 drop-shadow-sm cursor-pointer" onClick={() => setCurrentSection('home')}>
-          ¡Felices 5 Años mi niña!🤍
+        <div className="text-xl md:text-2xl font-script font-bold text-rose-600 drop-shadow-sm cursor-pointer" onClick={() => setCurrentSection('home')}>
+          ¡Felices 5 Años mi niña!
         </div>
         <div className="hidden md:flex space-x-2">
           {tabs.map((tab) => (

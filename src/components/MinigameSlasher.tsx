@@ -132,7 +132,7 @@ export function MinigameSlasher({ onWin }: MinigameSlasherProps) {
     let lastTriggeredTier = 0;
 
     // Game state
-    let crystals: { x: number; y: number; vx: number; vy: number; radius: number; points: {x:number, y:number}[]; active: boolean; rot: number; vrot: number }[] = [];
+    let crystals: { x: number; y: number; vx: number; vy: number; radius: number; points: {x:number, y:number}[]; active: boolean; rot: number; vrot: number; isTrap: boolean }[] = [];
     let particles: { x: number; y: number; vx: number; vy: number; life: number; maxLife: number; color: string }[] = [];
     let trails: { x: number; y: number; birth: number }[] = [];
 
@@ -144,7 +144,7 @@ export function MinigameSlasher({ onWin }: MinigameSlasherProps) {
     let timeScale = 1;
 
     let power = 0;
-    const MAX_POWER = 60; // need 60 points to hit 100%
+    const MAX_POWER = 120; // Need 120 points, each hit is 5 points (so 24 normal cuts)
 
     let touchPos = { x: canvas.width/2, y: canvas.height/2 };
     let isSwiping = false;
@@ -170,13 +170,16 @@ export function MinigameSlasher({ onWin }: MinigameSlasherProps) {
       const vx = side === 1 ? 150 + Math.random() * 100 : -150 - Math.random() * 100;
       const vy = -450 - Math.random() * 200;
 
+      const isTrap = Math.random() < 0.25; // 25% chance to be a trap
+
       crystals.push({
         x, y, vx, vy,
         radius: 25 + Math.random() * 15,
         points: generatePolygon(20, 5 + Math.floor(Math.random() * 3)),
         active: true,
         rot: 0,
-        vrot: (Math.random() - 0.5) * 5
+        vrot: (Math.random() - 0.5) * 5,
+        isTrap
       });
     };
 
@@ -189,8 +192,8 @@ export function MinigameSlasher({ onWin }: MinigameSlasherProps) {
     };
 
 
-    const spawnExplosion = (x: number, y: number) => {
-      const colors = ['#0ff', '#f0f', '#fff'];
+    const spawnExplosion = (x: number, y: number, isTrap: boolean = false) => {
+      const colors = isTrap ? ['#f00', '#faa', '#fff'] : ['#0ff', '#f0f', '#fff'];
       for (let i = 0; i < 25; i++) {
         particles.push({
           x, y,
@@ -288,8 +291,13 @@ export function MinigameSlasher({ onWin }: MinigameSlasherProps) {
              if (hit) {
                 c.active = false;
                 cutCount++;
-                spawnExplosion(c.x, c.y);
-                power++;
+                spawnExplosion(c.x, c.y, c.isTrap);
+                
+                if (c.isTrap) {
+                    power = Math.max(0, power - 10); // Penalty for hitting trap
+                } else {
+                    power += 5; // Fast progression
+                }
                 
                 const newGlow = Math.min(100, Math.floor((power / MAX_POWER) * 100));
                 setGlowPower(newGlow);
@@ -607,14 +615,25 @@ export function MinigameSlasher({ onWin }: MinigameSlasherProps) {
          }
          ctx.closePath();
          
-         ctx.fillStyle = '#111';
-         ctx.fill();
-         
-         ctx.strokeStyle = '#0ff';
-         ctx.lineWidth = 2;
-         ctx.shadowColor = '#0ff';
-         ctx.shadowBlur = 10;
-         ctx.stroke();
+         if (c.isTrap) {
+             ctx.fillStyle = '#200';
+             ctx.fill();
+             
+             ctx.strokeStyle = '#f00';
+             ctx.lineWidth = 2;
+             ctx.shadowColor = '#f00';
+             ctx.shadowBlur = 10;
+             ctx.stroke();
+         } else {
+             ctx.fillStyle = '#111';
+             ctx.fill();
+             
+             ctx.strokeStyle = '#0ff';
+             ctx.lineWidth = 2;
+             ctx.shadowColor = '#0ff';
+             ctx.shadowBlur = 10;
+             ctx.stroke();
+         }
 
          ctx.restore();
       }
@@ -685,7 +704,7 @@ export function MinigameSlasher({ onWin }: MinigameSlasherProps) {
           <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/60 backdrop-blur-sm z-10">
             <h3 className="font-sans text-2xl text-cyan-400 mb-2 font-bold uppercase tracking-widest drop-shadow-[0_0_10px_rgba(0,255,255,0.8)]">K-Drama City</h3>
             <p className="text-pink-100 mb-6 max-w-xs text-center text-sm px-4 shadow-black drop-shadow-md">
-              Desliza tu dedo para destruir los Cristales Oscuros.<br/>Enciende la ciudad.<br/>Corta 3 a la vez para Bullet Time.
+              Desliza tu dedo para destruir los Cristales Oscuros.<br/>Enciende la ciudad.<br/>¡CUIDADO! No cortes los cristales ROJOS.
             </p>
             <button 
               onClick={startGame}

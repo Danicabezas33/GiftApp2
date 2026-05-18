@@ -7,14 +7,14 @@ import { MinigameRunner } from './MinigameRunner';
 import { MinigameSlasher } from './MinigameSlasher';
 import { MinigameSushiStacker } from './MinigameSushiStacker';
 import { MinigameMaze } from './MinigameMaze';
-import { MinigameRhythm } from './MinigameRhythm';
+import { MinigameCherryBlossom } from './MinigameCherryBlossom';
 
 const gifts = [
   { id: 1, title: 'Regalo 1', icon: Globe, description: 'Supera la primera prueba para desbloquear un paseo virtual a través de nuestra historia.' },
-  { id: 2, title: 'Regalo 2', icon: Sparkles, description: 'Recuerda que siempre debemos cuidarnos adecuadamente.' },
-  { id: 3, title: 'Regalo 3', icon: UtensilsCrossed, description: '¡Apila sin parar!.' },
-  { id: 4, title: 'Regalo 4', icon: Flame, description: 'La intimidad y la calma es la base del alma.' },
-  { id: 5, title: 'Regalo 5', icon: Waves, description: 'Relajación máxima y desconexión total. Te lo mereces.' },
+  { id: 2, title: 'Regalo 2', icon: Waves, description: 'Relajación máxima y desconexión total. Te lo mereces.' },
+  { id: 3, title: 'Regalo 3', icon: Flame, description: 'La intimidad y la calma es la base del alma.' },
+  { id: 4, title: 'Regalo 4', icon: UtensilsCrossed, description: '¡Apila sin parar!.' },
+  { id: 5, title: 'Regalo 5', icon: Sparkles, description: 'Recuerda que siempre debemos cuidarnos adecuadamente.' },
 ];
 
 interface GamesProps {
@@ -140,17 +140,24 @@ export function Games({ onUnlockWeb }: GamesProps) {
         })}
       </div>
 
-      <div className="mt-20 text-center">
+      <div className="mt-20 flex flex-col sm:flex-row items-center justify-center gap-6">
         <button
           onClick={() => {
-            if (confirm('¿Seguro que quieres resetear todo el progreso?')) {
-              localStorage.removeItem('giftLevel_v3');
-              window.location.reload();
-            }
+            localStorage.removeItem('giftLevel_v3');
+            window.location.reload();
           }}
           className="text-gray-400 hover:text-rose-400 text-sm font-serif transition-colors"
         >
           Resetear Progreso de Juegos
+        </button>
+        <button
+          onClick={() => {
+            localStorage.setItem('giftLevel_v3', '6');
+            window.location.reload();
+          }}
+          className="text-gray-400 hover:text-rose-400 text-sm font-serif transition-colors"
+        >
+          Desbloquear todos los juegos
         </button>
       </div>
 
@@ -212,13 +219,13 @@ export function Games({ onUnlockWeb }: GamesProps) {
                   {activeGift.id === 1 ? (
                     <MinigameRunner onWin={handleMinigameWin} />
                   ) : activeGift.id === 2 ? (
-                    <MinigameSlasher onWin={handleMinigameWin} />
+                    <MinigameCherryBlossom onWin={handleMinigameWin} />
                   ) : activeGift.id === 3 ? (
-                    <MinigameSushiStacker onWin={handleMinigameWin} />
-                  ) : activeGift.id === 4 ? (
                     <MinigameMaze onWin={handleMinigameWin} />
+                  ) : activeGift.id === 4 ? (
+                    <MinigameSushiStacker onWin={handleMinigameWin} />
                   ) : activeGift.id === 5 ? (
-                    <MinigameRhythm onWin={handleMinigameWin} />
+                    <MinigameSlasher onWin={handleMinigameWin} />
                   ) : (
                     <p className="text-gray-600 text-lg leading-relaxed text-center">
                       Próximamente...
