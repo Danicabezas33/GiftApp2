@@ -21,15 +21,16 @@ const gifts = [
 
 interface GamesProps {
   onUnlockWeb?: () => void;
+  onNavigateHome?: () => void;
   key?: string;
 }
 
-export function Games({ onUnlockWeb }: GamesProps) {
+export function Games({ onUnlockWeb, onNavigateHome }: GamesProps) {
   const [unlockedLevels, setUnlockedLevels] = useState<number[]>(() => {
     return JSON.parse(localStorage.getItem('unlocked_levels_v4') || '[]');
   });
   const [revealedGift, setRevealedGift] = useState<number | null>(null);
-  const [modalPhase, setModalPhase] = useState<'none' | 'minigame' | 'scratch' | 'nfc'>('none');
+  const [modalPhase, setModalPhase] = useState<'none' | 'minigame' | 'scratch' | 'nfc' | 'web_unlocked'>('none');
   const [incomingLevelId, setIncomingLevelId] = useState<number | null>(null);
 
   useEffect(() => {
@@ -58,6 +59,8 @@ export function Games({ onUnlockWeb }: GamesProps) {
   }, [onUnlockWeb]);
 
   const handleNfcComplete = (id: number) => {
+    const isNewUnlockForWeb = (id === 2 && !unlockedLevels.includes(2));
+
     // Permanently unlock it
     const newUnlocked = [...new Set([...unlockedLevels, id])];
     setUnlockedLevels(newUnlocked);
@@ -65,9 +68,13 @@ export function Games({ onUnlockWeb }: GamesProps) {
     
     setIncomingLevelId(null);
     setRevealedGift(id);
-    setModalPhase('minigame');
-    
-    if (onUnlockWeb) onUnlockWeb();
+
+    if (isNewUnlockForWeb) {
+      setModalPhase('web_unlocked');
+    } else {
+      setModalPhase('minigame');
+      if (onUnlockWeb) onUnlockWeb();
+    }
   };
 
   const abrirNivel = (id: number) => {
@@ -179,10 +186,43 @@ export function Games({ onUnlockWeb }: GamesProps) {
           />
         )}
 
+        {modalPhase === 'web_unlocked' && (
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[120] bg-black/90 backdrop-blur-xl flex flex-col items-center justify-center p-6 text-white text-center"
+          >
+            <motion.div
+              initial={{ scale: 0.8, y: 20 }}
+              animate={{ scale: 1, y: 0 }}
+              className="bg-white/10 p-12 rounded-3xl border border-white/20 shadow-2xl backdrop-blur-md max-w-md w-full"
+            >
+              <Globe className="w-24 h-24 text-cyan-400 mx-auto mb-6" />
+              <h2 className="text-4xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-cyan-300 to-emerald-300">
+                ¡Página web desbloqueada!
+              </h2>
+              <p className="text-xl text-stone-300 mb-8 font-serif leading-relaxed">
+                Ahora tienes acceso a la experiencia completa. Explora la historia, recuerdos y la música de fondo.
+              </p>
+              <button
+                onClick={() => {
+                  setModalPhase('none');
+                  if (onUnlockWeb) onUnlockWeb();
+                  if (onNavigateHome) onNavigateHome();
+                }}
+                className="px-8 py-4 bg-gradient-to-r from-cyan-500 to-emerald-500 rounded-full font-bold text-xl hover:scale-105 active:scale-95 transition-all shadow-[0_0_30px_rgba(34,211,238,0.4)]"
+              >
+                Ir al Inicio
+              </button>
+            </motion.div>
+          </motion.div>
+        )}
+
         {revealedGift && activeGift && modalPhase === 'scratch' && (
           <ScratchCard
             tipoRegalo={activeGift.title}
-            imagenRegalo={`/photos/year1-1.jpg`} 
+            imagenRegalo={`/photos/nfc-${activeGift.id === 5 ? 'final' : activeGift.id + 1}.jpg`} 
             onClose={() => {
               setRevealedGift(null);
               setModalPhase('none');

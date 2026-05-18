@@ -116,16 +116,16 @@ export function NfcScannerModal({ levelId, onComplete }: { levelId: number, onCo
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 1 }}
-            className="flex flex-col items-center gap-6"
+            className="flex flex-col items-center gap-6 z-20 relative"
           >
-            <h2 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-cyan-300 to-rose-300">
-              {activeGift.title} Desbloqueado
+            <h2 className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-cyan-300 to-rose-300">
+              ¡Nivel {activeGift.id} Desbloqueado!
             </h2>
             <button
               onClick={handlePlay}
               className="px-8 py-4 bg-white text-stone-900 rounded-full font-bold text-xl hover:scale-105 active:scale-95 transition-transform shadow-[0_0_30px_rgba(255,255,255,0.4)]"
             >
-              Jugar ahora
+              Continuar
             </button>
           </motion.div>
         )}

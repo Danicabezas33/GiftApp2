@@ -22,6 +22,10 @@ export default function App() {
     setUnlockedWeb(true);
   }, []);
 
+  const handleNavigateHome = useCallback(() => {
+    setCurrentSection('home');
+  }, []);
+
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     
@@ -37,11 +41,13 @@ export default function App() {
       window.location.href = window.location.pathname;
     }
 
-    // Check if web is generally unlocked (if level > 1)
+    // Check if web is generally unlocked (if level >= 2 is unlocked)
     const unlockedLevels = JSON.parse(localStorage.getItem('unlocked_levels_v4') || '[]');
-    if (unlockedLevels.length > 0) {
+    if (unlockedLevels.includes(2) || unlockedLevels.some((l: number) => l >= 2)) {
       setUnlockedWeb(true);
-      setCurrentSection('home');
+      if (!params.has('section')) {
+         setCurrentSection('home');
+      }
     } else {
       setCurrentSection('games');
     }
@@ -60,7 +66,7 @@ export default function App() {
           {unlockedWeb && currentSection === 'home' && <Home key="home" />}
           {unlockedWeb && currentSection === 'roadmap' && <Roadmap key="roadmap" />}
           {unlockedWeb && currentSection === 'memories' && <Memories key="memories" />}
-          {currentSection === 'games' && <Games key="games" onUnlockWeb={handleUnlockWeb} />}
+          {currentSection === 'games' && <Games key="games" onUnlockWeb={handleUnlockWeb} onNavigateHome={handleNavigateHome} />}
         </AnimatePresence>
       </main>
 
