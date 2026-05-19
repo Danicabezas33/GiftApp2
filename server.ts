@@ -9,11 +9,12 @@ async function startServer() {
 
   // API to list music files
   app.get("/api/music", (req, res) => {
-    const isProd = process.env.NODE_ENV === "production";
-    const musicFolderName = isProd ? "music" : "public/music";
-    const musicDir = path.join(process.cwd(), musicFolderName);
+    const isProd = process.env.NODE_ENV === "production" || fs.existsSync(path.join(process.cwd(), "dist"));
+    const musicDir = isProd 
+      ? path.join(process.cwd(), "dist", "music")
+      : path.join(process.cwd(), "public", "music");
     
-    console.log(`Checking music in: ${musicDir}`);
+    console.log(`Checking music in: ${musicDir} (isProd: ${isProd})`);
     
     if (!fs.existsSync(musicDir)) {
       console.log("Music directory does not exist.");
