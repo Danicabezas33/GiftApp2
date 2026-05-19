@@ -67,7 +67,7 @@ const milestones = [
   { year: 'Año 5', title: 'El presente brillante', desc: 'Celebrando nuestro quinto aniversario con el corazón lleno de recuerdos y mirando hacia un futuro juntos.' }
 ];
 
-export function Roadmap() {
+export default function Roadmap() {
   const mapRef = useRef<L.Map | null>(null);
   const mapContainerRef = useRef<HTMLDivElement>(null);
   const layerGroupRef = useRef<L.LayerGroup | null>(null);
@@ -83,8 +83,8 @@ export function Roadmap() {
     
     L.control.zoom({ position: 'bottomright' }).addTo(map);
     
-    // Using a light themed map for the Spring aesthetic
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+    // Using a dark themed map for the Zen aesthetic
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
       subdomains: 'abcd',
       maxZoom: 20
@@ -99,7 +99,7 @@ export function Roadmap() {
         mapRef.current.invalidateSize();
         cargarAño(activeYear);
       }
-    }, 100);
+    }, 250);
 
     return () => {
       if (mapRef.current) {
@@ -127,6 +127,9 @@ export function Roadmap() {
     const coordsArray: [number, number][] = [];
 
     ubicaciones.forEach((ubicacion, index) => {
+      // Filtrar [0,0] para evitar errores visuales en el mapa
+      if (ubicacion.coords[0] === 0 && ubicacion.coords[1] === 0) return;
+      
       coordsArray.push(ubicacion.coords);
 
       const isLastPointOf2026 = año === '2026' && index === ubicaciones.length - 1;
@@ -161,8 +164,10 @@ export function Roadmap() {
       polyline.addTo(layerGroup);
     }
 
-    const bounds = L.latLngBounds(coordsArray);
-    map.flyToBounds(bounds, { padding: [50, 50], duration: 1.5 });
+    if (coordsArray.length > 0) {
+      const bounds = L.latLngBounds(coordsArray);
+      map.flyToBounds(bounds, { padding: [50, 50], duration: 1.5 });
+    }
   };
 
   return (
@@ -245,6 +250,4 @@ export function Roadmap() {
     </motion.div>
   );
 }
-
-export default Roadmap;
 
