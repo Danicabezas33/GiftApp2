@@ -23,31 +23,25 @@ export function MusicPlayer() {
   }, []);
 
   useEffect(() => {
-    if (playlist.length > 0) {
+    if (playlist.length > 0 && audioRef.current) {
+      const audio = audioRef.current;
       const wasPlaying = isPlaying;
-      if (audioRef.current) {
-        audioRef.current.pause();
-      }
       
-      const newAudio = new Audio(`/music/${playlist[currentIndex]}`);
-      newAudio.volume = volume;
-      newAudio.onended = () => handleNext();
-      audioRef.current = newAudio;
+      // We don't change the src if it's already the same song
+      const newSrc = `/music/${encodeURIComponent(playlist[currentIndex])}`;
+      if (audio.src.includes(encodeURIComponent(playlist[currentIndex]))) return;
 
+      audio.src = newSrc;
+      audio.load();
+      
       if (wasPlaying) {
-        newAudio.play().catch(e => {
-          console.log("Play failed:", e);
+        audio.play().catch(e => {
+          console.log("Auto-play failed:", e);
           setIsPlaying(false);
         });
       }
     }
   }, [currentIndex, playlist]);
-
-  useEffect(() => {
-    if (audioRef.current) {
-      audioRef.current.volume = volume;
-    }
-  }, [volume]);
 
   const handleNext = () => {
     if (playlist.length > 0) {
@@ -63,15 +57,17 @@ export function MusicPlayer() {
 
   const togglePlay = () => {
     if (playlist.length === 0) {
-      alert("Aún no has agregado la música 🥺. Sube tus canciones a /public/music/.");
+      alert("Aún no se ha cargado la música. Asegúrate de que las canciones estén en /public/music/.");
       return;
     }
 
+    if (!audioRef.current) return;
+
     if (isPlaying) {
-      audioRef.current?.pause();
+      audioRef.current.pause();
       setIsPlaying(false);
     } else {
-      audioRef.current?.play()
+      audioRef.current.play()
         .then(() => setIsPlaying(true))
         .catch(e => {
           console.log("Audio play failed:", e);
@@ -83,6 +79,12 @@ export function MusicPlayer() {
     return name.replace(/\.[^/.]+$/, "").replace(/_/g, " ");
   };
 
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.volume = volume;
+    }
+  }, [volume]);
+
   const VolumeIcon = volume === 0 ? VolumeX : volume < 0.5 ? Volume1 : Volume2;
 
   return (
@@ -91,6 +93,12 @@ export function MusicPlayer() {
       onMouseEnter={() => setShowVolume(true)}
       onMouseLeave={() => setShowVolume(false)}
     >
+      <audio 
+        ref={audioRef}
+        onEnded={handleNext}
+        onVolumeChange={(e) => setVolume((e.target as HTMLAudioElement).volume)}
+        preload="auto"
+      />
       <AnimatePresence>
         {(showVolume || isPlaying) && playlist.length > 0 && (
           <motion.div
