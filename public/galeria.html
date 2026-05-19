@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Galería Autónoma</title>
+  <!-- Usamos Tailwind CSS mediante CDN para mantenerlo independiente en vanilla -->
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 min-h-screen font-sans text-gray-800 pb-20">
+
+  <header class="bg-white shadow-sm border-b border-gray-200 py-8 mb-8 text-center sticky top-0 z-10">
+    <h1 class="text-3xl font-bold text-gray-800">Galería de Recuerdos</h1>
+    <p class="text-gray-500 mt-2 font-medium">Consumiendo la API de GitHub en tiempo real</p>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-4 w-full">
+    
+    <!-- CONTENEDOR 1: Selector de Años / Pestañas -->
+    <div id="tabs-container" class="flex flex-wrap justify-center gap-3 mb-10">
+      <!-- Los botones se inyectarán dinámicamente mediante JS -->
+    </div>
+
+    <!-- CONTENEDOR 2: Sistema de Cuadrícula / Grid de Galería -->
+    <div id="gallery-container" class="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <!-- Las tarjetas de imágenes o el skeleton de carga se inyectarán aquí -->
+    </div>
+
+  </main>
+
+  <script src="./galeria.js"></script>
+</body>
+</html>

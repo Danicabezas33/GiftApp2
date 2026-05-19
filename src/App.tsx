@@ -9,6 +9,7 @@ import { Navbar } from './components/Navbar';
 import { Home } from './components/Home';
 import { Roadmap } from './components/Roadmap';
 import { Memories } from './components/Memories';
+import { Gallery } from './components/Gallery';
 import { Games } from './components/Games';
 import { MusicPlayer } from './components/MusicPlayer';
 import { MobileScanner } from './components/MobileScanner';
@@ -84,6 +85,7 @@ export default function App() {
           {unlockedWeb && currentSection === 'home' && <Home key="home" />}
           {unlockedWeb && currentSection === 'roadmap' && <Roadmap key="roadmap" />}
           {unlockedWeb && currentSection === 'memories' && <Memories key="memories" />}
+          {unlockedWeb && currentSection === 'gallery' && <Gallery key="gallery" />}
           {currentSection === 'games' && <Games key="games" onUnlockWeb={handleUnlockWeb} onNavigateHome={handleNavigateHome} />}
         </AnimatePresence>
       </main>

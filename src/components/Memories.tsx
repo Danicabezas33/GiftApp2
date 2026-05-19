@@ -156,14 +156,35 @@ export function Memories() {
                 <X className="w-5 h-5" />
               </button>
               
-              <div className="w-full md:w-1/2 h-64 md:h-auto shrink-0 relative group bg-black/5">
-                <img 
-                  src={selectedMemory.images[currentImageIndex]} 
-                  onError={handleImageError}
-                  key={currentImageIndex}
-                  alt={selectedMemory.text}
-                  className="w-full h-full object-cover absolute inset-0 transition-opacity duration-300" 
-                />
+              <div className="w-full md:w-1/2 h-64 md:h-auto shrink-0 relative group bg-black/5 overflow-hidden">
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={currentImageIndex}
+                    initial={{ opacity: 0, x: 30 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -30 }}
+                    transition={{ duration: 0.2 }}
+                    drag={selectedMemory.images.length > 1 ? "x" : false}
+                    dragConstraints={{ left: 0, right: 0 }}
+                    dragElastic={0.2}
+                    onDragEnd={(e, { offset }) => {
+                      const swipe = offset.x;
+                      if (swipe < -40) {
+                        setCurrentImageIndex(prev => (prev + 1) % selectedMemory.images.length);
+                      } else if (swipe > 40) {
+                        setCurrentImageIndex(prev => (prev - 1 + selectedMemory.images.length) % selectedMemory.images.length);
+                      }
+                    }}
+                    className={`w-full h-full absolute inset-0 ${selectedMemory.images.length > 1 ? 'cursor-grab active:cursor-grabbing' : ''}`}
+                  >
+                    <img 
+                      src={selectedMemory.images[currentImageIndex]} 
+                      onError={handleImageError}
+                      alt={selectedMemory.text}
+                      className="w-full h-full object-cover pointer-events-none" 
+                    />
+                  </motion.div>
+                </AnimatePresence>
                 
                 {selectedMemory.images.length > 1 && (
                   <>

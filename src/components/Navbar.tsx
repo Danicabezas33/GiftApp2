@@ -1,4 +1,4 @@
-import {  Heart, Map, Image as ImageIcon, Gift, Gamepad2 } from 'lucide-react';
+import {  Heart, Map, ImageIcon, Gift, Gamepad2, Images } from 'lucide-react';
 
 interface NavbarProps {
   currentSection: string;
@@ -10,6 +10,7 @@ export function Navbar({ currentSection, setCurrentSection }: NavbarProps) {
     { id: 'home', label: 'Inicio', icon: Heart },
     { id: 'roadmap', label: 'Nuestra Historia', icon: Map },
     { id: 'memories', label: 'Memorias', icon: ImageIcon },
+    { id: 'gallery', label: 'Galería', icon: Images },
     { id: 'games', label: 'Regalos', icon: Gamepad2 },
   ];
 
