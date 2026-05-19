@@ -84,10 +84,15 @@ export default function App() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-rose-50 via-pink-50 to-rose-100 selection:bg-rose-200">
+    <div className="min-h-screen bg-zen-bg text-white selection:bg-petal-pink selection:text-zen-bg selection:bg-opacity-50">
       {unlockedWeb && <Navbar currentSection={currentSection} setCurrentSection={setCurrentSection} />}
       
-      <main className={`pb-24 ${unlockedWeb ? 'pt-16' : 'pt-4 md:pt-8'} flex min-h-screen flex-col items-center justify-center`}>
+      <main className={`pb-24 ${unlockedWeb ? 'pt-16' : 'pt-4 md:pt-8'} flex min-h-screen flex-col items-center justify-center relative overflow-hidden`}>
+        {/* Global background glow dots */}
+        <div className="absolute top-0 left-0 w-full h-full pointer-events-none overflow-hidden">
+          <div className="absolute top-[10%] left-[10%] w-[40%] h-[40%] bg-petal-pink/10 blur-[120px] rounded-full" />
+          <div className="absolute bottom-[10%] right-[10%] w-[40%] h-[40%] bg-zen-lavender/10 blur-[120px] rounded-full" />
+        </div>
         <AnimatePresence mode="wait">
           {unlockedWeb && currentSection === 'home' && <Home key="home" />}
           {unlockedWeb && currentSection === 'roadmap' && <Roadmap key="roadmap" />}

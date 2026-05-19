@@ -1,4 +1,5 @@
-import {  Heart, Map, ImageIcon, Gift, Gamepad2, Images } from 'lucide-react';
+import { motion } from 'motion/react';
+import { Heart, Map, ImageIcon, Gift, Gamepad2, Images } from 'lucide-react';
 
 interface NavbarProps {
   currentSection: string;
@@ -15,9 +16,9 @@ export function Navbar({ currentSection, setCurrentSection }: NavbarProps) {
   ];
 
   return (
-    <nav className="fixed top-0 left-0 w-full bg-white/80 backdrop-blur-md shadow-sm z-50 border-b border-rose-100/50">
+    <nav className="fixed top-0 left-0 w-full bg-[#130f1d]/40 backdrop-blur-xl z-50 border-b border-white/5">
       <div className="max-w-4xl mx-auto px-4 h-16 flex items-center justify-between">
-        <div className="text-xl md:text-2xl font-script font-bold text-rose-600 drop-shadow-sm cursor-pointer" onClick={() => setCurrentSection('home')}>
+        <div className="text-xl md:text-2xl font-script font-bold text-petal-pink drop-shadow-[0_0_10px_rgba(255,139,167,0.3)] cursor-pointer" onClick={() => setCurrentSection('home')}>
           ¡Felices 5 Años mi niña!
         </div>
         <div className="hidden md:flex space-x-2">
@@ -25,29 +26,47 @@ export function Navbar({ currentSection, setCurrentSection }: NavbarProps) {
             <button
               key={tab.id}
               onClick={() => setCurrentSection(tab.id)}
-              className={`px-5 py-2 rounded-full text-sm font-medium transition-all duration-300 flex items-center gap-2 ${
+              className={`px-5 py-2 rounded-full text-sm font-medium transition-all duration-500 flex items-center gap-2 relative group ${
                 currentSection === tab.id
-                  ? 'bg-rose-100/80 text-rose-700 shadow-sm'
-                  : 'text-gray-600 hover:bg-rose-50 hover:text-rose-500'
+                  ? 'text-petal-pink'
+                  : 'text-white/50 hover:text-white/80'
               }`}
             >
-              <tab.icon className="w-4 h-4" />
+              {currentSection === tab.id && (
+                <motion.div
+                  layoutId="navGlow"
+                  className="absolute inset-0 bg-petal-pink/10 rounded-full blur-md -z-10"
+                />
+              )}
+              <tab.icon className={`w-4 h-4 transition-transform duration-500 ${currentSection === tab.id ? 'scale-110' : 'group-hover:scale-110'}`} />
               {tab.label}
+              {currentSection === tab.id && (
+                <motion.div 
+                  layoutId="activeTabIndicator"
+                  className="absolute bottom-[-16px] left-1/2 -translate-x-1/2 w-1 h-1 bg-petal-pink rounded-full shadow-[0_0_8px_rgba(255,139,167,1)]"
+                />
+              )}
             </button>
           ))}
         </div>
-        <div className="flex md:hidden space-x-2">
+        <div className="flex md:hidden space-x-1">
           {tabs.map((tab) => (
             <button
               key={tab.id}
               onClick={() => setCurrentSection(tab.id)}
-              className={`p-2 rounded-full transition-colors ${
+              className={`p-3 rounded-full transition-all duration-300 relative ${
                 currentSection === tab.id
-                  ? 'bg-rose-100 text-rose-700'
-                  : 'text-gray-600 hover:bg-gray-100'
+                  ? 'text-petal-pink'
+                  : 'text-white/40 hover:text-white/60'
               }`}
             >
-              <tab.icon className="w-5 h-5" />
+              <tab.icon className={`w-5 h-5 ${currentSection === tab.id ? 'scale-110' : ''}`} />
+              {currentSection === tab.id && (
+                <motion.div 
+                  layoutId="activeTabIndicatorMob"
+                  className="absolute bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 bg-petal-pink rounded-full"
+                />
+              )}
             </button>
           ))}
         </div>

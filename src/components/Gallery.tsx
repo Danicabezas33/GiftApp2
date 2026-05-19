@@ -1,6 +1,6 @@
 import { motion, AnimatePresence } from 'motion/react';
 import { useState, useEffect } from 'react';
-import { Loader2, X, PlayCircle } from 'lucide-react';
+import { Loader2, X, PlayCircle, Images } from 'lucide-react';
 
 /**
  * Configuración del Repositorio de GitHub
@@ -75,26 +75,29 @@ export function Gallery() {
       exit={{ opacity: 0 }}
       className="w-full max-w-6xl mx-auto py-20 px-4 mt-8"
     >
-      <div className="text-center mb-10">
-        <h2 className="text-5xl font-script text-rose-600 mb-4 drop-shadow-sm">Galería de Recuerdos</h2>
-        <p className="text-rose-500/80 font-serif">Nuestros momentos en la nube</p>
+      <div className="text-center mb-16">
+        <h2 className="text-5xl md:text-7xl font-script text-white mb-6 drop-shadow-[0_0_15px_rgba(255,139,167,0.3)]">Galería de Recuerdos</h2>
+        <p className="text-pink-100/60 font-serif text-lg">Nuestros momentos capturados</p>
       </div>
 
       {/* Selector de Años / Pestañas Minimalista */}
-      <div className="flex justify-center border-b-2 border-rose-100/50 mb-10 w-full overflow-x-auto gap-4 md:gap-12 px-4 scrollbar-hide">
+      <div className="flex justify-center mb-16 w-full overflow-x-auto gap-4 md:gap-10 px-4 scrollbar-hide">
         {YEARS.map((year, index) => (
           <button
             key={year}
             onClick={() => setCurrentYear(year)}
-            className={`pb-4 px-2 whitespace-nowrap text-lg font-medium transition-colors relative ${
+            className={`pb-4 px-6 whitespace-nowrap text-lg font-medium transition-all duration-500 relative ${
               currentYear === year 
-                ? 'text-rose-600' 
-                : 'text-gray-400 hover:text-rose-400'
+                ? 'text-petal-pink' 
+                : 'text-white/30 hover:text-white/60'
             }`}
           >
             Año {index + 1}
             {currentYear === year && (
-              <motion.div layoutId="activeTabGallery" className="absolute bottom-[-2px] left-0 right-0 h-[3px] bg-rose-500 rounded-t-full" />
+              <motion.div 
+                layoutId="activeTabGallery" 
+                className="absolute bottom-0 left-0 right-0 h-[2px] bg-petal-pink rounded-full shadow-[0_0_8px_rgba(255,139,167,0.8)]" 
+              />
             )}
           </button>
         ))}
@@ -103,57 +106,60 @@ export function Gallery() {
       {/* Contenedor de la Galería */}
       <div className="min-h-[400px]">
         {loading ? (
-          <div className="flex flex-col items-center justify-center p-20 text-rose-400">
-             <Loader2 className="w-10 h-10 animate-spin mb-4" />
-             <p className="animate-pulse font-medium">Buscando recuerdos en GitHub...</p>
+          <div className="flex flex-col items-center justify-center p-20 text-petal-pink">
+             <Loader2 className="w-12 h-12 animate-spin mb-6 opacity-60" />
+             <p className="animate-pulse font-serif tracking-widest text-sm uppercase opacity-40">Buscando memorias...</p>
           </div>
         ) : error ? (
-           <div className="py-12 px-6 text-center bg-rose-50/80 text-rose-600 rounded-2xl border border-rose-200">
-             <p className="font-bold mb-2">Ops, algo salió mal</p>
-             <p className="text-sm opacity-90">{error}</p>
-             <p className="text-sm mt-4 opacity-75">Sube las fotos o videos a la carpeta public/gallery/{currentYear} de tu repositorio en GitHub para que aparezcan aquí automáticamente.</p>
+           <div className="py-12 px-8 text-center glass rounded-[2rem] border-white/5 max-w-xl mx-auto">
+             <p className="font-bold text-white mb-3">Algo salió mal</p>
+             <p className="text-sm text-white/50 leading-relaxed">{error}</p>
            </div>
         ) : images.length === 0 ? (
-          <div className="py-16 text-center text-gray-500 bg-white/60 backdrop-blur-sm rounded-2xl shadow-sm border border-rose-100">
-            No se encontraron imágenes o videos válidos en esta carpeta.
+          <div className="py-20 text-center text-white/20 glass rounded-[2.5rem] border-white/5">
+            <Images className="w-16 h-16 mx-auto mb-6 opacity-10" strokeWidth={1} />
+            <p className="font-serif italic text-lg">Aún no hay archivos en esta carpeta...</p>
           </div>
         ) : (
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             {images.map(media => {
               const video = isVideo(media.name);
               return (
-                <div 
+                <motion.div 
+                  layout
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
                   key={media.name} 
                   onClick={() => setSelectedMedia(media)}
-                  className="group relative rounded-2xl overflow-hidden shadow-sm border border-rose-100 aspect-[4/3] bg-rose-50 cursor-pointer"
+                  className="group relative rounded-3xl overflow-hidden shadow-2xl border border-white/5 aspect-[4/3] bg-white/5 cursor-pointer"
                 >
                   {video ? (
                     <>
                       <video 
                         src={media.download_url} 
-                        className="w-full h-full object-cover transform transition-transform duration-500 group-hover:scale-105 opacity-80"
+                        className="w-full h-full object-cover transform transition-transform duration-1000 group-hover:scale-110 opacity-70 group-hover:opacity-100"
                         muted playsInline
                       />
-                      <div className="absolute inset-0 flex items-center justify-center bg-black/20 group-hover:bg-black/10 transition-colors">
-                        <PlayCircle className="w-12 h-12 text-white/90 drop-shadow-md" />
+                      <div className="absolute inset-0 flex items-center justify-center bg-black/40 group-hover:bg-black/20 transition-all duration-500">
+                        <PlayCircle className="w-12 h-12 text-white/80 drop-shadow-lg transition-transform duration-500 group-hover:scale-125" />
                       </div>
                     </>
                   ) : (
                     <img 
                       src={media.download_url} 
                       alt={media.name} 
-                      className="w-full h-full object-cover transform transition-transform duration-500 group-hover:scale-110"
+                      className="w-full h-full object-cover transform transition-transform duration-1000 group-hover:scale-110 opacity-80 group-hover:opacity-100"
                       onError={(e: any) => {
                         e.target.src = 'https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=800&q=80';
                       }}
                     />
                   )}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
-                    <span className="text-white text-xs font-medium truncate drop-shadow-md">
-                      {video ? 'Video' : 'Foto'}
+                  <div className="absolute inset-x-0 bottom-0 p-4 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-y-2 group-hover:translate-y-0">
+                    <span className="text-white text-[10px] font-bold tracking-[0.2em] uppercase">
+                      {video ? 'Recuerdo en Video' : 'Fotografía'}
                     </span>
                   </div>
-                </div>
+                </motion.div>
               );
             })}
           </div>
@@ -167,11 +173,11 @@ export function Gallery() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 p-4 backdrop-blur-sm"
+            className="fixed inset-0 z-[200] flex items-center justify-center bg-zen-bg/95 p-4 backdrop-blur-xl"
             onClick={() => setSelectedMedia(null)}
           >
             <button 
-              className="absolute top-6 right-6 p-2 bg-white/10 hover:bg-white/20 rounded-full text-white transition-colors"
+              className="absolute top-8 right-8 p-3 bg-white/5 hover:bg-white/10 rounded-full text-white/40 hover:text-white transition-all duration-300"
               onClick={(e) => { e.stopPropagation(); setSelectedMedia(null); }}
             >
               <X className="w-8 h-8" />
@@ -180,22 +186,22 @@ export function Gallery() {
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
-              transition={{ type: "spring", damping: 25, stiffness: 300 }}
-              className="relative max-w-5xl max-h-[90vh] w-full flex items-center justify-center pointer-events-none"
+              className="relative max-w-6xl max-h-[90vh] w-full flex items-center justify-center p-4"
             >
+              <div className="absolute inset-0 bg-petal-pink/5 blur-[100px] rounded-full pointer-events-none" />
               {isVideo(selectedMedia.name) ? (
                 <video 
                   src={selectedMedia.download_url} 
                   controls 
                   autoPlay
-                  className="max-w-full max-h-[85vh] rounded-xl shadow-2xl pointer-events-auto"
+                  className="max-w-full max-h-[80vh] rounded-3xl shadow-[0_0_100px_rgba(0,0,0,0.5)] border border-white/10 pointer-events-auto"
                   onClick={(e) => e.stopPropagation()}
                 />
               ) : (
                 <img 
                   src={selectedMedia.download_url} 
                   alt={selectedMedia.name}
-                  className="max-w-full max-h-[85vh] object-contain rounded-xl shadow-2xl pointer-events-auto"
+                  className="max-w-full max-h-[80vh] object-contain rounded-3xl shadow-[0_0_100px_rgba(0,0,0,0.5)] border border-white/10 pointer-events-auto"
                   onClick={(e) => e.stopPropagation()}
                 />
               )}

@@ -108,106 +108,135 @@ export function Games({ onUnlockWeb, onNavigateHome }: GamesProps) {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -20 }}
-      className="max-w-5xl mx-auto px-4 py-8"
+      className="max-w-5xl mx-auto px-4 py-8 w-full"
     >
       {unlockedLevels.length === 0 ? (
         <div className="flex flex-col items-center justify-center min-h-[75vh] text-center px-4 w-full max-w-2xl mx-auto">
           <motion.div
              initial={{ scale: 0.5, opacity: 0 }}
              animate={{ scale: 1, opacity: 1 }}
-             transition={{ duration: 0.8, ease: "easeOut" }}
+             transition={{ duration: 1, type: "spring" }}
              className="relative mb-12"
           >
             <motion.div
-               animate={{ scale: [1, 1.1, 1], opacity: [0.5, 0.8, 0.5] }}
-               transition={{ repeat: Infinity, duration: 3, ease: "easeInOut" }}
-               className="absolute inset-0 bg-cyan-400 rounded-full blur-[80px] -z-10"
+               animate={{ scale: [1, 1.2, 1], opacity: [0.1, 0.3, 0.1] }}
+               transition={{ repeat: Infinity, duration: 4, ease: "easeInOut" }}
+               className="absolute inset-0 bg-petal-pink rounded-full blur-[80px] -z-10"
             />
-            <div className="w-56 h-56 bg-white/40 backdrop-blur-md rounded-full flex items-center justify-center border-[8px] border-white/60 shadow-[0_0_50px_rgba(255,255,255,0.3)]">
+            <div className="w-64 h-64 glass rounded-full flex items-center justify-center border-white/10 shadow-[0_0_50px_rgba(255,139,167,0.1)]">
                <motion.div
                   animate={{ rotate: 360 }}
-                  transition={{ repeat: Infinity, duration: 20, ease: "linear" }}
-                  className="absolute inset-2 rounded-full border-2 border-dashed border-cyan-400/30"
+                  transition={{ repeat: Infinity, duration: 30, ease: "linear" }}
+                  className="absolute inset-4 rounded-full border border-dashed border-petal-pink/20"
                />
-               <RadioReceiver className="w-28 h-28 text-cyan-600" strokeWidth={1} />
+               <RadioReceiver className="w-24 h-24 text-white/80" strokeWidth={1} />
             </div>
           </motion.div>
           
           <motion.div
             initial={{ y: 20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
-            transition={{ delay: 0.4, duration: 0.8 }}
+            transition={{ delay: 0.5, duration: 1 }}
           >
-            <h2 className="text-4xl md:text-6xl font-script font-bold text-rose-600 mb-6 drop-shadow-sm">
+            <h2 className="text-5xl md:text-7xl font-script text-white mb-6 drop-shadow-[0_0_10px_rgba(255,139,167,0.3)]">
               Tu regalo te espera
             </h2>
-            <p className="text-xl md:text-2xl text-stone-600 max-w-lg mx-auto font-serif leading-relaxed mb-10 decoration-rose-200 decoration-wavy underline underline-offset-8">
+            <p className="text-xl md:text-2xl text-pink-100/60 max-w-lg mx-auto font-serif leading-relaxed mb-12">
               Acerca el primer objeto al escáner NFC para comenzar el viaje...
             </p>
             
-            <div className="inline-flex items-center gap-4 bg-white/60 backdrop-blur-sm border border-cyan-100 py-3 px-8 rounded-full shadow-lg">
-               <div className="flex space-x-1">
-                  <motion.div animate={{ opacity: [0, 1, 0] }} transition={{ repeat: Infinity, duration: 1.5, times: [0, 0.5, 1] }} className="w-2 h-2 bg-cyan-400 rounded-full" />
-                  <motion.div animate={{ opacity: [0, 1, 0] }} transition={{ repeat: Infinity, duration: 1.5, delay: 0.2, times: [0, 0.5, 1] }} className="w-2 h-2 bg-cyan-400 rounded-full" />
-                  <motion.div animate={{ opacity: [0, 1, 0] }} transition={{ repeat: Infinity, duration: 1.5, delay: 0.4, times: [0, 0.5, 1] }} className="w-2 h-2 bg-cyan-400 rounded-full" />
+            <div className="inline-flex items-center gap-5 glass py-4 px-10 rounded-full border-white/5">
+               <div className="flex space-x-1.5">
+                  <motion.div animate={{ opacity: [0.2, 1, 0.2], scale: [0.8, 1.2, 0.8] }} transition={{ repeat: Infinity, duration: 2, times: [0, 0.5, 1] }} className="w-2 h-2 bg-petal-pink rounded-full" />
+                  <motion.div animate={{ opacity: [0.2, 1, 0.2], scale: [0.8, 1.2, 0.8] }} transition={{ repeat: Infinity, duration: 2, delay: 0.4, times: [0, 0.5, 1] }} className="w-2 h-2 bg-petal-pink rounded-full" />
+                  <motion.div animate={{ opacity: [0.2, 1, 0.2], scale: [0.8, 1.2, 0.8] }} transition={{ repeat: Infinity, duration: 2, delay: 0.8, times: [0, 0.5, 1] }} className="w-2 h-2 bg-petal-pink rounded-full" />
                </div>
-               <span className="text-sm font-mono font-bold text-cyan-600 uppercase tracking-widest">Escaneando...</span>
+               <span className="text-sm font-mono font-bold text-petal-pink uppercase tracking-[0.3em]">Buscando...</span>
             </div>
           </motion.div>
         </div>
       ) : (
         <>
-          <div className="text-center mb-12">
-            <h2 className="text-4xl md:text-5xl font-script font-bold text-rose-600 mb-4">¡Difruta de los regalos!</h2>
+          <div className="text-center mb-16">
+            <h2 className="text-5xl md:text-7xl font-script text-white mb-6 drop-shadow-[0_0_10px_rgba(255,139,167,0.2)]">Disfruta de los regalos</h2>
             
-            <div className="flex items-center justify-center gap-3 text-cyan-600 bg-cyan-50 border border-cyan-200 py-3 px-6 rounded-full max-w-sm mx-auto shadow-sm mt-6">
+            <div className="flex items-center justify-center gap-4 glass py-3 px-8 rounded-full max-w-sm mx-auto border-white/5 mt-8 border">
               <motion.div
-                animate={{ scale: [1, 1.2, 1], opacity: [0.5, 1, 0.5] }}
-                transition={{ repeat: Infinity, duration: 2 }}
+                animate={{ scale: [1, 1.2, 1], opacity: [0.4, 0.8, 0.4] }}
+                transition={{ repeat: Infinity, duration: 3 }}
               >
-                <RadioReceiver className="w-5 h-5" />
+                <RadioReceiver className="w-5 h-5 text-petal-pink" />
               </motion.div>
-              <span className="font-mono text-sm tracking-wide">Esperando conexión con objeto físico...</span>
+              <span className="font-mono text-xs tracking-[0.2em] uppercase text-white/40">Esperando conexión física...</span>
             </div>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 justify-center">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 justify-center">
             {gifts.map((gift) => {
-              const isUnlocked = unlockedLevels.includes(gift.id);
+              const isCompleted = unlockedLevels.includes(gift.id);
+              const nextToUnlock = Math.max(0, ...unlockedLevels) + 1;
+              const isActive = gift.id === nextToUnlock && gift.id <= 5;
+              const isLocked = gift.id > nextToUnlock;
+
               return (
                 <motion.div
                   key={gift.id}
-                  whileHover={isUnlocked ? { y: -5 } : {}}
-                  onClick={() => isUnlocked && abrirNivel(gift.id)}
-                  className={`relative overflow-hidden rounded-3xl p-8 transition-all duration-300 md:min-h-[240px] flex flex-col items-center justify-center text-center
-                    ${isUnlocked 
-                      ? 'bg-white shadow-xl shadow-rose-100 hover:shadow-2xl hover:shadow-rose-200 border-2 border-rose-100 cursor-pointer group' 
-                      : 'bg-stone-50/50 shadow-sm border border-stone-200 pointer-events-none opacity-60'
+                  whileHover={(isCompleted || isActive) ? { y: -8, scale: 1.02 } : {}}
+                  onClick={() => isCompleted && abrirNivel(gift.id)}
+                  className={`relative overflow-hidden rounded-[2.5rem] p-10 transition-all duration-500 md:min-h-[280px] flex flex-col items-center justify-center text-center border group
+                    ${isCompleted 
+                      ? 'glass hover:border-white/20 cursor-pointer' 
+                      : isActive
+                        ? 'bg-petal-pink text-zen-bg border-petal-pink shadow-[0_0_40px_rgba(255,139,167,0.4)] animate-pulse cursor-default'
+                        : 'bg-white/[0.02] border-white/[0.05] pointer-events-none opacity-30 filter grayscale brightness-75'
                     }`}
                 >
-                  {!isUnlocked && (
-                    <div className="absolute top-4 right-4 text-stone-400">
-                      <Lock className="w-6 h-6" />
+                  {isLocked && (
+                    <div className="absolute top-6 right-6 text-white/10">
+                      <Lock className="w-7 h-7" />
                     </div>
                   )}
-                  {isUnlocked && (
-                    <div className="absolute top-4 right-4 text-rose-300 opacity-0 group-hover:opacity-100 transition-opacity">
-                      <Unlock className="w-6 h-6" />
+                  {isCompleted && (
+                    <div className="absolute top-6 right-6 text-petal-pink/40 opacity-0 group-hover:opacity-100 transition-opacity">
+                      <Unlock className="w-7 h-7" />
+                    </div>
+                  )}
+                  {isActive && (
+                    <div className="absolute top-6 right-6 text-zen-bg/40">
+                      <RadioReceiver className="w-7 h-7 animate-spin-slow" />
                     </div>
                   )}
 
-                  <div className={`w-16 h-16 rounded-full flex items-center justify-center mb-4 transition-colors ${
-                    isUnlocked ? 'bg-rose-100 text-rose-500 group-hover:bg-rose-500 group-hover:text-white' : 'bg-stone-200 text-stone-400'
+                  <div className={`w-20 h-20 rounded-full flex items-center justify-center mb-6 transition-all duration-500 ${
+                    isCompleted 
+                      ? 'bg-white/5 text-petal-pink group-hover:bg-petal-pink group-hover:text-zen-bg shadow-inner group-hover:shadow-[0_0_30px_rgba(255,139,167,0.4)]' 
+                      : isActive
+                        ? 'bg-zen-bg/20 text-zen-bg'
+                        : 'bg-white/[0.02] text-white/10'
                   }`}>
-                    <gift.icon className="w-8 h-8" />
+                    <gift.icon className={`w-10 h-10 transition-transform duration-500 ${(isCompleted || isActive) ? 'group-hover:scale-110' : ''}`} />
                   </div>
                   
-                  <h3 className={`text-xl font-serif font-bold mb-2 ${isUnlocked ? 'text-gray-800' : 'text-stone-400'}`}>
+                  <h3 className={`text-2xl font-serif font-bold mb-2 ${
+                    isCompleted ? 'text-white' : isActive ? 'text-zen-bg' : 'text-white/20'
+                  }`}>
                     Nivel {gift.id}
                   </h3>
-                  <p className={`font-medium ${isUnlocked ? 'text-rose-600' : 'text-stone-400'}`}>
-                    {isUnlocked ? gift.title : 'Bloqueado'}
+                  <p className={`font-medium tracking-wide ${
+                    isCompleted ? 'text-petal-pink' : isActive ? 'text-zen-bg/60' : 'text-white/10'
+                  }`}>
+                    {isCompleted ? gift.title : isActive ? 'Escanea para desbloquear' : 'Bloqueado'}
                   </p>
+                  
+                  {isCompleted && (
+                    <motion.div 
+                      initial={{ scale: 0 }}
+                      animate={{ scale: 1 }}
+                      className="mt-4 px-4 py-1 bg-petal-pink/10 border border-petal-pink/20 rounded-full text-[10px] text-petal-pink font-bold uppercase tracking-widest"
+                    >
+                      Completado
+                    </motion.div>
+                  )}
                 </motion.div>
               );
             })}
@@ -216,7 +245,7 @@ export function Games({ onUnlockWeb, onNavigateHome }: GamesProps) {
       )}
 
       {unlockedLevels.length > 0 && (
-        <div className="mt-20 flex flex-col sm:flex-row items-center justify-center gap-6">
+        <div className="mt-20 flex flex-col sm:flex-row items-center justify-center gap-8">
           <button
             onClick={async () => {
               localStorage.removeItem('unlocked_levels_v4');
@@ -224,9 +253,9 @@ export function Games({ onUnlockWeb, onNavigateHome }: GamesProps) {
               await syncGlobalUnlockedLevels([]);
               window.location.reload();
             }}
-            className="text-stone-400 hover:text-rose-400 text-sm font-serif transition-colors"
+            className="text-white/20 hover:text-petal-pink text-xs font-mono tracking-widest uppercase transition-all duration-300"
           >
-            Resetear Progreso de Juegos
+            Resetear Progreso
           </button>
           <button
             onClick={async () => {
@@ -235,9 +264,9 @@ export function Games({ onUnlockWeb, onNavigateHome }: GamesProps) {
               await syncGlobalUnlockedLevels(fullLevels);
               window.location.reload();
             }}
-            className="text-stone-400 hover:text-rose-400 text-sm font-serif transition-colors"
+            className="text-white/20 hover:text-petal-pink text-xs font-mono tracking-widest uppercase transition-all duration-300"
           >
-            Forzar Desbloqueo (Tablet)
+            Forzar Desbloqueo
           </button>
         </div>
       )}
@@ -255,18 +284,19 @@ export function Games({ onUnlockWeb, onNavigateHome }: GamesProps) {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[120] bg-black/90 backdrop-blur-xl flex flex-col items-center justify-center p-6 text-white text-center"
+            className="fixed inset-0 z-[120] bg-zen-bg/90 backdrop-blur-2xl flex flex-col items-center justify-center p-6 text-white text-center"
           >
             <motion.div
               initial={{ scale: 0.8, y: 20 }}
               animate={{ scale: 1, y: 0 }}
-              className="bg-white/10 p-12 rounded-3xl border border-white/20 shadow-2xl backdrop-blur-md max-w-md w-full"
+              className="glass p-12 md:p-16 rounded-[3rem] shadow-[0_0_100px_rgba(255,139,167,0.1)] max-w-lg w-full relative overflow-hidden"
             >
-              <Globe className="w-24 h-24 text-cyan-400 mx-auto mb-6" />
-              <h2 className="text-4xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-cyan-300 to-emerald-300">
+              <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-petal-pink to-zen-lavender" />
+              <Globe className="w-24 h-24 text-petal-pink mx-auto mb-8 drop-shadow-[0_0_15px_rgba(255,139,167,0.5)]" />
+              <h2 className="text-4xl md:text-5xl font-script font-bold mb-6 text-white">
                 ¡Página web desbloqueada!
               </h2>
-              <p className="text-xl text-stone-300 mb-8 font-serif leading-relaxed">
+              <p className="text-xl text-white/60 mb-10 font-serif leading-relaxed">
                 Ahora tienes acceso a la experiencia completa. Explora la historia, recuerdos y la música de fondo.
               </p>
               <button
@@ -275,9 +305,9 @@ export function Games({ onUnlockWeb, onNavigateHome }: GamesProps) {
                   if (onUnlockWeb) onUnlockWeb();
                   if (onNavigateHome) onNavigateHome();
                 }}
-                className="px-8 py-4 bg-gradient-to-r from-cyan-500 to-emerald-500 rounded-full font-bold text-xl hover:scale-105 active:scale-95 transition-all shadow-[0_0_30px_rgba(34,211,238,0.4)]"
+                className="w-full py-5 bg-petal-pink text-zen-bg rounded-2xl font-bold text-xl hover:scale-[1.02] active:scale-95 transition-all shadow-[0_0_30px_rgba(255,139,167,0.4)]"
               >
-                Ir al Inicio
+                Comenzar experiencia
               </button>
             </motion.div>
           </motion.div>
@@ -300,7 +330,7 @@ export function Games({ onUnlockWeb, onNavigateHome }: GamesProps) {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-white/60 backdrop-blur-md"
+            className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-zen-bg/80 backdrop-blur-xl"
             onClick={() => {
               setRevealedGift(null);
               setModalPhase('none');
@@ -310,7 +340,7 @@ export function Games({ onUnlockWeb, onNavigateHome }: GamesProps) {
               initial={{ scale: 0.9, y: 20 }}
               animate={{ scale: 1, y: 0 }}
               exit={{ scale: 0.9, y: 20 }}
-              className="bg-white rounded-3xl overflow-hidden shadow-2xl max-w-md w-full relative border border-rose-100 text-center"
+              className="glass rounded-[2.5rem] overflow-hidden shadow-[0_0_50px_rgba(0,0,0,0.5)] max-w-lg w-full relative border-white/10 text-center flex flex-col"
               onClick={e => e.stopPropagation()}
             >
               <button 
@@ -318,23 +348,22 @@ export function Games({ onUnlockWeb, onNavigateHome }: GamesProps) {
                   setRevealedGift(null);
                   setModalPhase('none');
                 }}
-                className="absolute top-4 right-4 bg-gray-50 hover:bg-gray-100 text-gray-800 rounded-full p-2 z-20 transition-colors shadow-sm"
+                className="absolute top-6 right-6 text-white/20 hover:text-white transition-colors z-20"
               >
-                <X className="w-5 h-5" />
+                <X className="w-6 h-6" />
               </button>
 
-              <div className="bg-rose-500 py-10 px-6 relative overflow-hidden">
-                <div className="absolute -top-6 -right-6 w-24 h-24 bg-white/10 rounded-full blur-xl"></div>
-                <div className="absolute -bottom-8 -left-8 w-32 h-32 bg-white/20 rounded-full blur-2xl"></div>
-                <activeGift.icon className="w-20 h-20 text-white mx-auto relative z-10" />
+              <div className="bg-petal-pink/10 py-12 px-6 relative overflow-hidden border-b border-white/5">
+                <div className="absolute top-[-20%] left-[-20%] w-[140%] h-[140%] bg-petal-pink/5 blur-[60px] rounded-full -z-10" />
+                <activeGift.icon className="w-20 h-20 text-petal-pink mx-auto relative z-10 drop-shadow-[0_0_15px_rgba(255,139,167,0.3)]" />
               </div>
 
-              <div className="p-8">
-                <span className="inline-block px-3 py-1 bg-rose-100 text-rose-600 text-xs font-bold tracking-widest uppercase rounded-full mb-4">
-                  Desbloqueado
+              <div className="p-8 md:p-12 flex flex-col flex-1">
+                <span className="inline-block px-4 py-1 bg-petal-pink text-zen-bg text-[10px] font-bold tracking-[0.3em] uppercase rounded-full mb-6 mx-auto">
+                  Misión Desbloqueada
                 </span>
-                <h3 className="text-3xl font-serif font-bold text-gray-800 mb-4">{activeGift.title} Minijuego</h3>
-                <div className="mb-6 w-full">
+                <h3 className="text-3xl font-serif font-bold text-white mb-6">Mini-Desafío {activeGift.id}</h3>
+                <div className="mb-10 w-full overflow-hidden flex-1 min-h-[300px]">
                   {activeGift.id === 1 ? (
                     <MinigameRunner onWin={handleMinigameWin} />
                   ) : activeGift.id === 2 ? (
@@ -346,7 +375,7 @@ export function Games({ onUnlockWeb, onNavigateHome }: GamesProps) {
                   ) : activeGift.id === 5 ? (
                     <MinigameSlasher onWin={handleMinigameWin} />
                   ) : (
-                    <p className="text-gray-600 text-lg leading-relaxed text-center">
+                    <p className="text-white/40 text-lg leading-relaxed text-center font-serif py-20">
                       Próximamente...
                     </p>
                   )}
@@ -356,9 +385,9 @@ export function Games({ onUnlockWeb, onNavigateHome }: GamesProps) {
                     setRevealedGift(null);
                     setModalPhase('none');
                   }}
-                  className="w-full py-4 bg-gradient-to-r from-rose-500 to-pink-500 text-white rounded-xl font-bold text-lg hover:from-rose-600 hover:to-pink-600 transition-all shadow-md transform hover:-translate-y-0.5"
+                  className="w-full py-5 border border-white/10 hover:bg-white/5 text-white/40 hover:text-white rounded-2xl font-bold text-lg transition-all duration-500"
                 >
-                  Cerrar
+                  Cancelar desafío
                 </button>
               </div>
             </motion.div>

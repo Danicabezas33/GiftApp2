@@ -27,13 +27,13 @@ export function ScratchCard({ tipoRegalo, imagenRegalo, onClose, onComplete }: S
     canvas.width = 300;
     canvas.height = 300;
 
-    // Fill with pink color
-    ctx.fillStyle = '#f43f5e'; // rose-500
+    // Fill with petal pink color
+    ctx.fillStyle = '#ff8ba7'; 
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
     // Add text
     ctx.font = 'bold 20px serif';
-    ctx.fillStyle = '#ffffff';
+    ctx.fillStyle = '#130f1d';
     ctx.textAlign = 'center';
     
     // Wrap text pseudo logic
@@ -128,24 +128,24 @@ export function ScratchCard({ tipoRegalo, imagenRegalo, onClose, onComplete }: S
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-white/60 backdrop-blur-md"
+      className="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-zen-bg/80 backdrop-blur-xl"
     >
       <motion.div
         initial={{ scale: 0.9, y: 20 }}
         animate={{ scale: 1, y: 0 }}
         exit={{ scale: 0.9, y: 20 }}
-        className="bg-white rounded-3xl p-6 md:p-10 shadow-2xl max-w-md w-full relative border border-rose-100 flex flex-col items-center"
+        className="glass rounded-[2.5rem] p-8 md:p-12 shadow-[0_0_50px_rgba(0,0,0,0.5)] max-w-md w-full relative border-white/10 flex flex-col items-center"
       >
         <button 
           onClick={onClose}
-          className="absolute top-4 right-4 bg-gray-50 hover:bg-gray-100 text-gray-800 rounded-full p-2 z-20 transition-colors shadow-sm"
+          className="absolute top-6 right-6 text-white/20 hover:text-white transition-colors z-20"
         >
-          <X className="w-5 h-5" />
+          <X className="w-6 h-6" />
         </button>
 
-        <h2 className="text-3xl font-serif font-bold text-rose-600 mb-6 text-center">¡Nuevo objeto desbloqueado!</h2>
+        <h2 className="text-3xl font-serif font-bold text-white mb-8 text-center drop-shadow-[0_0_10px_rgba(255,139,167,0.3)]">¡Objeto descubierto!</h2>
 
-        <div className="relative w-[300px] h-[300px] mb-8 rounded-2xl overflow-hidden shadow-inner border border-rose-100 bg-gray-50 flex items-center justify-center">
+        <div className="relative w-[300px] h-[300px] mb-10 rounded-[2rem] overflow-hidden shadow-2xl border border-white/5 bg-white/5 flex items-center justify-center">
           {/* Base image representing the gift */}
           <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none p-4">
              <img src={imagenRegalo} alt={tipoRegalo} className="w-full h-full object-cover rounded-xl" />
@@ -180,9 +180,9 @@ export function ScratchCard({ tipoRegalo, imagenRegalo, onClose, onComplete }: S
             >
               <button
                 onClick={onComplete}
-                className="w-full py-4 bg-gradient-to-r from-rose-500 to-pink-500 text-white rounded-xl font-bold text-lg hover:from-rose-600 hover:to-pink-600 transition-all shadow-md transform hover:-translate-y-0.5"
+                className="w-full py-5 bg-petal-pink text-zen-bg rounded-2xl font-bold text-xl hover:scale-[1.02] active:scale-95 transition-all shadow-[0_0_30px_rgba(255,139,167,0.4)]"
               >
-                ¡Recoger Regalo y Continuar!
+                Recoger y continuar
               </button>
             </motion.div>
           )}
