@@ -6,7 +6,7 @@ import 'leaflet/dist/leaflet.css';
 // Create a custom pink pin icon
 const customPinkIcon = L.divIcon({
   className: 'custom-pin',
-  html: `<div style="background-color: #f43f5e; width: 24px; height: 24px; border-radius: 50% 50% 50% 0; border: 3px solid white; transform: rotate(-45deg); box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);"></div>`,
+  html: `<div style="background-color: #ff8ba7; width: 24px; height: 24px; border-radius: 50% 50% 50% 0; border: 2px solid #130f1d; transform: rotate(-45deg); box-shadow: 0 0 10px rgba(255, 139, 167, 0.5);"></div>`,
   iconSize: [24, 24],
   iconAnchor: [12, 24],
   popupAnchor: [0, -26],
@@ -15,7 +15,7 @@ const customPinkIcon = L.divIcon({
 // Create a custom question mark icon for the mystery destination
 const questionIcon = L.divIcon({
   className: 'custom-pin-question',
-  html: `<div style="background-color: #0ea5e9; width: 32px; height: 32px; border-radius: 50%; border: 3px solid white; display: flex; items-center; justify-center; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1); font-weight: bold; color: white; font-size: 20px;">?</div>`,
+  html: `<div style="background-color: #a7a1ff; width: 32px; height: 32px; border-radius: 50%; border: 2px solid #130f1d; display: flex; items-center; justify-center; box-shadow: 0 0 15px rgba(167, 161, 255, 0.5); font-weight: bold; color: #130f1d; font-size: 20px;">?</div>`,
   iconSize: [32, 32],
   iconAnchor: [16, 16],
   popupAnchor: [0, -16],
@@ -81,8 +81,9 @@ export function Roadmap() {
     }).setView([40.4168, -3.7038], 5);
     
     L.control.zoom({ position: 'bottomright' }).addTo(map);
-
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+    
+    // Using a dark themed map for the Zen aesthetic
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
       subdomains: 'abcd',
       maxZoom: 20
@@ -158,45 +159,42 @@ export function Roadmap() {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="max-w-4xl mx-auto py-20 px-4 mt-8 flex flex-col gap-20"
+      className="max-w-4xl mx-auto py-20 px-4 mt-8 flex flex-col gap-24 font-serif"
     >
       <section>
-        <h2 className="text-5xl font-script text-center text-rose-600 mb-16 drop-shadow-sm">Nuestra Historia</h2>
+        <h2 className="text-5xl md:text-7xl font-script text-center text-white mb-20 drop-shadow-[0_0_15px_rgba(255,139,167,0.3)]">Nuestra Historia</h2>
         
-        <div className="relative border-l-4 border-rose-300/50 ml-4 md:ml-12 md:space-y-16">
+        <div className="relative border-l border-white/10 ml-2 md:ml-12 space-y-12 md:space-y-16">
           {milestones.map((m, i) => (
             <motion.div 
-              initial={{ opacity: 0, x: -30, y: 20 }}
-              whileInView={{ opacity: 1, x: 0, y: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ delay: i * 0.1, duration: 0.6, ease: "easeOut" }}
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ delay: i * 0.1, duration: 0.8 }}
               key={i} 
-              className="mb-14 ml-8 md:ml-16 relative"
+              className="mb-10 ml-6 md:ml-16 relative"
             >
-              <div className="absolute w-8 h-8 bg-gradient-to-br from-rose-400 to-pink-500 rounded-full -left-[42px] md:-left-[76px] top-1 border-4 border-white shadow-lg flex items-center justify-center">
-                <div className="w-2 h-2 bg-white rounded-full"></div>
-              </div>
+              <div className="absolute w-3 h-3 md:w-4 md:h-4 bg-petal-pink rounded-full -left-[30px] md:-left-[73px] top-2 shadow-[0_0_10px_rgba(255,139,167,0.8)]"></div>
               
-              <div className="bg-white/80 backdrop-blur-sm p-3 rounded-3xl shadow-lg border border-white/60 hover:shadow-xl transition-shadow group flex flex-col md:flex-row gap-4 items-stretch">
-                <div className="p-5 md:p-6 flex-1 flex flex-col justify-center">
-                  <span className="inline-block px-4 py-1.5 bg-rose-100 text-rose-600 text-sm font-bold tracking-widest uppercase rounded-full mb-4 shadow-sm w-max">
+              <div className="glass p-1 rounded-[1.5rem] md:rounded-[2rem] overflow-hidden flex flex-col md:flex-row gap-4 items-stretch group hover:border-white/20 transition-all duration-500">
+                <div className="p-6 md:p-10 flex-1 flex flex-col justify-center">
+                  <span className="inline-block px-3 py-0.5 md:px-4 md:py-1 bg-petal-pink/10 text-petal-pink text-[10px] md:text-xs font-bold tracking-[0.2em] uppercase rounded-full mb-4 md:mb-6 w-max border border-petal-pink/20">
                     {m.year}
                   </span>
-                  <h3 className="text-2xl font-serif font-bold text-gray-800 mt-1 mb-3 group-hover:text-rose-500 transition-colors">{m.title}</h3>
-                  <p className="text-gray-600 text-lg leading-relaxed">{m.desc}</p>
+                  <h3 className="text-2xl md:text-3xl font-bold text-white mt-1 mb-3 md:mb-4 group-hover:text-petal-pink transition-colors duration-500">{m.title}</h3>
+                  <p className="text-white/60 text-base md:text-lg leading-relaxed">{m.desc}</p>
                 </div>
-                <div className="md:w-[220px] lg:w-[280px] min-h-[220px] shrink-0 relative bg-rose-50/50 overflow-hidden rounded-2xl flex items-center justify-center border border-rose-100/50">
+                <div className="w-full md:w-[220px] lg:w-[320px] h-48 md:h-auto shrink-0 relative bg-white/5 overflow-hidden rounded-xl md:rounded-2xl flex items-center justify-center border border-white/5">
                   <video
                     src={`https://raw.githubusercontent.com/Danicabezas33/GiftApp2/main/public/videos/year${i + 1}.mp4`}
                     autoPlay loop muted playsInline
-                    className="absolute inset-0 w-full h-full object-cover z-10"
+                    className="absolute inset-0 w-full h-full object-cover z-10 opacity-80 group-hover:opacity-100 transition-opacity duration-1000"
                     onError={(e) => {
                       (e.target as HTMLVideoElement).style.opacity = '0';
                     }}
                   />
-                  <div className="absolute inset-0 flex flex-col items-center justify-center p-4 text-center text-rose-400/60 z-0 text-sm font-medium">
-                    <span>No hay vídeo</span>
-                    <span className="text-[10px] mt-1 hidden group-hover:block transition-all">Sube /videos/year{i + 1}.mp4</span>
+                  <div className="absolute inset-0 flex flex-col items-center justify-center p-4 text-center text-white/20 z-0 text-sm font-medium">
+                    <span>Recuerdo en video</span>
                   </div>
                 </div>
               </div>
@@ -206,20 +204,20 @@ export function Roadmap() {
       </section>
 
       <section>
-        <h2 className="text-5xl font-script text-center text-rose-600 mb-8 drop-shadow-sm">Mapa de Viajes</h2>
+        <h2 className="text-5xl font-script text-center text-white mb-12 drop-shadow-sm">Mapa de Viajes</h2>
         
-        <div className="flex flex-col lg:flex-row gap-6 bg-white/60 backdrop-blur-md p-4 md:p-6 rounded-3xl shadow-xl border border-white/80">
+        <div className="flex flex-col lg:flex-row gap-8 glass p-6 rounded-[2.5rem]">
           {/* Selectores de año */}
-          <div className="w-full lg:w-48 flex flex-row lg:flex-col gap-3 overflow-x-auto pb-2 lg:pb-0 scrollbar-hide">
+          <div className="w-full lg:w-48 flex flex-row lg:flex-col gap-3 overflow-x-auto pb-4 lg:pb-0 scrollbar-hide">
             {Object.keys(routesByYear).map(year => (
               <button
                 key={year}
                 onClick={() => setActiveYear(year)}
                 className={`
-                  px-6 py-4 rounded-2xl font-bold text-lg transition-all shadow-sm flex-1 lg:flex-none whitespace-nowrap
+                  px-8 py-4 rounded-2xl font-bold text-lg transition-all duration-500 flex-1 lg:flex-none whitespace-nowrap border
                   ${activeYear === year 
-                    ? 'bg-gradient-to-r from-rose-500 to-rose-400 text-white shadow-rose-200 shadow-lg transform lg:-translate-y-1' 
-                    : 'bg-white text-gray-600 hover:bg-rose-50 hover:text-rose-500 border border-gray-100'}
+                    ? 'bg-petal-pink text-zen-bg border-petal-pink shadow-[0_0_20px_rgba(255,139,167,0.3)]' 
+                    : 'bg-white/5 text-white/40 hover:text-white/80 border-white/5 hover:border-white/10'}
                 `}
               >
                 {year}
@@ -228,8 +226,8 @@ export function Roadmap() {
           </div>
 
           {/* Mapa */}
-          <div className="flex-1 min-h-[500px] rounded-2xl overflow-hidden border-4 border-white shadow-inner relative z-0">
-            <div ref={mapContainerRef} className="w-full h-full min-h-[400px] absolute inset-0 z-0"></div>
+          <div className="flex-1 h-[350px] md:h-[500px] rounded-[1.5rem] md:rounded-[2rem] overflow-hidden border border-white/10 relative z-0">
+            <div ref={mapContainerRef} className="w-full h-full absolute inset-0 z-0"></div>
           </div>
         </div>
       </section>

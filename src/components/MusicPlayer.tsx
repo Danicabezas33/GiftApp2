@@ -13,7 +13,10 @@ export function MusicPlayer() {
   useEffect(() => {
     // Fetch playlist from github as fallback because Vercel doesn't run the backend
     fetch('https://api.github.com/repos/Danicabezas33/GiftApp2/contents/public/music')
-      .then(res => res.json())
+      .then(res => {
+        if (!res.ok) throw new Error("GitHub API error");
+        return res.json();
+      })
       .then(data => {
         if (Array.isArray(data) && data.length > 0) {
           const musicFiles = data
@@ -28,13 +31,28 @@ export function MusicPlayer() {
          console.error("Error fetching music from Github:", err);
          // Fallback to try local API just in case (for local dev)
          fetch('/api/music')
-            .then(res => res.json())
+            .then(res => {
+               if (!res.ok) throw new Error("Fallback API error");
+               return res.json();
+            })
             .then(apiData => {
                if (Array.isArray(apiData) && apiData.length > 0) {
                   setPlaylist(apiData);
+               } else {
+                  throw new Error("Empty API output");
                }
             })
-            .catch(e => console.error("Error fetching music from API too:", e));
+            .catch(e => {
+                console.error("Error fetching music from API too:", e);
+                // Final fallback using hardcoded files from your screenshot
+                setPlaylist([
+                    "Alejo - TÍRAME.mp3",
+                    "Alejo - WIKIWIKI.mp3",
+                    "Alvaro Díaz - EN PR NO HACE FRÍO.mp3",
+                    "Alvaro Díaz - QUIZÁS SI QUIZÁS NO.mp3",
+                    "track.mp3"
+                ]);
+            });
       });
   }, []);
 
@@ -44,7 +62,7 @@ export function MusicPlayer() {
       const wasPlaying = isPlaying;
       
       // We don't change the src if it's already the same song
-      const newSrc = `/music/${encodeURIComponent(playlist[currentIndex])}`;
+      const newSrc = `https://raw.githubusercontent.com/Danicabezas33/GiftApp2/main/public/music/${encodeURIComponent(playlist[currentIndex])}`;
       if (audio.src.includes(encodeURIComponent(playlist[currentIndex]))) return;
 
       audio.src = newSrc;
@@ -105,7 +123,7 @@ export function MusicPlayer() {
 
   return (
     <div 
-      className="fixed bottom-6 right-6 flex flex-col items-end gap-2 z-[100]"
+      className="fixed bottom-4 right-4 md:bottom-8 md:right-8 flex flex-col items-end gap-3 z-[100]"
       onMouseEnter={() => setShowVolume(true)}
       onMouseLeave={() => setShowVolume(false)}
     >
@@ -121,12 +139,12 @@ export function MusicPlayer() {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 10 }}
-            className="bg-white/80 backdrop-blur-md px-4 py-2 rounded-2xl shadow-lg border border-rose-100 mb-1 max-w-[200px] overflow-hidden"
+            className="glass px-4 py-2 rounded-2xl shadow-xl border-white/10 mb-1 max-w-[180px] md:max-w-[220px] overflow-hidden"
           >
-            <div className="flex items-center gap-2 overflow-hidden whitespace-nowrap">
-              <Music className="w-4 h-4 text-rose-500 shrink-0 z-10 bg-white/80" />
+            <div className="flex items-center gap-3 overflow-hidden whitespace-nowrap">
+              <Music className="w-4 h-4 text-petal-pink shrink-0 animate-pulse" />
               <div className="overflow-hidden flex-1 relative flex">
-                <p className="text-xs font-medium text-gray-600 animate-marquee pr-4">
+                <p className="text-[10px] md:text-xs font-medium text-white/60 animate-marquee pr-4 tracking-wider uppercase">
                   {cleanupTrackName(playlist[currentIndex])}
                 </p>
               </div>
@@ -142,52 +160,52 @@ export function MusicPlayer() {
               initial={{ opacity: 0, x: 20, scale: 0.9 }}
               animate={{ opacity: 1, x: 0, scale: 1 }}
               exit={{ opacity: 0, x: 10, scale: 0.9 }}
-              className="bg-white/90 backdrop-blur-md rounded-full shadow-lg p-3 px-4 flex items-center gap-2 border border-rose-100"
+              className="glass rounded-full shadow-2xl p-3 px-5 flex items-center gap-3 border-white/5"
             >
               <input 
                 type="range" 
                 min="0" max="1" step="0.01" 
                 value={volume}
                 onChange={(e) => setVolume(parseFloat(e.target.value))}
-                className="w-24 accent-rose-500 cursor-pointer"
+                className="w-20 md:w-28 accent-petal-pink cursor-pointer opacity-80"
               />
             </motion.div>
           )}
         </AnimatePresence>
 
-        <div className="bg-white/90 backdrop-blur-md rounded-full shadow-xl p-2 flex items-center gap-1 border border-rose-100 transition-all hover:shadow-rose-200/50 hover:shadow-2xl">
+        <div className="glass rounded-full shadow-[0_0_40px_rgba(0,0,0,0.5)] p-2 md:p-2.5 flex items-center gap-1 border-white/5 transition-all duration-500 hover:border-white/20">
           <button 
             onClick={() => {
               if(volume > 0) setVolume(0);
               else setVolume(0.5);
             }}
-            className="w-8 h-8 rounded-full flex items-center justify-center text-rose-500 hover:bg-rose-50 transition-colors"
+            className="w-8 h-8 md:w-9 md:h-9 rounded-full flex items-center justify-center text-white/40 hover:text-petal-pink hover:bg-white/5 transition-all"
           >
-            <VolumeIcon className="w-4 h-4" />
+            <VolumeIcon className="w-4 h-4 md:w-5 md:h-5" />
           </button>
           
-          <div className="w-px h-6 bg-rose-200 mx-1"></div>
+          <div className="w-px h-5 md:h-6 bg-white/10 mx-1"></div>
 
           <div className="flex items-center gap-1 px-1">
             <button 
               onClick={handlePrev}
-              className="w-8 h-8 rounded-full flex items-center justify-center text-rose-400 hover:bg-rose-50 hover:text-rose-600 transition-all"
+              className="w-8 h-8 md:w-9 md:h-9 rounded-full flex items-center justify-center text-white/30 hover:text-white hover:bg-white/5 transition-all"
             >
-              <SkipBack className="w-4 h-4" />
+              <SkipBack className="w-4 h-4 md:w-5 md:h-5" />
             </button>
-
+ 
             <button 
               onClick={togglePlay}
-              className="bg-gradient-to-r from-rose-500 to-pink-500 hover:from-rose-600 hover:to-pink-600 cursor-pointer text-white w-10 h-10 rounded-full flex items-center justify-center transition-all shadow-md transform hover:scale-105"
+              className="bg-petal-pink text-zen-bg w-10 h-10 md:w-12 md:h-12 rounded-full flex items-center justify-center transition-all duration-500 shadow-[0_0_20px_rgba(255,139,167,0.3)] hover:scale-105 active:scale-95"
             >
-              {isPlaying ? <Pause className="w-5 h-5" /> : <Play className="w-5 h-5 ml-0.5" />}
+              {isPlaying ? <Pause className="w-5 h-5 md:w-6 md:h-6" fill="currentColor" /> : <Play className="w-5 h-5 md:w-6 md:h-6 ml-1" fill="currentColor" />}
             </button>
-
+ 
             <button 
               onClick={handleNext}
-              className="w-8 h-8 rounded-full flex items-center justify-center text-rose-400 hover:bg-rose-50 hover:text-rose-600 transition-all"
+              className="w-8 h-8 md:w-9 md:h-9 rounded-full flex items-center justify-center text-white/30 hover:text-white hover:bg-white/5 transition-all"
             >
-              <SkipForward className="w-4 h-4" />
+              <SkipForward className="w-4 h-4 md:w-5 md:h-5" />
             </button>
           </div>
         </div>

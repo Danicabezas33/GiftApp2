@@ -22,10 +22,10 @@ export function ScratchCard({ tipoRegalo, imagenRegalo, onClose, onComplete }: S
     const ctx = canvas.getContext('2d', { willReadFrequently: true });
     if (!ctx) return;
 
-    // Set canvas resolution
-    // Use fixed dimensions or match the container
-    canvas.width = 300;
-    canvas.height = 300;
+    // Set canvas resolution based on container
+    const rect = canvas.getBoundingClientRect();
+    canvas.width = rect.width;
+    canvas.height = rect.height;
 
     // Fill with petal pink color
     ctx.fillStyle = '#ff8ba7'; 
@@ -145,7 +145,7 @@ export function ScratchCard({ tipoRegalo, imagenRegalo, onClose, onComplete }: S
 
         <h2 className="text-3xl font-serif font-bold text-white mb-8 text-center drop-shadow-[0_0_10px_rgba(255,139,167,0.3)]">¡Objeto descubierto!</h2>
 
-        <div className="relative w-[300px] h-[300px] mb-10 rounded-[2rem] overflow-hidden shadow-2xl border border-white/5 bg-white/5 flex items-center justify-center">
+        <div className="relative w-64 h-64 md:w-80 md:h-80 mb-10 rounded-[2rem] overflow-hidden shadow-2xl border border-white/5 bg-white/5 flex items-center justify-center">
           {/* Base image representing the gift */}
           <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none p-4">
              <img src={imagenRegalo} alt={tipoRegalo} className="w-full h-full object-cover rounded-xl" />

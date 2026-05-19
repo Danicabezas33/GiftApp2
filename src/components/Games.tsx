@@ -138,14 +138,14 @@ export function Games({ onUnlockWeb, onNavigateHome }: GamesProps) {
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.5, duration: 1 }}
           >
-            <h2 className="text-5xl md:text-7xl font-script text-white mb-6 drop-shadow-[0_0_10px_rgba(255,139,167,0.3)]">
+            <h2 className="text-4xl md:text-7xl font-script text-white mb-6 drop-shadow-[0_0_10px_rgba(255,139,167,0.3)]">
               Tu regalo te espera
             </h2>
-            <p className="text-xl md:text-2xl text-pink-100/60 max-w-lg mx-auto font-serif leading-relaxed mb-12">
+            <p className="text-lg md:text-2xl text-pink-100/60 max-w-lg mx-auto font-serif leading-relaxed mb-12">
               Acerca el primer objeto al escáner NFC para comenzar el viaje...
             </p>
             
-            <div className="inline-flex items-center gap-5 glass py-4 px-10 rounded-full border-white/5">
+            <div className="inline-flex items-center gap-5 glass py-3 px-8 md:py-4 md:px-10 rounded-full border-white/5">
                <div className="flex space-x-1.5">
                   <motion.div animate={{ opacity: [0.2, 1, 0.2], scale: [0.8, 1.2, 0.8] }} transition={{ repeat: Infinity, duration: 2, times: [0, 0.5, 1] }} className="w-2 h-2 bg-petal-pink rounded-full" />
                   <motion.div animate={{ opacity: [0.2, 1, 0.2], scale: [0.8, 1.2, 0.8] }} transition={{ repeat: Infinity, duration: 2, delay: 0.4, times: [0, 0.5, 1] }} className="w-2 h-2 bg-petal-pink rounded-full" />
@@ -157,8 +157,8 @@ export function Games({ onUnlockWeb, onNavigateHome }: GamesProps) {
         </div>
       ) : (
         <>
-          <div className="text-center mb-16">
-            <h2 className="text-5xl md:text-7xl font-script text-white mb-6 drop-shadow-[0_0_10px_rgba(255,139,167,0.2)]">Disfruta de los regalos</h2>
+          <div className="text-center mb-10 md:mb-16">
+            <h2 className="text-4xl md:text-7xl font-script text-white mb-6 drop-shadow-[0_0_10px_rgba(255,139,167,0.2)]">Disfruta de los regalos</h2>
             
             <div className="flex items-center justify-center gap-4 glass py-3 px-8 rounded-full max-w-sm mx-auto border-white/5 mt-8 border">
               <motion.div

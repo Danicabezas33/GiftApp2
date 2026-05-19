@@ -106,7 +106,7 @@ export function Memories() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
               transition={{ duration: 0.5 }}
-              className="grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-8"
+              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8"
             >
               {(memoriesData[activeTab] || []).map((item, idx) => (
                 <motion.div 
@@ -161,7 +161,7 @@ export function Memories() {
                 <X className="w-8 h-8" />
               </button>
               
-              <div className="w-full md:w-3/5 h-80 md:h-auto shrink-0 relative group bg-black/20 overflow-hidden">
+              <div className="w-full md:w-3/5 h-[300px] md:h-auto shrink-0 relative group bg-black/20 overflow-hidden">
                 <AnimatePresence mode="wait">
                   <motion.div
                     key={currentImageIndex}
@@ -223,16 +223,16 @@ export function Memories() {
                 )}
               </div>
               <div className="w-full md:w-2/5 flex-1 min-h-0 overflow-y-auto bg-white/[0.02]">
-                <div className="p-10 md:p-14 flex flex-col min-h-full h-fit">
-                  <h3 className="text-4xl font-serif font-bold text-white mb-8 pr-10">{selectedMemory.text}</h3>
+                <div className="p-6 md:p-14 flex flex-col min-h-full h-fit">
+                  <h3 className="text-2xl md:text-4xl font-serif font-bold text-white mb-6 md:mb-8 pr-10">{selectedMemory.text}</h3>
                   <div className="relative group">
-                    <div className="absolute -left-6 top-0 bottom-0 w-1 bg-petal-pink/30 rounded-full group-hover:bg-petal-pink transition-colors duration-500" />
-                    <p className="text-white/60 text-xl leading-relaxed whitespace-pre-line italic font-serif">
+                    <div className="absolute -left-4 md:-left-6 top-0 bottom-0 w-0.5 md:w-1 bg-petal-pink/30 rounded-full group-hover:bg-petal-pink transition-colors duration-500" />
+                    <p className="text-white/60 text-lg md:text-xl leading-relaxed whitespace-pre-line italic font-serif">
                       "{selectedMemory.detail}"
                     </p>
                   </div>
-                  <div className="mt-12 flex justify-end mt-auto pt-4 opacity-20">
-                    <Heart className="w-10 h-10 text-petal-pink fill-petal-pink/10" />
+                  <div className="mt-8 md:mt-12 flex justify-end mt-auto pt-4 opacity-20">
+                    <Heart className="w-8 h-8 md:w-10 md:h-10 text-petal-pink fill-petal-pink/10" />
                   </div>
                 </div>
               </div>
