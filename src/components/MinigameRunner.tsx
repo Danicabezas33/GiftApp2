@@ -196,6 +196,12 @@ export function MinigameRunner({ onWin }: MinigameRunnerProps) {
       ctx.restore();
     };
 
+    const setIsPlayedAndWon = () => {
+      setIsPlaying(false);
+      setIsWon(true);
+      setTimeout(() => onWin(), 2500);
+    };
+
     const loop = (currentTime: number) => {
       const dt = Math.min((currentTime - lastTime) / 1000, 0.1);
       lastTime = currentTime;
@@ -507,12 +513,6 @@ export function MinigameRunner({ onWin }: MinigameRunnerProps) {
       }
 
       animationId = requestAnimationFrame(loop);
-    };
-
-    const setIsPlayedAndWon = () => {
-      setIsPlaying(false);
-      setIsWon(true);
-      setTimeout(() => onWin(), 2500);
     };
 
     animationId = requestAnimationFrame(loop);

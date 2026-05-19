@@ -1,6 +1,6 @@
 import { motion } from 'motion/react';
 import { useState, useEffect, useRef } from 'react';
-import L from 'leaflet';
+import * as L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 
 // Create a custom pink pin icon
@@ -73,43 +73,6 @@ export function Roadmap() {
   const layerGroupRef = useRef<L.LayerGroup | null>(null);
   const [activeYear, setActiveYear] = useState('2021');
 
-  useEffect(() => {
-    if (!mapContainerRef.current) return;
-
-    const map = L.map(mapContainerRef.current, {
-      zoomControl: false
-    }).setView([40.4168, -3.7038], 5);
-    
-    L.control.zoom({ position: 'bottomright' }).addTo(map);
-    
-    // Using a light themed map for the new aesthetic
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
-      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
-      subdomains: 'abcd',
-      maxZoom: 20
-    }).addTo(map);
-
-    layerGroupRef.current = L.LayerGroup().addTo(map);
-    mapRef.current = map;
-
-    // Critical: ensure map fills container after layout/animation
-    setTimeout(() => {
-      map.invalidateSize();
-      cargarYear(activeYear);
-    }, 50);
-
-    return () => {
-      map.remove();
-      mapRef.current = null;
-    };
-  }, []);
-
-  useEffect(() => {
-    if (mapRef.current) {
-      cargarYear(activeYear);
-    }
-  }, [activeYear]);
-
   const cargarYear = (year: string) => {
     if (!mapRef.current || !layerGroupRef.current) return;
 
@@ -164,6 +127,43 @@ export function Roadmap() {
     // Always call invalidateSize after flying to ensure it's still correct
     setTimeout(() => map.invalidateSize(), 1500);
   };
+
+  useEffect(() => {
+    if (!mapContainerRef.current) return;
+
+    const map = L.map(mapContainerRef.current, {
+      zoomControl: false
+    }).setView([40.4168, -3.7038], 5);
+    
+    L.control.zoom({ position: 'bottomright' }).addTo(map);
+    
+    // Using a light themed map for the new aesthetic
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+      subdomains: 'abcd',
+      maxZoom: 20
+    }).addTo(map);
+
+    layerGroupRef.current = L.layerGroup().addTo(map);
+    mapRef.current = map;
+
+    // Critical: ensure map fills container after layout/animation
+    setTimeout(() => {
+      map.invalidateSize();
+      cargarYear(activeYear);
+    }, 50);
+
+    return () => {
+      map.remove();
+      mapRef.current = null;
+    };
+  }, []);
+
+  useEffect(() => {
+    if (mapRef.current) {
+      cargarYear(activeYear);
+    }
+  }, [activeYear]);
 
   return (
     <motion.div 
@@ -238,7 +238,7 @@ export function Roadmap() {
 
           {/* Mapa */}
           <div className="flex-1 h-[350px] md:h-[500px] rounded-[1.5rem] md:rounded-[2rem] overflow-hidden border border-pink-100 relative shadow-inner bg-pink-50/20">
-            <div ref={mapContainerRef} className="w-full h-full relative"></div>
+            <div ref={mapContainerRef} className="absolute inset-0 w-full h-full"></div>
           </div>
         </div>
       </section>
