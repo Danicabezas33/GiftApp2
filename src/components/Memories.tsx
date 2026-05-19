@@ -1,49 +1,57 @@
 import { motion, AnimatePresence } from 'motion/react';
-import { useState } from 'react';
-import { X, Heart, ChevronLeft, ChevronRight } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { X, Heart, ChevronLeft, ChevronRight, Loader2 } from 'lucide-react';
 
-const memoriesData = {
-  1: [
-    { images: ["/photos/year1-1.jpg", "/photos/year1-2.jpg"], text: "El primer atardecer juntos.", detail: "Aún recuerdo los nervios de este día,\n cuando me tomaste la mano por primera vez mientras el sol desaparecía. Fue el comienzo de nuestra historia. Aún recuerdo los nervios de este día, cuando me tomaste la mano por primera vez mientras el sol desaparecía. Fue el comienzo de nuestra historia. Aún recuerdo los nervios de este día, cuando me tomaste la mano por primera vez mientras el sol desaparecía. Fue el comienzo de nuestra historia. Aún recuerdo los nervios de este día, cuando me tomaste la mano por primera vez mientras el sol desaparecía. Fue el comienzo de nuestra historia. Aún recuerdo los nervios de este día, cuando me tomaste la mano por primera vez mientras el sol desaparecía.Aún recuerdo los nervios de este día, cuando me tomaste la mano por primera vez mientras el sol desaparecía. Fue el comienzo de nuestra historia. Aún recuerdo los nervios de este día, cuando me tomaste la mano por primera vez mientras el sol desaparecía. Fue el comienzo de nuestra historia. Aún recuerdo los nervios de este día, cuando me tomaste la mano por primera vez mientras el sol desaparecía. Fue el comienzo de nuestra historia. Aún recuerdo los nervios de este día, cuando me tomaste la mano por primera vez mientras el sol desaparecía. Fue el comienzo de nuestra historia. Aún recuerdo los nervios de este día, cuando me tomaste la mano por primera vez mientras el sol desaparecía.Aún recuerdo los nervios de este día, cuando me tomaste la mano por primera vez mientras el sol desaparecía. Fue el comienzo de nuestra historia. Aún recuerdo los nervios de este día, cuando me tomaste la mano por primera vez mientras el sol desaparecía. Fue el comienzo de nuestra historia. Aún recuerdo los nervios de este día, cuando me tomaste la mano por primera vez mientras el sol desaparecía. Fue el comienzo de nuestra historia. Aún recuerdo los nervios de este día, cuando me tomaste la mano por primera vez mientras el sol desaparecía. Fue el comienzo de nuestra historia. Aún recuerdo los nervios de este día, cuando me tomaste la mano por primera vez mientras el sol desaparecía.Aún recuerdo los nervios de este día, cuando me tomaste la mano por primera vez mientras el sol desaparecía. Fue el comienzo de nuestra historia. Aún recuerdo los nervios de este día, cuando me tomaste la mano por primera vez mientras el sol desaparecía. Fue el comienzo de nuestra historia. Aún recuerdo los nervios de este día, cuando me tomaste la mano por primera vez mientras el sol desaparecía. Fue el comienzo de nuestra historia. Aún recuerdo los nervios de este día, cuando me tomaste la mano por primera vez mientras el sol desaparecía. Fue el comienzo de nuestra historia. Aún recuerdo los nervios de este día, cuando me tomaste la mano por primera vez mientras el sol desaparecía." },
-    { images: ["/photos/year1-2.jpg", "/photos/year1-1.jpg"], text: "Nuestra canción.", detail: "Bailando en el salón de casa sin que nos importara nada más." },
-    { images: ["/photos/year1-3.jpg", "/photos/year1-1.jpg"], text: "Primeras risas.", detail: "Esa tarde que no parábamos de reír por cualquier tontería. Me di cuenta de lo mucho que me gustabas." },
-    { images: ["/photos/year1-4.jpg"], text: "Cita en el cine.", detail: "Nuestra primera película juntos. No recuerdo ni de qué iba porque solo podía mirarte a ti." },
-    { images: ["/photos/year1-5.jpg"], text: "Paseo por el parque.", detail: "Una tarde tranquila, simplemente caminando y conociéndonos cada vez más." },
-    { images: ["/photos/year1-6.jpg"], text: "Aquel café.", detail: "El primer café que compartimos. Las horas pasaron volando mientras hablábamos de todo y de nada." },
-    { images: ["/photos/year1-7.jpg"], text: "Bajo la lluvia.", detail: "Corriendo para no mojarnos, y al final terminamos empapados y riéndonos a carcajadas." },
-    { images: ["/photos/year1-8.jpg"], text: "Mirando las estrellas.", detail: "Esa noche tan especial donde el cielo estaba despejado y soñamos juntos." },
-    { images: ["/photos/year1-9.jpg"], text: "Nuestra primera foto.", detail: "La primera vez que posamos juntos ante la cámara. Quién diría todo lo que vendría después." },
-    { images: ["/photos/year1-10.jpg"], text: "Sorpresa inesperada.", detail: "Ese detalle que tuviste conmigo que me dejó sin palabras y me robó un poquito más el corazón." },
-    { images: ["/photos/year1-11.jpg"], text: "Día de campo.", detail: "Merienda al aire libre, buen tiempo y la mejor compañía que podría pedir." },
-    { images: ["/photos/year1-12.jpg"], text: "El primer te quiero.", detail: "Ese momento mágico en el que las palabras finalmente salieron y cambiaron todo para siempre." },
-    { images: ["/photos/year1-13.jpg"], text: "Aventura improvisada.", detail: "Cuando decidimos hacer algo diferente sin planearlo, y fue simplemente perfecto." },
-    { images: ["/photos/year1-14.jpg"], text: "Cocinado juntos.", detail: "Nuestro primer intento de hacer una cena elaborada. Fue un poco desastre, pero muy divertido." },
-    { images: ["/photos/year1-15.jpg"], text: "Visita al museo.", detail: "Perdidos entre arte, aunque mi obra favorita siempre serás tú." },
-    { images: ["/photos/year1-16.jpg"], text: "Un día cualquiera.", detail: "Porque contigo cualquier día normal se vuelve extraordinario." },
-    { images: ["/photos/year1-17.jpg"], text: "Brindando por nosotros.", detail: "Nuestro primer brindis. Que sean muchos más a tu lado." }
-  ],
-  2: [
-    { images: ["/photos/year2-1.jpg"], text: "Nuestro primer viaje a la playa.", detail: "Tanta arena, tantas risas y el mar infinito. Fueron los mejores días desconectados de todo." },
-    { images: ["/photos/year2-2.jpg"], text: "Cenando rico.", detail: "Descubriendo nuestro restaurante favorito de la ciudad. Qué bien comimos." }
-  ],
-  3: [
-    { images: ["/photos/year3-1.jpg"], text: "Cuando adoptamos a nuestra plantita.", detail: "Nuestro primer ser vivo a cargo. Sobrevivió el primer mes, ¡todo un logro!" },
-    { images: ["/photos/year3-2.jpg"], text: "Navidad juntos.", detail: "Frío fuera, pero el corazón súper calentito estando los dos en casa." }
-  ],
-  4: [
-    { images: ["/photos/year4-1.jpg"], text: "Aquella aventura en la montaña.", detail: "Casi nos perdemos, pero terminamos encontrando unas vistas espectaculares. El mejor equipo." },
-    { images: ["/photos/year4-2.jpg"], text: "Haciendo tonterías.", detail: "Nuestras caras de locos de siempre. Eres la única persona con la que puedo ser yo al 100%." }
-  ],
-  5: [
-    { images: ["/photos/year5-1.jpg"], text: "Hoy, más felices que nunca.", detail: "Han pasado 5 años y te sigo mirando con los mismos ojos que el primer día." },
-    { images: ["/photos/year5-2.jpg"], text: "Por siempre.", detail: "A por la siguiente aventura, mi amor." }
-  ]
-};
+interface Memory {
+  id: string;
+  imgCount: number;
+  text: string;
+  detail: string;
+  images: string[];
+}
 
 export function Memories() {
-  const [activeTab, setActiveTab] = useState<1|2|3|4|5>(1);
-  const [selectedMemory, setSelectedMemory] = useState<any>(null);
+  const [activeTab, setActiveTab] = useState<number>(1);
+  const [selectedMemory, setSelectedMemory] = useState<Memory | null>(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [memoriesData, setMemoriesData] = useState<Record<string, Memory[]>>({});
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    async function loadMemories() {
+      try {
+        const response = await fetch('/memories.json');
+        if (!response.ok) throw new Error('Error al cargar memories.json');
+        const data = await response.json();
+        
+        const processedData: Record<string, Memory[]> = {};
+        for (const year in data) {
+          processedData[year] = data[year].map((memory: any) => ({
+             ...memory,
+             images: buildImagePaths(year, memory.id, memory.imgCount)
+          }));
+        }
+        
+        setMemoriesData(processedData);
+        setLoading(false);
+      } catch (err: any) {
+        console.error(err);
+        setError('Ocurrió un error al cargar las memorias.');
+        setLoading(false);
+      }
+    }
+    
+    loadMemories();
+  }, []);
+
+  function buildImagePaths(year: string, id: string, count: number) {
+    const paths = [];
+    for (let i = 1; i <= count; i++) {
+      paths.push(`/photos/year${year}/${id}-${i}.jpg`);
+    }
+    return paths;
+  }
 
   const fallbackImage = "https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=800&q=80";
 
@@ -78,41 +86,50 @@ export function Memories() {
       </div>
 
       <div className="min-h-[400px]">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={activeTab}
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.95 }}
-            transition={{ duration: 0.3 }}
-            className="grid grid-cols-[repeat(auto-fill,minmax(280px,1fr))] gap-6 md:gap-8"
-          >
-            {memoriesData[activeTab].map((item, idx) => (
-              <motion.div 
-                key={idx} 
-                whileHover={{ y: -5 }}
-                onClick={() => {
-                  setSelectedMemory(item);
-                  setCurrentImageIndex(0);
-                }}
-                className="bg-white/80 backdrop-blur-sm rounded-3xl overflow-hidden shadow-md border border-rose-100/50 hover:shadow-xl hover:shadow-rose-200/50 transition-all cursor-pointer group"
-              >
-                <div className="h-72 overflow-hidden relative">
-                  <div className="absolute inset-0 bg-rose-500/10 group-hover:bg-transparent transition-colors z-10" />
-                  <img 
-                    src={item.images[0]} 
-                    onError={handleImageError}
-                    alt={`Recuerdo ${activeTab}`} 
-                    className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700" 
-                  />
-                </div>
-                <div className="p-6 text-center bg-gradient-to-b from-white/50 to-white">
-                  <p className="text-gray-800 font-serif font-medium text-lg leading-snug">{item.text}</p>
-                </div>
-              </motion.div>
-            ))}
-          </motion.div>
-        </AnimatePresence>
+        {loading ? (
+          <div className="flex flex-col items-center justify-center p-20 text-stone-400">
+             <Loader2 className="w-10 h-10 animate-spin text-rose-300 mb-4" />
+             <p className="animate-pulse font-medium text-lg text-rose-400">Cargando la máquina del tiempo...</p>
+          </div>
+        ) : error ? (
+           <div className="p-4 text-center text-rose-500 font-bold">{error}</div>
+        ) : (
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={activeTab}
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              transition={{ duration: 0.3 }}
+              className="grid grid-cols-[repeat(auto-fill,minmax(280px,1fr))] gap-6 md:gap-8"
+            >
+              {(memoriesData[activeTab] || []).map((item, idx) => (
+                <motion.div 
+                  key={idx} 
+                  whileHover={{ y: -5 }}
+                  onClick={() => {
+                    setSelectedMemory(item);
+                    setCurrentImageIndex(0);
+                  }}
+                  className="bg-white/80 backdrop-blur-sm rounded-3xl overflow-hidden shadow-md border border-rose-100/50 hover:shadow-xl hover:shadow-rose-200/50 transition-all cursor-pointer group"
+                >
+                  <div className="h-72 overflow-hidden relative">
+                    <div className="absolute inset-0 bg-rose-500/10 group-hover:bg-transparent transition-colors z-10" />
+                    <img 
+                      src={item.images[0]} 
+                      onError={handleImageError}
+                      alt={`Recuerdo ${activeTab}`} 
+                      className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700" 
+                    />
+                  </div>
+                  <div className="p-6 text-center bg-gradient-to-b from-white/50 to-white">
+                    <p className="text-gray-800 font-serif font-medium text-lg leading-snug">{item.text}</p>
+                  </div>
+                </motion.div>
+              ))}
+            </motion.div>
+          </AnimatePresence>
+        )}
       </div>
 
       {/* Modal / Bocadillo */}

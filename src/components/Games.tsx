@@ -30,9 +30,6 @@ export function Games({ onUnlockWeb, onNavigateHome }: GamesProps) {
     return JSON.parse(localStorage.getItem('unlocked_levels_v4') || '[]');
   });
 
-  useEffect(() => {
-    syncGlobalUnlockedLevels(unlockedLevels);
-  }, []);
   const [revealedGift, setRevealedGift] = useState<number | null>(null);
   const [modalPhase, setModalPhase] = useState<'none' | 'minigame' | 'scratch' | 'nfc' | 'web_unlocked'>('none');
   const [incomingLevelId, setIncomingLevelId] = useState<number | null>(null);

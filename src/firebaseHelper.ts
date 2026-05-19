@@ -1,5 +1,5 @@
 import { db } from './firebase';
-import { doc, setDoc, onSnapshot, serverTimestamp, getDoc } from 'firebase/firestore';
+import { doc, setDoc, onSnapshot, serverTimestamp, getDoc, arrayUnion } from 'firebase/firestore';
 
 export const setLatestUnlock = async (id: number) => {
   const docRef = doc(db, 'game_state', 'latest_unlock');
@@ -33,7 +33,12 @@ export const listenToLatestUnlock = (callback: (data: any) => void) => {
 // Global state sync to allow the mobile scanner to know what levels are unlocked
 export const syncGlobalUnlockedLevels = async (levels: number[]) => {
   const docRef = doc(db, 'game_state', 'global_state');
-  await setDoc(docRef, { unlockedLevels: levels }, { merge: true });
+  // We overwrite it if it's explicitly cleared, otherwise we use arrayUnion.
+  if (levels.length === 0) {
+    await setDoc(docRef, { unlockedLevels: [] }, { merge: true });
+  } else {
+    await setDoc(docRef, { unlockedLevels: arrayUnion(...levels) }, { merge: true });
+  }
 };
 
 export const getGlobalUnlockedLevels = async (): Promise<number[]> => {
