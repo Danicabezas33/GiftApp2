@@ -1,5 +1,5 @@
 import { db } from './firebase';
-import { doc, setDoc, onSnapshot, serverTimestamp } from 'firebase/firestore';
+import { doc, setDoc, onSnapshot, serverTimestamp, getDoc } from 'firebase/firestore';
 
 export const setLatestUnlock = async (id: number) => {
   const docRef = doc(db, 'game_state', 'latest_unlock');
@@ -29,3 +29,19 @@ export const listenToLatestUnlock = (callback: (data: any) => void) => {
     console.error("Firestore onSnapshot Error:", error);
   });
 };
+
+// Global state sync to allow the mobile scanner to know what levels are unlocked
+export const syncGlobalUnlockedLevels = async (levels: number[]) => {
+  const docRef = doc(db, 'game_state', 'global_state');
+  await setDoc(docRef, { unlockedLevels: levels }, { merge: true });
+};
+
+export const getGlobalUnlockedLevels = async (): Promise<number[]> => {
+  const docRef = doc(db, 'game_state', 'global_state');
+  const snap = await getDoc(docRef);
+  if (snap.exists() && snap.data()?.unlockedLevels) {
+    return snap.data().unlockedLevels;
+  }
+  return [];
+};
+

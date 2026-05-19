@@ -39,7 +39,11 @@ export default function App() {
     // Check reset flag
     if (params.has('reset')) {
       localStorage.removeItem('unlocked_levels_v4');
-      window.location.href = window.location.pathname;
+      import('./firebaseHelper').then(({ syncGlobalUnlockedLevels }) => {
+         syncGlobalUnlockedLevels([]);
+         window.location.href = window.location.pathname;
+      });
+      return;
     }
 
     // Check if web is generally unlocked (from localstorage)

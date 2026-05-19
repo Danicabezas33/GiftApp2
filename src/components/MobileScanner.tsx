@@ -1,15 +1,37 @@
 import { useEffect, useState } from 'react';
 import { motion } from 'motion/react';
-import { setLatestUnlock } from '../firebaseHelper';
-import { CheckCircle2, Loader2 } from 'lucide-react';
+import { setLatestUnlock, getGlobalUnlockedLevels } from '../firebaseHelper';
+import { CheckCircle2, Loader2, XCircle } from 'lucide-react';
 
 export function MobileScanner({ id }: { id: number }) {
-  const [status, setStatus] = useState<'sending' | 'success' | 'error'>('sending');
+  const [status, setStatus] = useState<'sending' | 'success' | 'error' | 'invalid'>('sending');
   const [errorMsg, setErrorMsg] = useState<string>('');
 
   useEffect(() => {
     const sendPulse = async () => {
       try {
+        const unlockedLevels = await getGlobalUnlockedLevels();
+        
+        // Validation check
+        if (id < 1 || id > 5) {
+          setErrorMsg('Objeto no reconocido.');
+          setStatus('invalid');
+          return;
+        }
+
+        if (unlockedLevels.includes(id)) {
+          // Already unlocked, maybe just allow it through or say already unlocked?
+          // Let's just allow it for now, it's valid.
+        } else {
+          // It's a new unlock. Check if it's the right next one (1, or consecutive)
+          const isExpectedOrder = id === 1 || unlockedLevels.includes(id - 1);
+          if (!isExpectedOrder) {
+            setErrorMsg(`¡Objeto incorrecto!`);
+            setStatus('invalid');
+            return;
+          }
+        }
+
         await setLatestUnlock(id);
         setStatus('success');
       } catch (err: any) {
@@ -59,6 +81,25 @@ export function MobileScanner({ id }: { id: number }) {
                  className="h-full bg-emerald-400"
                />
             </div>
+          </>
+        )}
+
+        {status === 'invalid' && (
+          <>
+            <motion.div
+              initial={{ scale: 0 }}
+              animate={{ scale: [1.2, 1] }}
+              transition={{ type: "spring", bounce: 0.6 }}
+            >
+              <XCircle className="w-20 h-20 text-rose-500 mb-6 drop-shadow-[0_0_15px_rgba(244,63,94,0.5)]" />
+            </motion.div>
+            <h2 className="text-3xl font-bold mb-4 text-rose-500">
+              ¡Objeto incorrecto!
+            </h2>
+            <p className="text-stone-300 text-lg mb-2">
+              Este no es el regado que toca ahora mismo.
+            </p>
+            <p className="text-stone-400 text-sm">Escanea el objeto correcto para continuar.</p>
           </>
         )}
 

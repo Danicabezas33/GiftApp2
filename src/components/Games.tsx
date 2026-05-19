@@ -1,7 +1,7 @@
 import { motion, AnimatePresence } from 'motion/react';
 import { useState, useEffect } from 'react';
 import { Lock, Unlock, Globe, Sparkles, UtensilsCrossed, Flame, Waves, X, RadioReceiver } from 'lucide-react';
-import { listenToLatestUnlock } from '../firebaseHelper';
+import { listenToLatestUnlock, syncGlobalUnlockedLevels } from '../firebaseHelper';
 import { NfcScannerModal } from './NfcScannerModal';
 
 import { ScratchCard } from './ScratchCard';
@@ -29,6 +29,10 @@ export function Games({ onUnlockWeb, onNavigateHome }: GamesProps) {
   const [unlockedLevels, setUnlockedLevels] = useState<number[]>(() => {
     return JSON.parse(localStorage.getItem('unlocked_levels_v4') || '[]');
   });
+
+  useEffect(() => {
+    syncGlobalUnlockedLevels(unlockedLevels);
+  }, []);
   const [revealedGift, setRevealedGift] = useState<number | null>(null);
   const [modalPhase, setModalPhase] = useState<'none' | 'minigame' | 'scratch' | 'nfc' | 'web_unlocked'>('none');
   const [incomingLevelId, setIncomingLevelId] = useState<number | null>(null);
@@ -47,8 +51,14 @@ export function Games({ onUnlockWeb, onNavigateHome }: GamesProps) {
         // We use setUnlockedLevels just to access the latest state without putting it in dependency array
         setUnlockedLevels(currentLevels => {
           if (id >= 1 && id <= 5 && !currentLevels.includes(id)) {
-            setIncomingLevelId(id);
-            setModalPhase('nfc');
+            // Check order: Must unlock 1 first, then 2, etc.
+            const isExpectedOrder = id === 1 || currentLevels.includes(id - 1);
+            if (isExpectedOrder) {
+              setIncomingLevelId(id);
+              setModalPhase('nfc');
+            } else {
+              console.log(`Scan ignorado: se esperaba nivel previo antes de ${id}.`);
+            }
           }
           return currentLevels;
         });
@@ -63,6 +73,7 @@ export function Games({ onUnlockWeb, onNavigateHome }: GamesProps) {
     const newUnlocked = [...new Set([...unlockedLevels, id])];
     setUnlockedLevels(newUnlocked);
     localStorage.setItem('unlocked_levels_v4', JSON.stringify(newUnlocked));
+    syncGlobalUnlockedLevels(newUnlocked);
     
     setIncomingLevelId(null);
     setRevealedGift(id);
@@ -208,8 +219,9 @@ export function Games({ onUnlockWeb, onNavigateHome }: GamesProps) {
       {unlockedLevels.length > 0 && (
         <div className="mt-20 flex flex-col sm:flex-row items-center justify-center gap-6">
           <button
-            onClick={() => {
+            onClick={async () => {
               localStorage.removeItem('unlocked_levels_v4');
+              await syncGlobalUnlockedLevels([]);
               window.location.reload();
             }}
             className="text-stone-400 hover:text-rose-400 text-sm font-serif transition-colors"
@@ -217,8 +229,10 @@ export function Games({ onUnlockWeb, onNavigateHome }: GamesProps) {
             Resetear Progreso de Juegos
           </button>
           <button
-            onClick={() => {
-              localStorage.setItem('unlocked_levels_v4', JSON.stringify([1,2,3,4,5]));
+            onClick={async () => {
+              const fullLevels = [1,2,3,4,5];
+              localStorage.setItem('unlocked_levels_v4', JSON.stringify(fullLevels));
+              await syncGlobalUnlockedLevels(fullLevels);
               window.location.reload();
             }}
             className="text-stone-400 hover:text-rose-400 text-sm font-serif transition-colors"
