@@ -2,7 +2,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import { useState, useEffect } from 'react';
 import { X, Heart, ChevronLeft, ChevronRight, Loader2 } from 'lucide-react';
 
-interface Memory {
+interface MemoryItem {
   id: string;
   imgCount: number;
   text: string;
@@ -11,10 +11,10 @@ interface Memory {
 }
 
 export function Memories() {
-  const [activeTab, setActiveTab] = useState<number>(1);
-  const [selectedMemory, setSelectedMemory] = useState<Memory | null>(null);
+  const [activeTab, setActiveTab] = useState<string>('1');
+  const [selectedMemory, setSelectedMemory] = useState<MemoryItem | null>(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const [memoriesData, setMemoriesData] = useState<Record<string, Memory[]>>({});
+  const [memoriesData, setMemoriesData] = useState<Record<string, MemoryItem[]>>({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -25,7 +25,7 @@ export function Memories() {
         if (!response.ok) throw new Error('Error al cargar memories.json');
         const data = await response.json();
         
-        const processedData: Record<string, Memory[]> = {};
+        const processedData: Record<string, MemoryItem[]> = {};
         for (const year in data) {
           processedData[year] = data[year].map((memory: any) => ({
              ...memory,
@@ -72,7 +72,7 @@ export function Memories() {
       <p className="text-center text-[#9D84A3] font-serif text-lg mb-16">Un viaje a través de nuestras mejores fotos.</p>
       
       <div className="flex flex-wrap justify-center gap-4 mb-16">
-        {([1, 2, 3, 4, 5] as const).map(year => (
+        {(['1', '2', '3', '4', '5'] as const).map(year => (
           <button
             key={year}
             onClick={() => setActiveTab(year)}
@@ -137,7 +137,6 @@ export function Memories() {
         )}
       </div>
 
-      {/* Modal / Bocadillo */}
       <AnimatePresence>
         {selectedMemory && (
           <motion.div 
@@ -172,7 +171,7 @@ export function Memories() {
                     drag={selectedMemory.images.length > 1 ? "x" : false}
                     dragConstraints={{ left: 0, right: 0 }}
                     dragElastic={0.2}
-                    onDragEnd={(e, { offset }) => {
+                    onDragEnd={(_e, { offset }) => {
                       const swipe = offset.x;
                       if (swipe < -40) {
                         setCurrentImageIndex(prev => (prev + 1) % selectedMemory.images.length);

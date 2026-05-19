@@ -1,6 +1,6 @@
 import { motion } from 'motion/react';
 import { useState, useEffect, useRef } from 'react';
-import * as L from 'leaflet';
+import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 
 // Create a custom pink pin icon
@@ -87,6 +87,9 @@ export function Roadmap() {
     const coordsArray: [number, number][] = [];
 
     ubicaciones.forEach((ubicacion, index) => {
+      // Filter out [0,0] for mapping but keep it in data if needed
+      if (ubicacion.coords[0] === 0 && ubicacion.coords[1] === 0) return;
+      
       coordsArray.push(ubicacion.coords);
 
       const isLastPointOf2026 = year === '2026' && index === ubicaciones.length - 1;
@@ -121,23 +124,27 @@ export function Roadmap() {
       polyline.addTo(layerGroup);
     }
 
-    const bounds = L.latLngBounds(coordsArray);
-    map.flyToBounds(bounds, { padding: [50, 50], duration: 1.5 });
+    if (coordsArray.length > 0) {
+      const bounds = L.latLngBounds(coordsArray);
+      map.flyToBounds(bounds, { padding: [50, 50], duration: 1.5 });
+    }
     
-    // Always call invalidateSize after flying to ensure it's still correct
-    setTimeout(() => map.invalidateSize(), 1500);
+    // Always call invalidateSize to ensure it's still correct after flying
+    setTimeout(() => {
+      if (mapRef.current) mapRef.current.invalidateSize();
+    }, 1500);
   };
 
   useEffect(() => {
     if (!mapContainerRef.current) return;
 
+    // Use a unique ID or the ref directly
     const map = L.map(mapContainerRef.current, {
       zoomControl: false
     }).setView([40.4168, -3.7038], 5);
     
     L.control.zoom({ position: 'bottomright' }).addTo(map);
     
-    // Using a light themed map for the new aesthetic
     L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
       subdomains: 'abcd',
@@ -147,15 +154,19 @@ export function Roadmap() {
     layerGroupRef.current = L.layerGroup().addTo(map);
     mapRef.current = map;
 
-    // Critical: ensure map fills container after layout/animation
+    // Small delay to ensure container is fully dimensioned
     setTimeout(() => {
-      map.invalidateSize();
-      cargarYear(activeYear);
-    }, 50);
+      if (mapRef.current) {
+        mapRef.current.invalidateSize();
+        cargarYear(activeYear);
+      }
+    }, 100);
 
     return () => {
-      map.remove();
-      mapRef.current = null;
+      if (mapRef.current) {
+        mapRef.current.remove();
+        mapRef.current = null;
+      }
     };
   }, []);
 
@@ -218,7 +229,6 @@ export function Roadmap() {
         <h2 className="text-5xl font-script text-center text-[#D1495B] mb-12 drop-shadow-sm">Mapa de Viajes</h2>
         
         <div className="flex flex-col lg:flex-row gap-8 bg-white shadow-xl shadow-pink-100/50 p-6 rounded-[2.5rem] border border-pink-50">
-          {/* Selectores de año */}
           <div className="w-full lg:w-48 flex flex-row lg:flex-col gap-3 overflow-x-auto pb-4 lg:pb-0 scrollbar-hide">
             {Object.keys(routesByYear).map(year => (
               <button
@@ -236,13 +246,11 @@ export function Roadmap() {
             ))}
           </div>
 
-          {/* Mapa */}
           <div className="flex-1 h-[350px] md:h-[500px] rounded-[1.5rem] md:rounded-[2rem] overflow-hidden border border-pink-100 relative shadow-inner bg-pink-50/20">
-            <div ref={mapContainerRef} className="absolute inset-0 w-full h-full"></div>
+            <div ref={mapContainerRef} className="absolute inset-0 w-full h-full z-0"></div>
           </div>
         </div>
       </section>
     </motion.div>
   );
 }
-

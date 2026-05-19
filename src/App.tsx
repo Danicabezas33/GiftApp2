@@ -1,8 +1,3 @@
-/**
- * @license
- * SPDX-License-Identifier: Apache-2.0
- */
-
 import { useState, useEffect, useCallback } from 'react';
 import { AnimatePresence } from 'motion/react';
 import { Navbar } from './components/Navbar';
@@ -34,10 +29,9 @@ export default function App() {
     const scannerUnlock = params.get('scanner_unlock');
     if (scannerUnlock) {
       setScannerId(parseInt(scannerUnlock, 10));
-      return; // Skip normal app loading for mobile
+      return; 
     }
 
-    // Check reset flag
     if (params.has('reset')) {
       localStorage.removeItem('unlocked_levels_v4');
       localStorage.removeItem('web_unlocked_v4');
@@ -55,7 +49,6 @@ export default function App() {
       return;
     }
 
-    // Check if web is generally unlocked (from localstorage)
     const storedWebUnlocked = localStorage.getItem('web_unlocked_v4') === 'true';
     if (storedWebUnlocked) {
       setUnlockedWeb(true);
@@ -66,7 +59,6 @@ export default function App() {
       setCurrentSection('games');
     }
 
-    // Sync unlocked levels to firebase on mount just in case
     const storedLevels = localStorage.getItem('unlocked_levels_v4');
     if (storedLevels) {
       import('./firebaseHelper').then(({ syncGlobalUnlockedLevels }) => {
@@ -88,7 +80,6 @@ export default function App() {
       {unlockedWeb && <Navbar currentSection={currentSection} setCurrentSection={setCurrentSection} />}
       
       <main className={`pb-24 ${unlockedWeb ? 'pt-16' : 'pt-4 md:pt-8'} flex min-h-screen flex-col items-center justify-center relative overflow-hidden`}>
-        {/* Global background glow clouds */}
         <div className="absolute top-0 left-0 w-full h-full pointer-events-none overflow-hidden">
           <div className="absolute top-[-10%] right-[-10%] w-[50%] h-[50%] bg-pink-100/60 blur-[120px] rounded-full" />
           <div className="absolute bottom-[-10%] left-[-10%] w-[50%] h-[50%] bg-yellow-100/50 blur-[120px] rounded-full" />
