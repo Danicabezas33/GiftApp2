@@ -137,8 +137,10 @@ export function Roadmap() {
 
   useEffect(() => {
     if (!mapContainerRef.current) return;
+    
+    // Ensure we don't double init
+    if (mapRef.current) return;
 
-    // Use a unique ID or the ref directly
     const map = L.map(mapContainerRef.current, {
       zoomControl: false
     }).setView([40.4168, -3.7038], 5);
@@ -160,7 +162,7 @@ export function Roadmap() {
         mapRef.current.invalidateSize();
         cargarYear(activeYear);
       }
-    }, 100);
+    }, 200);
 
     return () => {
       if (mapRef.current) {
@@ -254,3 +256,5 @@ export function Roadmap() {
     </motion.div>
   );
 }
+
+export default Roadmap;

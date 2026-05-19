@@ -242,3 +242,5 @@ export function Memories() {
     </motion.div>
   );
 }
+
+export default Memories;

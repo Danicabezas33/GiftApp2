@@ -118,3 +118,5 @@ export function MobileScanner({ id }: { id: number }) {
     </div>
   );
 }
+
+export default MobileScanner;

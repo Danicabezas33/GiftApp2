@@ -212,3 +212,5 @@ export function Gallery() {
     </motion.div>
   );
 }
+
+export default Gallery;

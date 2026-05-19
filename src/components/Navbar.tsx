@@ -74,4 +74,6 @@ export function Navbar({ currentSection, setCurrentSection }: NavbarProps) {
     </nav>
   );
 }
+
+export default Navbar;
  

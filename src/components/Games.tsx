@@ -397,4 +397,6 @@ export function Games({ onUnlockWeb, onNavigateHome }: GamesProps) {
     </motion.section>
   );
 }
+
+export default Games;
  

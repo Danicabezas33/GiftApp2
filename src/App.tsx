@@ -1,13 +1,13 @@
 import { useState, useEffect, useCallback } from 'react';
 import { AnimatePresence } from 'motion/react';
-import { Navbar } from './components/Navbar';
-import { Home } from './components/Home';
-import { Roadmap } from './components/Roadmap';
-import { Memories } from './components/Memories';
-import { Gallery } from './components/Gallery';
-import { Games } from './components/Games';
-import { MusicPlayer } from './components/MusicPlayer';
-import { MobileScanner } from './components/MobileScanner';
+import Navbar from './components/Navbar';
+import Home from './components/Home';
+import Roadmap from './components/Roadmap';
+import Memories from './components/Memories';
+import Gallery from './components/Gallery';
+import Games from './components/Games';
+import MusicPlayer from './components/MusicPlayer';
+import MobileScanner from './components/MobileScanner';
 
 export default function App() {
   const [currentSection, setCurrentSection] = useState('games');
