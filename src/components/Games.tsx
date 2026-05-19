@@ -286,7 +286,7 @@ export function Games({ onUnlockWeb, onNavigateHome }: GamesProps) {
         {revealedGift && activeGift && modalPhase === 'scratch' && (
           <ScratchCard
             tipoRegalo={activeGift.title}
-            imagenRegalo={`/photos/nfc-${activeGift.id === 5 ? 'final' : activeGift.id + 1}.jpg`} 
+            imagenRegalo={`https://raw.githubusercontent.com/Danicabezas33/GiftApp2/main/public/photos/nfc-${activeGift.id === 5 ? 'final' : activeGift.id + 1}.jpg`} 
             onClose={() => {
               setRevealedGift(null);
               setModalPhase('none');

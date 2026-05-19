@@ -52,7 +52,7 @@ export function Home() {
         className="relative z-10 w-56 h-56 md:w-72 md:h-72 rounded-full overflow-hidden mb-10 ring-8 ring-white/60 shadow-2xl"
       >
         <img 
-          src="/photos/home.jpg" 
+          src="https://raw.githubusercontent.com/Danicabezas33/GiftApp2/main/public/photos/home.jpg" 
           onError={(e) => {
             (e.target as HTMLImageElement).src = "https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=800&q=80"
           }}

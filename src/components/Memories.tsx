@@ -45,10 +45,12 @@ export function Memories() {
     loadMemories();
   }, []);
 
+  const GITHUB_BASE = 'https://raw.githubusercontent.com/Danicabezas33/GiftApp2/main/public';
+
   function buildImagePaths(year: string, id: string, count: number) {
     const paths = [];
     for (let i = 1; i <= count; i++) {
-      paths.push(`/photos/year${year}/${id}-${i}.jpg`);
+      paths.push(`${GITHUB_BASE}/photos/year${year}/${id}-${i}.jpg`);
     }
     return paths;
   }

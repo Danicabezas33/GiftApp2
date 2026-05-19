@@ -187,7 +187,7 @@ export function Roadmap() {
                 </div>
                 <div className="md:w-[220px] lg:w-[280px] min-h-[220px] shrink-0 relative bg-rose-50/50 overflow-hidden rounded-2xl flex items-center justify-center border border-rose-100/50">
                   <video
-                    src={`/videos/year${i + 1}.mp4`}
+                    src={`https://raw.githubusercontent.com/Danicabezas33/GiftApp2/main/public/videos/year${i + 1}.mp4`}
                     autoPlay loop muted playsInline
                     className="absolute inset-0 w-full h-full object-cover z-10"
                     onError={(e) => {
