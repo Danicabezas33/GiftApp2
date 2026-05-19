@@ -11,15 +11,31 @@ export function MusicPlayer() {
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
-    // Fetch playlist
-    fetch('/api/music')
+    // Fetch playlist from github as fallback because Vercel doesn't run the backend
+    fetch('https://api.github.com/repos/Danicabezas33/GiftApp2/contents/public/music')
       .then(res => res.json())
       .then(data => {
         if (Array.isArray(data) && data.length > 0) {
-          setPlaylist(data);
+          const musicFiles = data
+            .filter((f: any) => f.type === 'file' && f.name.endsWith('.mp3'))
+            .map((f: any) => f.name); // only keep filenames
+          if (musicFiles.length > 0) {
+            setPlaylist(musicFiles);
+          }
         }
       })
-      .catch(err => console.error("Error fetching music:", err));
+      .catch(err => {
+         console.error("Error fetching music from Github:", err);
+         // Fallback to try local API just in case (for local dev)
+         fetch('/api/music')
+            .then(res => res.json())
+            .then(apiData => {
+               if (Array.isArray(apiData) && apiData.length > 0) {
+                  setPlaylist(apiData);
+               }
+            })
+            .catch(e => console.error("Error fetching music from API too:", e));
+      });
   }, []);
 
   useEffect(() => {
