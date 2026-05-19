@@ -1,98 +1,215 @@
-import { motion } from 'motion/react';
-import { Heart } from 'lucide-react';
+import { useState, useRef, useEffect } from 'react';
+import { Play, Pause, Volume2, VolumeX, Volume1, SkipBack, SkipForward, Music } from 'lucide-react';
+import { motion, AnimatePresence } from 'motion/react';
 
-export function Home() {
-  // Background floating hearts
-  const hearts = Array.from({ length: 15 }).map((_, i) => ({
-    id: i,
-    x: Math.random() * 100,
-    y: Math.random() * 100,
-    scale: 0.5 + Math.random() * 1,
-    duration: 10 + Math.random() * 20,
-    delay: Math.random() * 5
-  }));
+export function MusicPlayer() {
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [volume, setVolume] = useState(0.5);
+  const [showVolume, setShowVolume] = useState(false);
+  const [playlist, setPlaylist] = useState<string[]>([]);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+
+  useEffect(() => {
+    // Fetch playlist from github as fallback because Vercel doesn't run the backend
+    fetch('https://api.github.com/repos/Danicabezas33/GiftApp2/contents/public/music')
+      .then(res => {
+        if (!res.ok) throw new Error("GitHub API error");
+        return res.json();
+      })
+      .then(data => {
+        if (Array.isArray(data) && data.length > 0) {
+          const musicFiles = data
+            .filter((f: any) => f.type === 'file' && f.name.endsWith('.mp3'))
+            .map((f: any) => f.name); // only keep filenames
+          if (musicFiles.length > 0) {
+            setPlaylist(musicFiles);
+          }
+        }
+      })
+      .catch(err => {
+         console.error("Error fetching music from Github:", err);
+         // Fallback to try local API just in case (for local dev)
+         fetch('/api/music')
+            .then(res => {
+               if (!res.ok) throw new Error("Fallback API error");
+               return res.json();
+            })
+            .then(apiData => {
+               if (Array.isArray(apiData) && apiData.length > 0) {
+                  setPlaylist(apiData);
+               } else {
+                  throw new Error("Empty API output");
+               }
+            })
+            .catch(e => {
+                console.error("Error fetching music from API too:", e);
+                // Final fallback using hardcoded files from your screenshot
+                setPlaylist([
+                    "Alejo - TÍRAME.mp3",
+                    "Alejo - WIKIWIKI.mp3",
+                    "Alvaro Díaz - EN PR NO HACE FRÍO.mp3",
+                    "Alvaro Díaz - QUIZÁS SI QUIZÁS NO.mp3",
+                    "track.mp3"
+                ]);
+            });
+      });
+  }, []);
+
+  useEffect(() => {
+    if (playlist.length > 0 && audioRef.current) {
+      const audio = audioRef.current;
+      const wasPlaying = isPlaying;
+      
+      // We don't change the src if it's already the same song
+      const newSrc = `https://raw.githubusercontent.com/Danicabezas33/GiftApp2/main/public/music/${encodeURIComponent(playlist[currentIndex])}`;
+      if (audio.src.includes(encodeURIComponent(playlist[currentIndex]))) return;
+
+      audio.src = newSrc;
+      audio.load();
+      
+      if (wasPlaying) {
+        audio.play().catch(e => {
+          console.log("Auto-play failed:", e);
+          setIsPlaying(false);
+        });
+      }
+    }
+  }, [currentIndex, playlist]);
+
+  const handleNext = () => {
+    if (playlist.length > 0) {
+      setCurrentIndex((prev) => (prev + 1) % playlist.length);
+    }
+  };
+
+  const handlePrev = () => {
+    if (playlist.length > 0) {
+      setCurrentIndex((prev) => (prev - 1 + playlist.length) % playlist.length);
+    }
+  };
+
+  const togglePlay = () => {
+    if (playlist.length === 0) {
+      alert("Aún no se ha cargado la música. Asegúrate de que las canciones estén en /public/music/.");
+      return;
+    }
+
+    if (!audioRef.current) return;
+
+    if (isPlaying) {
+      audioRef.current.pause();
+      setIsPlaying(false);
+    } else {
+      audioRef.current.play()
+        .then(() => setIsPlaying(true))
+        .catch(e => {
+          console.log("Audio play failed:", e);
+        });
+    }
+  };
+
+  const cleanupTrackName = (name: string) => {
+    return name.replace(/\.[^/.]+$/, "").replace(/_/g, " ");
+  };
+
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.volume = volume;
+    }
+  }, [volume]);
+
+  const VolumeIcon = volume === 0 ? VolumeX : volume < 0.5 ? Volume1 : Volume2;
 
   return (
-    <motion.div 
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      className="relative min-h-[80vh] flex flex-col items-center justify-center py-12 px-4 overflow-hidden mt-8"
+    <div 
+      className="fixed bottom-4 right-4 md:bottom-8 md:right-8 flex flex-col items-end gap-3 z-[100]"
+      onMouseEnter={() => setShowVolume(true)}
+      onMouseLeave={() => setShowVolume(false)}
     >
-      {/* Background decorations */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        {hearts.map(heart => (
+      <audio 
+        ref={audioRef}
+        onEnded={handleNext}
+        onVolumeChange={(e) => setVolume((e.target as HTMLAudioElement).volume)}
+        preload="auto"
+      />
+      <AnimatePresence>
+        {(showVolume || isPlaying) && playlist.length > 0 && (
           <motion.div
-            key={heart.id}
-            className="absolute text-petal-pink/10"
-            style={{ left: `${heart.x}%`, top: `${heart.y}%` }}
-            animate={{ 
-              y: [0, -150, 0],
-              opacity: [0.05, 0.2, 0.05],
-              rotate: [0, 45, -45, 0]
-            }}
-            transition={{ 
-              duration: heart.duration,
-              repeat: Infinity,
-              ease: "linear",
-              delay: heart.delay
-            }}
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 10 }}
+            className="bg-white/90 backdrop-blur-md px-4 py-2 rounded-2xl shadow-lg border border-pink-50 mb-1 max-w-[180px] md:max-w-[220px] overflow-hidden"
           >
-            <Heart size={24 * heart.scale} fill="currentColor" />
+            <div className="flex items-center gap-3 overflow-hidden whitespace-nowrap">
+              <Music className="w-4 h-4 text-[#FF8BA7] shrink-0 animate-pulse" />
+              <div className="overflow-hidden flex-1 relative flex">
+                <p className="text-[10px] md:text-xs font-medium text-[#5F4B66]/80 animate-marquee pr-4 tracking-wider uppercase">
+                  {cleanupTrackName(playlist[currentIndex])}
+                </p>
+              </div>
+            </div>
           </motion.div>
-        ))}
-        <div className="absolute top-1/4 -left-32 w-96 h-96 bg-petal-pink/5 rounded-full blur-[100px] mix-blend-screen"></div>
-        <div className="absolute bottom-1/4 -right-32 w-96 h-96 bg-zen-lavender/5 rounded-full blur-[100px] mix-blend-screen"></div>
-      </div>
+        )}
+      </AnimatePresence>
 
-      <motion.div 
-        initial={{ scale: 0.8, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        transition={{ duration: 1.5, type: "spring" }}
-        className="relative z-10 w-64 h-64 md:w-80 md:h-80 rounded-full overflow-hidden mb-12 ring-[12px] ring-white/5 shadow-[0_0_80px_rgba(255,139,167,0.15)] group"
-      >
-        <img 
-          src="https://raw.githubusercontent.com/Danicabezas33/GiftApp2/main/public/photos/home.jpg" 
-          onError={(e) => {
-            (e.target as HTMLImageElement).src = "https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=800&q=80"
-          }}
-          alt="Nosotros" 
-          className="w-full h-full object-cover transform hover:scale-105 transition-transform duration-[2000ms]"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-zen-bg/40 to-transparent group-hover:opacity-0 transition-opacity duration-1000" />
-      </motion.div>
-      
-      <motion.h1 
-        initial={{ y: 20, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ delay: 0.3 }}
-        className="text-5xl md:text-8xl font-script text-white mb-8 z-10 text-center drop-shadow-[0_0_15px_rgba(255,139,167,0.3)] font-medium"
-      >
-        Felices 5 años, mi niña preciosa
-      </motion.h1>
-      
-      <motion.div 
-        initial={{ y: 30, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ delay: 0.6 }}
-        className="relative z-10 max-w-2xl glass p-8 md:p-16 rounded-[2.5rem] shadow-2xl text-center"
-      >
-        <div className="absolute -top-10 -left-6 text-5xl opacity-30 select-none">✨</div>
-        <div className="absolute -bottom-10 -right-6 text-5xl opacity-30 select-none">❤️</div>
-        
-        <p className="text-pink-100/90 text-lg md:text-2xl leading-relaxed mb-8 font-serif italic border-l-2 border-petal-pink/30 pl-6 md:pl-8 text-left">
-          "Parece que fue ayer cuando empezamos esta hermosa aventura, pero ya han pasado 5 increíbles años.
-          Cada día a tu lado ha sido un regalo, lleno de risas, aprendizajes y un amor que no deja de crecer."
-        </p>
-        <p className="text-white/70 text-base md:text-xl leading-relaxed mb-10 text-left pl-6 md:pl-8 border-l-2 border-white/5">
-          No me imagino mi vida sin ti, eres mi compañera, mi mejor amiga y el gran amor de mi vida.
-          He creado esta pequeña página para recordar algunos de nuestros mejores momentos y celebrar todo lo 
-          que hemos construido juntos. ¡Y lo que nos falta!
-        </p>
-        <p className="font-script text-5xl text-petal-pink mt-10 mb-2 drop-shadow-sm">
-          Te amo con todo mi corazón.
-        </p>
-      </motion.div>
-    </motion.div>
+      <div className="flex items-center gap-2">
+        <AnimatePresence>
+          {showVolume && (
+            <motion.div 
+              initial={{ opacity: 0, x: 20, scale: 0.9 }}
+              animate={{ opacity: 1, x: 0, scale: 1 }}
+              exit={{ opacity: 0, x: 10, scale: 0.9 }}
+              className="bg-white/90 backdrop-blur-md rounded-full shadow-lg p-3 px-5 flex items-center gap-3 border border-pink-50"
+            >
+              <input 
+                type="range" 
+                min="0" max="1" step="0.01" 
+                value={volume}
+                onChange={(e) => setVolume(parseFloat(e.target.value))}
+                className="w-20 md:w-28 accent-[#FF8BA7] cursor-pointer opacity-80"
+              />
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        <div className="bg-white/95 backdrop-blur-md rounded-full shadow-[0_4px_15px_rgba(255,139,167,0.15)] p-2 md:p-2.5 flex items-center gap-1 border border-pink-50 transition-all duration-500 hover:border-pink-200">
+          <button 
+            onClick={() => {
+              if(volume > 0) setVolume(0);
+              else setVolume(0.5);
+            }}
+            className="w-8 h-8 md:w-9 md:h-9 rounded-full flex items-center justify-center text-[#9D84A3] hover:text-[#FF8BA7] hover:bg-pink-50 transition-all"
+          >
+            <VolumeIcon className="w-4 h-4 md:w-5 md:h-5" />
+          </button>
+          
+          <div className="w-px h-5 md:h-6 bg-pink-100 mx-1"></div>
+
+          <div className="flex items-center gap-1 px-1">
+            <button 
+              onClick={handlePrev}
+              className="w-8 h-8 md:w-9 md:h-9 rounded-full flex items-center justify-center text-[#9D84A3] hover:text-[#5F4B66] hover:bg-pink-50 transition-all"
+            >
+              <SkipBack className="w-4 h-4 md:w-5 md:h-5" />
+            </button>
+ 
+            <button 
+              onClick={togglePlay}
+              className="bg-[#FF8BA7] text-white w-10 h-10 md:w-12 md:h-12 rounded-full flex items-center justify-center transition-all duration-500 shadow-[0_4px_15px_rgba(255,139,167,0.4)] hover:scale-105 active:scale-95 hover:bg-[#ff99b3]"
+            >
+              {isPlaying ? <Pause className="w-5 h-5 md:w-6 md:h-6" fill="currentColor" /> : <Play className="w-5 h-5 md:w-6 md:h-6 ml-1" fill="currentColor" />}
+            </button>
+ 
+            <button 
+              onClick={handleNext}
+              className="w-8 h-8 md:w-9 md:h-9 rounded-full flex items-center justify-center text-[#9D84A3] hover:text-[#5F4B66] hover:bg-pink-50 transition-all"
+            >
+              <SkipForward className="w-4 h-4 md:w-5 md:h-5" />
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }

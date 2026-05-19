@@ -6,11 +6,12 @@
   --font-serif: "Playfair Display", ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
   --font-script: "Great Vibes", cursive;
   
-  --color-zen-bg: #130f1d;
-  --color-zen-card: rgba(30, 25, 41, 0.6);
-  --color-petal-pink: #ff8ba7;
-  --color-plum-pink: #f43f5e;
-  --color-zen-lavender: #a7a1ff;
+  --color-spring-bg: #FFF5F7;
+  --color-spring-card: #FFFFFF;
+  --color-spring-primary: #FF8BA7;
+  --color-spring-secondary: #D1495B;
+  --color-spring-text: #5F4B66;
+  --color-spring-text-muted: #9D84A3;
 }
 
 @keyframes marquee {
@@ -34,10 +35,10 @@
 }
 
 .glass {
-  background: var(--color-zen-card);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: var(--color-spring-card);
+  border-radius: 1.5rem;
+  box-shadow: 0 10px 25px -5px rgba(255, 139, 167, 0.2), 0 8px 10px -6px rgba(255, 139, 167, 0.1);
+  border: 1px solid rgba(255, 139, 167, 0.1);
 }
 
 .glow-pink {

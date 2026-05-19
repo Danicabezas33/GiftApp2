@@ -162,9 +162,9 @@ export function Roadmap() {
       className="max-w-4xl mx-auto py-20 px-4 mt-8 flex flex-col gap-24 font-serif"
     >
       <section>
-        <h2 className="text-5xl md:text-7xl font-script text-center text-white mb-20 drop-shadow-[0_0_15px_rgba(255,139,167,0.3)]">Nuestra Historia</h2>
+        <h2 className="text-5xl md:text-7xl font-script text-center text-[#D1495B] mb-20 drop-shadow-sm">Nuestra Historia</h2>
         
-        <div className="relative border-l border-white/10 ml-2 md:ml-12 space-y-12 md:space-y-16">
+        <div className="relative border-l border-pink-100 ml-2 md:ml-12 space-y-12 md:space-y-16">
           {milestones.map((m, i) => (
             <motion.div 
               initial={{ opacity: 0, x: -20 }}
@@ -174,17 +174,17 @@ export function Roadmap() {
               key={i} 
               className="mb-10 ml-6 md:ml-16 relative"
             >
-              <div className="absolute w-3 h-3 md:w-4 md:h-4 bg-petal-pink rounded-full -left-[30px] md:-left-[73px] top-2 shadow-[0_0_10px_rgba(255,139,167,0.8)]"></div>
+              <div className="absolute w-3 h-3 md:w-4 md:h-4 bg-[#FF8BA7] rounded-full -left-[30px] md:-left-[73px] top-6 shadow-[0_4px_10px_rgba(255,139,167,0.4)]"></div>
               
-              <div className="glass p-1 rounded-[1.5rem] md:rounded-[2rem] overflow-hidden flex flex-col md:flex-row gap-4 items-stretch group hover:border-white/20 transition-all duration-500">
+              <div className="bg-white p-1 rounded-[1.5rem] md:rounded-[2rem] shadow-xl shadow-pink-100/50 overflow-hidden flex flex-col md:flex-row gap-4 items-stretch group border border-pink-50 hover:border-pink-200 transition-all duration-500">
                 <div className="p-6 md:p-10 flex-1 flex flex-col justify-center">
-                  <span className="inline-block px-3 py-0.5 md:px-4 md:py-1 bg-petal-pink/10 text-petal-pink text-[10px] md:text-xs font-bold tracking-[0.2em] uppercase rounded-full mb-4 md:mb-6 w-max border border-petal-pink/20">
+                  <span className="inline-block px-3 py-0.5 md:px-4 md:py-1 bg-[#FF8BA7]/10 text-[#FF8BA7] text-[10px] md:text-xs font-bold tracking-[0.2em] uppercase rounded-full mb-4 md:mb-6 w-max border border-[#FF8BA7]/20">
                     {m.year}
                   </span>
-                  <h3 className="text-2xl md:text-3xl font-bold text-white mt-1 mb-3 md:mb-4 group-hover:text-petal-pink transition-colors duration-500">{m.title}</h3>
-                  <p className="text-white/60 text-base md:text-lg leading-relaxed">{m.desc}</p>
+                  <h3 className="text-2xl md:text-3xl font-bold text-[#5F4B66] mt-1 mb-3 md:mb-4 group-hover:text-[#FF8BA7] transition-colors duration-500">{m.title}</h3>
+                  <p className="text-pink-900/70 text-base md:text-lg leading-relaxed">{m.desc}</p>
                 </div>
-                <div className="w-full md:w-[220px] lg:w-[320px] h-48 md:h-auto shrink-0 relative bg-white/5 overflow-hidden rounded-xl md:rounded-2xl flex items-center justify-center border border-white/5">
+                <div className="w-full md:w-[220px] lg:w-[320px] h-48 md:h-auto shrink-0 relative bg-pink-50/50 overflow-hidden rounded-xl md:rounded-2xl flex items-center justify-center border border-pink-100/50">
                   <video
                     src={`https://raw.githubusercontent.com/Danicabezas33/GiftApp2/main/public/videos/year${i + 1}.mp4`}
                     autoPlay loop muted playsInline
@@ -193,7 +193,7 @@ export function Roadmap() {
                       (e.target as HTMLVideoElement).style.opacity = '0';
                     }}
                   />
-                  <div className="absolute inset-0 flex flex-col items-center justify-center p-4 text-center text-white/20 z-0 text-sm font-medium">
+                  <div className="absolute inset-0 flex flex-col items-center justify-center p-4 text-center text-[#9D84A3]/50 z-0 text-sm font-medium">
                     <span>Recuerdo en video</span>
                   </div>
                 </div>
@@ -204,9 +204,9 @@ export function Roadmap() {
       </section>
 
       <section>
-        <h2 className="text-5xl font-script text-center text-white mb-12 drop-shadow-sm">Mapa de Viajes</h2>
+        <h2 className="text-5xl font-script text-center text-[#D1495B] mb-12 drop-shadow-sm">Mapa de Viajes</h2>
         
-        <div className="flex flex-col lg:flex-row gap-8 glass p-6 rounded-[2.5rem]">
+        <div className="flex flex-col lg:flex-row gap-8 bg-white shadow-xl shadow-pink-100/50 p-6 rounded-[2.5rem] border border-pink-50">
           {/* Selectores de año */}
           <div className="w-full lg:w-48 flex flex-row lg:flex-col gap-3 overflow-x-auto pb-4 lg:pb-0 scrollbar-hide">
             {Object.keys(routesByYear).map(year => (
@@ -216,8 +216,8 @@ export function Roadmap() {
                 className={`
                   px-8 py-4 rounded-2xl font-bold text-lg transition-all duration-500 flex-1 lg:flex-none whitespace-nowrap border
                   ${activeYear === year 
-                    ? 'bg-petal-pink text-zen-bg border-petal-pink shadow-[0_0_20px_rgba(255,139,167,0.3)]' 
-                    : 'bg-white/5 text-white/40 hover:text-white/80 border-white/5 hover:border-white/10'}
+                    ? 'bg-[#FF8BA7] text-white border-[#FF8BA7] shadow-[0_4px_15px_rgba(255,139,167,0.4)]' 
+                    : 'bg-pink-50/50 text-[#9D84A3] hover:text-[#5F4B66] hover:bg-pink-50 border-pink-50'}
                 `}
               >
                 {year}
@@ -226,7 +226,7 @@ export function Roadmap() {
           </div>
 
           {/* Mapa */}
-          <div className="flex-1 h-[350px] md:h-[500px] rounded-[1.5rem] md:rounded-[2rem] overflow-hidden border border-white/10 relative z-0">
+          <div className="flex-1 h-[350px] md:h-[500px] rounded-[1.5rem] md:rounded-[2rem] overflow-hidden border border-pink-100 relative z-0">
             <div ref={mapContainerRef} className="w-full h-full absolute inset-0 z-0"></div>
           </div>
         </div>

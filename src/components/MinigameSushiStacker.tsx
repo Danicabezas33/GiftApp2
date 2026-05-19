@@ -477,7 +477,7 @@ export function MinigameSushiStacker({ onWin }: MinigameSushiStackerProps) {
 
   return (
     <div className="w-full flex flex-col items-center">
-      <div className="w-full relative bg-rose-50/50 rounded-2xl overflow-hidden border border-rose-100 shadow-inner min-h-[350px] flex items-center justify-center cursor-pointer">
+      <div className="w-full relative bg-pink-50/50 rounded-2xl overflow-hidden border border-pink-100 shadow-inner min-h-[350px] flex items-center justify-center cursor-pointer">
         <canvas 
           ref={canvasRef} 
           className="w-full h-[350px] block touch-none" 
@@ -485,13 +485,13 @@ export function MinigameSushiStacker({ onWin }: MinigameSushiStackerProps) {
         
         {!isPlaying && score === 0 && !isGameOver && !isWon && (
           <div className="absolute inset-0 flex flex-col items-center justify-center bg-white/80 backdrop-blur-sm z-10 pointer-events-none">
-            <h3 className="font-serif text-2xl text-rose-800 mb-2 font-bold">Sushi Tower</h3>
-            <p className="font-sans text-sm text-gray-700 mb-6 px-6 text-center max-w-sm">
+            <h3 className="font-serif text-2xl text-[#D1495B] mb-2 font-bold drop-shadow-sm">Sushi Tower</h3>
+            <p className="font-sans text-[#9D84A3] mb-6 px-6 text-center max-w-sm text-sm">
               Toca la pantalla para apilar. Si no centras bien las piezas, la torre podría desestabilizarse. Construye 12 pisos perfectos.
             </p>
             <button 
               onClick={(e) => { e.stopPropagation(); startGame(); }}
-              className="px-8 py-3 bg-rose-500 text-white font-bold rounded-full hover:bg-rose-600 transition-colors shadow-md pointer-events-auto transform hover:scale-105"
+              className="px-8 py-3 bg-[#FF8BA7] text-white font-bold rounded-full hover:bg-pink-400 transition-colors shadow-md pointer-events-auto transform hover:scale-105"
             >
               ¡A Cocinar!
             </button>
@@ -501,11 +501,11 @@ export function MinigameSushiStacker({ onWin }: MinigameSushiStackerProps) {
         {isGameOver && (
           <div className="absolute inset-0 flex flex-col items-center justify-center bg-white/90 backdrop-blur-sm z-10 pointer-events-none">
              <div className="text-4xl mb-3 animate-bounce">🍣💥</div>
-             <p className="font-serif text-2xl text-rose-600 font-bold mb-2">¡Desastre en la cocina!</p>
-             <p className="text-gray-600 mb-6 font-medium">Lograste {score} pisos de sabor.</p>
+             <p className="font-serif text-2xl text-[#D1495B] font-bold mb-2">¡Desastre en la cocina!</p>
+             <p className="text-[#9D84A3] mb-6 font-medium text-sm">Lograste {score} pisos de sabor.</p>
              <button 
               onClick={(e) => { e.stopPropagation(); startGame(); }}
-              className="px-8 py-3 bg-rose-500 text-white font-bold rounded-full hover:bg-rose-600 transition-colors shadow-md pointer-events-auto transform hover:scale-105"
+              className="px-8 py-3 bg-[#FF8BA7] text-white font-bold rounded-full hover:bg-pink-400 transition-colors shadow-md pointer-events-auto transform hover:scale-105"
             >
               Intentar de nuevo
             </button>
@@ -514,15 +514,15 @@ export function MinigameSushiStacker({ onWin }: MinigameSushiStackerProps) {
 
         {isWon && (
           <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none z-20">
-             <div className="bg-white/90 backdrop-blur-md px-8 py-6 rounded-2xl shadow-xl border-2 border-rose-200 text-center animate-bounce mt-32">
-                <p className="font-serif text-3xl text-rose-600 font-bold mb-2">¡Torre Perfecta!</p>
-                <p className="text-rose-800 font-medium">Cena Sushi superada 🎉</p>
+             <div className="bg-white/90 backdrop-blur-md px-8 py-6 rounded-2xl shadow-xl shadow-pink-200/50 border border-pink-100 text-center animate-bounce mt-32">
+                <p className="font-serif text-3xl text-[#D1495B] font-bold mb-2">¡Torre Perfecta!</p>
+                <p className="text-[#FF8BA7] font-medium">Cena Sushi superada 🎉</p>
              </div>
           </div>
         )}
 
         {isPlaying && !isWon && (
-          <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-md px-4 py-2 rounded-full text-rose-700 font-bold text-sm shadow-sm z-10 border border-rose-100 flex items-center gap-2 pointer-events-none">
+          <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-md px-4 py-2 rounded-full text-[#D1495B] font-bold text-sm shadow-sm z-10 border border-pink-50 flex items-center gap-2 pointer-events-none">
             <span className="text-lg">🍣</span> {score} / 12
           </div>
         )}

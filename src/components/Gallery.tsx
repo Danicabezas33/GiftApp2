@@ -76,8 +76,8 @@ export function Gallery() {
       className="w-full max-w-6xl mx-auto py-20 px-4 mt-8"
     >
       <div className="text-center mb-16">
-        <h2 className="text-5xl md:text-7xl font-script text-white mb-6 drop-shadow-[0_0_15px_rgba(255,139,167,0.3)]">Galería de Recuerdos</h2>
-        <p className="text-pink-100/60 font-serif text-lg">Nuestros momentos capturados</p>
+        <h2 className="text-5xl md:text-7xl font-script text-[#D1495B] mb-6 drop-shadow-sm">Galería de Recuerdos</h2>
+        <p className="text-[#9D84A3] font-serif text-lg">Nuestros momentos capturados</p>
       </div>
 
       {/* Selector de Años / Pestañas Minimalista */}
@@ -88,15 +88,15 @@ export function Gallery() {
             onClick={() => setCurrentYear(year)}
             className={`pb-4 px-6 whitespace-nowrap text-lg font-medium transition-all duration-500 relative ${
               currentYear === year 
-                ? 'text-petal-pink' 
-                : 'text-white/30 hover:text-white/60'
+                ? 'text-[#FF8BA7]' 
+                : 'text-[#9D84A3] hover:text-[#5F4B66]'
             }`}
           >
             Año {index + 1}
             {currentYear === year && (
               <motion.div 
                 layoutId="activeTabGallery" 
-                className="absolute bottom-0 left-0 right-0 h-[2px] bg-petal-pink rounded-full shadow-[0_0_8px_rgba(255,139,167,0.8)]" 
+                className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#FF8BA7] rounded-full shadow-[0_0_8px_rgba(255,139,167,0.8)]" 
               />
             )}
           </button>
@@ -106,18 +106,18 @@ export function Gallery() {
       {/* Contenedor de la Galería */}
       <div className="min-h-[400px]">
         {loading ? (
-          <div className="flex flex-col items-center justify-center p-20 text-petal-pink">
+          <div className="flex flex-col items-center justify-center p-20 text-[#FF8BA7]">
              <Loader2 className="w-12 h-12 animate-spin mb-6 opacity-60" />
-             <p className="animate-pulse font-serif tracking-widest text-sm uppercase opacity-40">Buscando memorias...</p>
+             <p className="animate-pulse font-serif tracking-widest text-sm uppercase opacity-60">Buscando memorias...</p>
           </div>
         ) : error ? (
-           <div className="py-12 px-8 text-center glass rounded-[2rem] border-white/5 max-w-xl mx-auto">
-             <p className="font-bold text-white mb-3">Algo salió mal</p>
-             <p className="text-sm text-white/50 leading-relaxed">{error}</p>
+           <div className="py-12 px-8 text-center bg-white shadow-xl shadow-pink-100/50 rounded-[2rem] border border-pink-50 max-w-xl mx-auto">
+             <p className="font-bold text-[#D1495B] mb-3">Algo salió mal</p>
+             <p className="text-sm text-pink-900/60 leading-relaxed">{error}</p>
            </div>
         ) : images.length === 0 ? (
-          <div className="py-20 text-center text-white/20 glass rounded-[2.5rem] border-white/5">
-            <Images className="w-16 h-16 mx-auto mb-6 opacity-10" strokeWidth={1} />
+          <div className="py-20 text-center text-[#9D84A3] bg-white/50 rounded-[2.5rem] border border-pink-50 shadow-sm">
+            <Images className="w-16 h-16 mx-auto mb-6 opacity-30" strokeWidth={1} />
             <p className="font-serif italic text-lg">Aún no hay archivos en esta carpeta...</p>
           </div>
         ) : (
@@ -131,7 +131,7 @@ export function Gallery() {
                   animate={{ opacity: 1, scale: 1 }}
                   key={media.name} 
                   onClick={() => setSelectedMedia(media)}
-                  className="group relative rounded-3xl overflow-hidden shadow-2xl border border-white/5 aspect-[4/3] bg-white/5 cursor-pointer"
+                  className="group relative rounded-3xl overflow-hidden shadow-lg shadow-pink-100/40 border border-pink-50 aspect-[4/3] bg-white cursor-pointer"
                 >
                   {video ? (
                     <>

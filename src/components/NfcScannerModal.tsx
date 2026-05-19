@@ -48,7 +48,7 @@ export function NfcScannerModal({ levelId, onComplete }: { levelId: number, onCo
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="fixed inset-0 z-50 bg-black/90 backdrop-blur-xl flex flex-col items-center justify-center p-6 text-white overflow-hidden"
+      className="fixed inset-0 z-50 bg-white/90 backdrop-blur-xl flex flex-col items-center justify-center p-6 text-[#5F4B66] overflow-hidden"
     >
       <div className="relative w-64 h-64 md:w-80 md:h-80 flex flex-col items-center justify-center mb-10">
         
@@ -60,17 +60,17 @@ export function NfcScannerModal({ levelId, onComplete }: { levelId: number, onCo
               exit={{ opacity: 0, scale: 1.2, filter: 'blur(20px)' }}
               className="absolute inset-0 flex items-center justify-center"
             >
-              <Icon className="w-40 h-40 md:w-48 md:h-48 text-stone-700/80 drop-shadow-2xl" strokeWidth={1} />
+              <Icon className="w-40 h-40 md:w-48 md:h-48 text-[#9D84A3]/50 drop-shadow-xl" strokeWidth={1} />
             </motion.div>
           ) : (
             <motion.div
               key="reveal"
-              initial={{ opacity: 0, scale: 0.5, filter: 'brightness(10)' }}
+              initial={{ opacity: 0, scale: 0.5, filter: 'brightness(2)' }}
               animate={{ opacity: 1, scale: 1, filter: 'brightness(1)' }}
               transition={{ duration: 1, ease: "easeOut" }}
               className="absolute inset-0 flex flex-col items-center justify-center"
             >
-              <div className="bg-gradient-to-br from-rose-400 to-cyan-400 p-8 rounded-full shadow-[0_0_100px_rgba(244,63,94,0.6)]">
+              <div className="bg-gradient-to-br from-[#FF8BA7] to-pink-300 p-8 rounded-full shadow-[0_0_100px_rgba(255,139,167,0.6)]">
                 <Icon className="w-24 h-24 text-white" strokeWidth={2} />
               </div>
             </motion.div>
@@ -84,9 +84,9 @@ export function NfcScannerModal({ levelId, onComplete }: { levelId: number, onCo
               initial={{ top: '0%' }}
               animate={{ top: '100%' }}
               transition={{ repeat: Infinity, repeatType: 'reverse', duration: 1.5, ease: 'linear' }}
-              className="absolute left-[-20%] right-[-20%] h-1 bg-cyan-400 z-10 shadow-[0_0_20px_rgba(34,211,238,1)] overflow-visible"
+              className="absolute left-[-20%] right-[-20%] h-1 bg-[#FF8BA7] z-10 shadow-[0_0_30px_rgba(255,139,167,0.8)] overflow-visible"
             >
-              <div className="absolute inset-0 bg-cyan-400 blur-md h-3 -mt-1" />
+              <div className="absolute inset-0 bg-[#FF8BA7] blur-md h-3 -mt-1 opacity-50" />
             </motion.div>
           )}
         </AnimatePresence>
@@ -98,7 +98,7 @@ export function NfcScannerModal({ levelId, onComplete }: { levelId: number, onCo
           <motion.p 
             animate={{ opacity: [1, 0.5, 1] }} 
             transition={{ repeat: Infinity, duration: 1 }}
-            className="text-cyan-400 text-xl tracking-widest"
+            className="text-[#FF8BA7] text-xl tracking-widest font-bold"
           >
             [ ANALIZANDO FRECUENCIA NFC... ]
           </motion.p>
@@ -107,7 +107,7 @@ export function NfcScannerModal({ levelId, onComplete }: { levelId: number, onCo
           <motion.p 
             initial={{ scale: 0.9, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
-            className="text-emerald-400 text-2xl font-bold tracking-widest drop-shadow-[0_0_10px_rgba(52,211,153,0.8)]"
+            className="text-[#D1495B] text-2xl font-bold tracking-widest drop-shadow-[0_2px_5px_rgba(209,73,91,0.3)]"
           >
             [ ¡VÍNCULO CONFIRMADO! ]
           </motion.p>
@@ -119,12 +119,12 @@ export function NfcScannerModal({ levelId, onComplete }: { levelId: number, onCo
             transition={{ delay: 1 }}
             className="flex flex-col items-center gap-6 z-20 relative"
           >
-            <h2 className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-cyan-300 to-rose-300">
+            <h2 className="text-4xl font-bold text-[#D1495B]">
               ¡Nivel {activeGift.id} Desbloqueado!
             </h2>
             <button
               onClick={handlePlay}
-              className="px-8 py-4 bg-white text-stone-900 rounded-full font-bold text-xl hover:scale-105 active:scale-95 transition-transform shadow-[0_0_30px_rgba(255,255,255,0.4)]"
+              className="px-8 py-4 bg-[#FF8BA7] text-white rounded-full font-bold text-xl hover:scale-105 active:scale-95 transition-transform shadow-[0_4px_15px_rgba(255,139,167,0.5)]"
             >
               Continuar
             </button>
