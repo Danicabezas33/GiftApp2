@@ -75,6 +75,7 @@ export function Roadmap() {
 
   useEffect(() => {
     if (!mapContainerRef.current) return;
+    if (mapRef.current) return;
 
     const map = L.map(mapContainerRef.current, {
       zoomControl: false
@@ -82,8 +83,8 @@ export function Roadmap() {
     
     L.control.zoom({ position: 'bottomright' }).addTo(map);
     
-    // Using a dark themed map for the Zen aesthetic
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+    // Using a light themed map for the Spring aesthetic
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
       subdomains: 'abcd',
       maxZoom: 20
@@ -92,9 +93,19 @@ export function Roadmap() {
     layerGroupRef.current = L.layerGroup().addTo(map);
     mapRef.current = map;
 
+    // Critical: ensure map fills container after layout/animation
+    setTimeout(() => {
+      if (mapRef.current) {
+        mapRef.current.invalidateSize();
+        cargarAño(activeYear);
+      }
+    }, 100);
+
     return () => {
-      map.remove();
-      mapRef.current = null;
+      if (mapRef.current) {
+        mapRef.current.remove();
+        mapRef.current = null;
+      }
     };
   }, []);
 
@@ -162,9 +173,9 @@ export function Roadmap() {
       className="max-w-4xl mx-auto py-20 px-4 mt-8 flex flex-col gap-24 font-serif"
     >
       <section>
-        <h2 className="text-5xl md:text-7xl font-script text-center text-white mb-20 drop-shadow-[0_0_15px_rgba(255,139,167,0.3)]">Nuestra Historia</h2>
+        <h2 className="text-5xl md:text-7xl font-script text-center text-spring-secondary mb-20 drop-shadow-sm">Nuestra Historia</h2>
         
-        <div className="relative border-l border-white/10 ml-2 md:ml-12 space-y-12 md:space-y-16">
+        <div className="relative border-l border-spring-primary/20 ml-2 md:ml-12 space-y-12 md:space-y-16">
           {milestones.map((m, i) => (
             <motion.div 
               initial={{ opacity: 0, x: -20 }}
@@ -174,17 +185,17 @@ export function Roadmap() {
               key={i} 
               className="mb-10 ml-6 md:ml-16 relative"
             >
-              <div className="absolute w-3 h-3 md:w-4 md:h-4 bg-petal-pink rounded-full -left-[30px] md:-left-[73px] top-2 shadow-[0_0_10px_rgba(255,139,167,0.8)]"></div>
+              <div className="absolute w-3 h-3 md:w-4 md:h-4 bg-spring-primary rounded-full -left-[30px] md:-left-[73px] top-2 shadow-[0_4px_10px_rgba(255,139,167,0.4)]"></div>
               
-              <div className="glass p-1 rounded-[1.5rem] md:rounded-[2rem] overflow-hidden flex flex-col md:flex-row gap-4 items-stretch group hover:border-white/20 transition-all duration-500">
+              <div className="glass p-1 rounded-[1.5rem] md:rounded-[2rem] overflow-hidden flex flex-col md:flex-row gap-4 items-stretch group hover:border-spring-primary/20 transition-all duration-500">
                 <div className="p-6 md:p-10 flex-1 flex flex-col justify-center">
-                  <span className="inline-block px-3 py-0.5 md:px-4 md:py-1 bg-petal-pink/10 text-petal-pink text-[10px] md:text-xs font-bold tracking-[0.2em] uppercase rounded-full mb-4 md:mb-6 w-max border border-petal-pink/20">
+                  <span className="inline-block px-3 py-0.5 md:px-4 md:py-1 bg-spring-primary/10 text-spring-primary text-[10px] md:text-xs font-bold tracking-[0.2em] uppercase rounded-full mb-4 md:mb-6 w-max border border-spring-primary/20">
                     {m.year}
                   </span>
-                  <h3 className="text-2xl md:text-3xl font-bold text-white mt-1 mb-3 md:mb-4 group-hover:text-petal-pink transition-colors duration-500">{m.title}</h3>
-                  <p className="text-white/60 text-base md:text-lg leading-relaxed">{m.desc}</p>
+                  <h3 className="text-2xl md:text-3xl font-bold text-spring-text mt-1 mb-3 md:mb-4 group-hover:text-spring-primary transition-colors duration-500">{m.title}</h3>
+                  <p className="text-spring-text-muted text-base md:text-lg leading-relaxed">{m.desc}</p>
                 </div>
-                <div className="w-full md:w-[220px] lg:w-[320px] h-48 md:h-auto shrink-0 relative bg-white/5 overflow-hidden rounded-xl md:rounded-2xl flex items-center justify-center border border-white/5">
+                <div className="w-full md:w-[220px] lg:w-[320px] h-48 md:h-auto shrink-0 relative bg-spring-bg overflow-hidden rounded-xl md:rounded-2xl flex items-center justify-center border border-spring-primary/10">
                   <video
                     src={`https://raw.githubusercontent.com/Danicabezas33/GiftApp2/main/public/videos/year${i + 1}.mp4`}
                     autoPlay loop muted playsInline
@@ -193,7 +204,7 @@ export function Roadmap() {
                       (e.target as HTMLVideoElement).style.opacity = '0';
                     }}
                   />
-                  <div className="absolute inset-0 flex flex-col items-center justify-center p-4 text-center text-white/20 z-0 text-sm font-medium">
+                  <div className="absolute inset-0 flex flex-col items-center justify-center p-4 text-center text-spring-text-muted/30 z-0 text-sm font-medium">
                     <span>Recuerdo en video</span>
                   </div>
                 </div>
@@ -204,7 +215,7 @@ export function Roadmap() {
       </section>
 
       <section>
-        <h2 className="text-5xl font-script text-center text-white mb-12 drop-shadow-sm">Mapa de Viajes</h2>
+        <h2 className="text-5xl font-script text-center text-spring-secondary mb-12 drop-shadow-sm">Mapa de Viajes</h2>
         
         <div className="flex flex-col lg:flex-row gap-8 glass p-6 rounded-[2.5rem]">
           {/* Selectores de año */}
@@ -216,8 +227,8 @@ export function Roadmap() {
                 className={`
                   px-8 py-4 rounded-2xl font-bold text-lg transition-all duration-500 flex-1 lg:flex-none whitespace-nowrap border
                   ${activeYear === year 
-                    ? 'bg-petal-pink text-zen-bg border-petal-pink shadow-[0_0_20px_rgba(255,139,167,0.3)]' 
-                    : 'bg-white/5 text-white/40 hover:text-white/80 border-white/5 hover:border-white/10'}
+                    ? 'bg-spring-primary text-white border-spring-primary shadow-[0_4px_15px_rgba(255,139,167,0.4)]' 
+                    : 'bg-spring-bg text-spring-text-muted hover:text-spring-text hover:bg-white border-spring-primary/10'}
                 `}
               >
                 {year}
@@ -226,12 +237,14 @@ export function Roadmap() {
           </div>
 
           {/* Mapa */}
-          <div className="flex-1 h-[350px] md:h-[500px] rounded-[1.5rem] md:rounded-[2rem] overflow-hidden border border-white/10 relative z-0">
-            <div ref={mapContainerRef} className="w-full h-full absolute inset-0 z-0"></div>
+          <div className="flex-1 h-[350px] md:h-[500px] rounded-[1.5rem] md:rounded-[2rem] overflow-hidden border border-spring-primary/20 relative z-0">
+            <div ref={mapContainerRef} className="w-full h-full absolute inset-0 z-0 text-spring-text"></div>
           </div>
         </div>
       </section>
     </motion.div>
   );
 }
+
+export default Roadmap;
 
