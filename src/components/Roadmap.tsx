@@ -1,25 +1,12 @@
-"use client"; // Añade esto en la línea 1
-
 import { motion } from 'motion/react';
 import { useState, useEffect, useRef } from 'react';
 import L from 'leaflet';
+import 'leaflet/dist/leaflet.css';
 
-// Protegemos la configuración para que solo se ejecute en el navegador
-if (typeof window !== 'undefined') {
-  // @ts-ignore
-  delete L.Icon.Default.prototype._getIconUrl;
-  L.Icon.Default.mergeOptions({
-    iconRetinaUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon-2x.png',
-    iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png',
-    shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
-  });
-}
-
-// El resto de tu código sigue igual...
 // Create a custom pink pin icon
 const customPinkIcon = L.divIcon({
   className: 'custom-pin',
-  html: `<div style="background-color: #ff8ba7; width: 24px; height: 24px; border-radius: 50% 50% 50% 0; border: 2px solid white; transform: rotate(-45deg); box-shadow: 0 4px 10px rgba(255, 139, 167, 0.4);"></div>`,
+  html: `<div style="background-color: #ff8ba7; width: 24px; height: 24px; border-radius: 50% 50% 50% 0; border: 2px solid #130f1d; transform: rotate(-45deg); box-shadow: 0 0 10px rgba(255, 139, 167, 0.5);"></div>`,
   iconSize: [24, 24],
   iconAnchor: [12, 24],
   popupAnchor: [0, -26],
@@ -28,7 +15,7 @@ const customPinkIcon = L.divIcon({
 // Create a custom question mark icon for the mystery destination
 const questionIcon = L.divIcon({
   className: 'custom-pin-question',
-  html: `<div style="background-color: #D1495B; width: 32px; height: 32px; border-radius: 50%; border: 2px solid white; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 15px rgba(209, 73, 91, 0.3); font-weight: bold; color: white; font-size: 20px;">?</div>`,
+  html: `<div style="background-color: #a7a1ff; width: 32px; height: 32px; border-radius: 50%; border: 2px solid #130f1d; display: flex; items-center; justify-center; box-shadow: 0 0 15px rgba(167, 161, 255, 0.5); font-weight: bold; color: #130f1d; font-size: 20px;">?</div>`,
   iconSize: [32, 32],
   iconAnchor: [16, 16],
   popupAnchor: [0, -16],
@@ -86,7 +73,36 @@ export function Roadmap() {
   const layerGroupRef = useRef<L.LayerGroup | null>(null);
   const [activeYear, setActiveYear] = useState('2021');
 
-  const cargarYear = (year: string) => {
+  useEffect(() => {
+    if (!mapContainerRef.current) return;
+
+    const map = L.map(mapContainerRef.current, {
+      zoomControl: false
+    }).setView([40.4168, -3.7038], 5);
+    
+    L.control.zoom({ position: 'bottomright' }).addTo(map);
+    
+    // Using a dark themed map for the Zen aesthetic
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+      subdomains: 'abcd',
+      maxZoom: 20
+    }).addTo(map);
+
+    layerGroupRef.current = L.layerGroup().addTo(map);
+    mapRef.current = map;
+
+    return () => {
+      map.remove();
+      mapRef.current = null;
+    };
+  }, []);
+
+  useEffect(() => {
+    cargarAño(activeYear);
+  }, [activeYear]);
+
+  const cargarAño = (año: string) => {
     if (!mapRef.current || !layerGroupRef.current) return;
 
     const map = mapRef.current;
@@ -94,26 +110,23 @@ export function Roadmap() {
 
     layerGroup.clearLayers();
 
-    const ubicaciones = routesByYear[year];
+    const ubicaciones = routesByYear[año];
     if (!ubicaciones || ubicaciones.length === 0) return;
 
     const coordsArray: [number, number][] = [];
 
     ubicaciones.forEach((ubicacion, index) => {
-      // Filter out [0,0] for mapping but keep it in data if needed
-      if (ubicacion.coords[0] === 0 && ubicacion.coords[1] === 0) return;
-      
       coordsArray.push(ubicacion.coords);
 
-      const isLastPointOf2026 = year === '2026' && index === ubicaciones.length - 1;
+      const isLastPointOf2026 = año === '2026' && index === ubicaciones.length - 1;
       const markerIcon = isLastPointOf2026 ? questionIcon : customPinkIcon;
 
       const marker = L.marker(ubicacion.coords, { icon: markerIcon });
       
       const popupContent = `
         <div class="text-center font-sans p-1">
-          <h3 class="font-bold text-lg text-[#D1495B] mb-1 leading-tight">${ubicacion.name}</h3>
-          <p class="text-[#5F4B66]/80 text-sm m-0 leading-snug">${ubicacion.message}</p>
+          <h3 class="font-bold text-lg text-rose-600 mb-1 leading-tight">${ubicacion.name}</h3>
+          <p class="text-gray-700 text-sm m-0 leading-snug">${ubicacion.message}</p>
         </div>
       `;
       
@@ -127,74 +140,20 @@ export function Roadmap() {
 
     if (coordsArray.length > 1) {
       const polyline = L.polyline(coordsArray, {
-        color: '#FF8BA7',
+        color: '#0ea5e9',
         weight: 4,
         dashArray: '8, 8',
-        opacity: 0.6,
+        opacity: 0.8,
         lineCap: 'round',
         lineJoin: 'round'
       });
       polyline.addTo(layerGroup);
     }
 
-    if (coordsArray.length > 0) {
-      const bounds = L.latLngBounds(coordsArray);
-      map.flyToBounds(bounds, { padding: [50, 50], duration: 1.5 });
-    }
-    
-    // Always call invalidateSize to ensure it's still correct after flying
-    setTimeout(() => {
-      if (mapRef.current) mapRef.current.invalidateSize();
-    }, 1500);
+    const bounds = L.latLngBounds(coordsArray);
+    map.flyToBounds(bounds, { padding: [50, 50], duration: 1.5 });
   };
 
-  useEffect(() => {
-    if (!mapContainerRef.current) return;
-    
-    // Verificar que estamos en el cliente (evita errores en pre-renderizado de Vercel)
-    if (typeof window === 'undefined') return;
-
-    // Ensure we don't double init
-    if (mapRef.current) return;
-
-    const map = L.map(mapContainerRef.current, {
-      zoomControl: false
-    }).setView([40.4168, -3.7038], 5);
-    
-    L.control.zoom({ position: 'bottomright' }).addTo(map);
-    
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
-      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
-      subdomains: 'abcd',
-      maxZoom: 20
-    }).addTo(map);
-
-    layerGroupRef.current = L.layerGroup().addTo(map);
-    mapRef.current = map;
-
-    // Forzar el re-cálculo del tamaño después de un breve delay
-    // Esto es crítico si el mapa está dentro de animaciones o pestañas
-    const timer = setTimeout(() => {
-      if (mapRef.current) {
-        mapRef.current.invalidateSize();
-        cargarYear(activeYear);
-      }
-    }, 500);
-
-    return () => {
-      clearTimeout(timer);
-      if (mapRef.current) {
-        mapRef.current.remove();
-        mapRef.current = null;
-      }
-    };
-  }, []);
-
-  useEffect(() => {
-    if (mapRef.current) {
-      cargarYear(activeYear);
-    }
-  }, [activeYear]);
   return (
     <motion.div 
       initial={{ opacity: 0 }}
