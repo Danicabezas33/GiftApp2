@@ -3,7 +3,6 @@
 import { motion } from 'motion/react';
 import { useState, useEffect, useRef } from 'react';
 import L from 'leaflet';
-import 'leaflet/dist/leaflet.css';
 
 // Protegemos la configuración para que solo se ejecute en el navegador
 if (typeof window !== 'undefined') {
@@ -227,8 +226,8 @@ export function Roadmap() {
                   <h3 className="text-2xl md:text-3xl font-bold text-[#5F4B66] mt-1 mb-3 md:mb-4 group-hover:text-[#FF8BA7] transition-colors duration-500">{m.title}</h3>
                   <p className="text-pink-900/70 text-base md:text-lg leading-relaxed">{m.desc}</p>
                 </div>
-                <div className="w-full md:w-[220px] lg:w-[320px] h-48 md:h-auto shrink-0 relative bg-pink-50/50 overflow-hidden rounded-xl md:rounded-2xl flex items-center justify-center border border-pink-100/50">
-                  <video
+                <div className="w-full shrink-0 min-h-[350px] h-[350px] md:min-h-[500px] md:h-[500px] rounded-[1.5rem] md:rounded-[2rem] overflow-hidden border border-pink-100 relative shadow-inner bg-pink-50/20 z-10">
+                  <div ref={mapContainerRef} className="absolute top-0 left-0 w-full h-full z-20"></div>                  <video
                     src={`https://raw.githubusercontent.com/Danicabezas33/GiftApp2/main/public/videos/year${i + 1}.mp4`}
                     autoPlay loop muted playsInline
                     className="absolute inset-0 w-full h-full object-cover z-10 opacity-80 group-hover:opacity-100 transition-opacity duration-1000"
