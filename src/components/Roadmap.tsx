@@ -3,6 +3,15 @@ import { useState, useEffect, useRef } from 'react';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 
+// Solución para los iconos de marcadores en producción (Vercel/Build)
+// @ts-ignore
+delete L.Icon.Default.prototype._getIconUrl;
+L.Icon.Default.mergeOptions({
+  iconRetinaUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon-2x.png',
+  iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png',
+  shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
+});
+
 // Create a custom pink pin icon
 const customPinkIcon = L.divIcon({
   className: 'custom-pin',
@@ -138,6 +147,9 @@ export function Roadmap() {
   useEffect(() => {
     if (!mapContainerRef.current) return;
     
+    // Verificar que estamos en el cliente (evita errores en pre-renderizado de Vercel)
+    if (typeof window === 'undefined') return;
+
     // Ensure we don't double init
     if (mapRef.current) return;
 
@@ -156,15 +168,17 @@ export function Roadmap() {
     layerGroupRef.current = L.layerGroup().addTo(map);
     mapRef.current = map;
 
-    // Small delay to ensure container is fully dimensioned
-    setTimeout(() => {
+    // Forzar el re-cálculo del tamaño después de un breve delay
+    // Esto es crítico si el mapa está dentro de animaciones o pestañas
+    const timer = setTimeout(() => {
       if (mapRef.current) {
         mapRef.current.invalidateSize();
         cargarYear(activeYear);
       }
-    }, 200);
+    }, 500);
 
     return () => {
+      clearTimeout(timer);
       if (mapRef.current) {
         mapRef.current.remove();
         mapRef.current = null;
