@@ -173,11 +173,11 @@ export function Gallery() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[200] flex items-center justify-center bg-zen-bg/95 p-4 backdrop-blur-xl"
+            className="fixed inset-0 z-[200] flex items-center justify-center bg-white/90 p-4 backdrop-blur-md"
             onClick={() => setSelectedMedia(null)}
           >
             <button 
-              className="absolute top-8 right-8 p-3 bg-white/5 hover:bg-white/10 rounded-full text-white/40 hover:text-white transition-all duration-300"
+              className="absolute top-8 right-8 p-3 bg-pink-50 hover:bg-pink-100 rounded-full text-[#9D84A3] hover:text-[#D1495B] transition-all duration-300 shadow-sm"
               onClick={(e) => { e.stopPropagation(); setSelectedMedia(null); }}
             >
               <X className="w-8 h-8" />
@@ -188,20 +188,20 @@ export function Gallery() {
               exit={{ scale: 0.9, opacity: 0 }}
               className="relative max-w-6xl max-h-[90vh] w-full flex items-center justify-center p-4"
             >
-              <div className="absolute inset-0 bg-petal-pink/5 blur-[100px] rounded-full pointer-events-none" />
+              <div className="absolute inset-0 bg-[#FF8BA7]/10 blur-[100px] rounded-full pointer-events-none" />
               {isVideo(selectedMedia.name) ? (
                 <video 
                   src={selectedMedia.download_url} 
                   controls 
                   autoPlay
-                  className="max-w-full max-h-[80vh] rounded-3xl shadow-[0_0_100px_rgba(0,0,0,0.5)] border border-white/10 pointer-events-auto"
+                  className="max-w-full max-h-[80vh] rounded-3xl shadow-2xl shadow-pink-200/50 border border-pink-50 pointer-events-auto"
                   onClick={(e) => e.stopPropagation()}
                 />
               ) : (
                 <img 
                   src={selectedMedia.download_url} 
                   alt={selectedMedia.name}
-                  className="max-w-full max-h-[80vh] object-contain rounded-3xl shadow-[0_0_100px_rgba(0,0,0,0.5)] border border-white/10 pointer-events-auto"
+                  className="max-w-full max-h-[80vh] object-contain rounded-3xl shadow-2xl shadow-pink-200/50 border border-pink-50 pointer-events-auto"
                   onClick={(e) => e.stopPropagation()}
                 />
               )}

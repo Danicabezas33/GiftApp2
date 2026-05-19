@@ -6,7 +6,7 @@ import 'leaflet/dist/leaflet.css';
 // Create a custom pink pin icon
 const customPinkIcon = L.divIcon({
   className: 'custom-pin',
-  html: `<div style="background-color: #ff8ba7; width: 24px; height: 24px; border-radius: 50% 50% 50% 0; border: 2px solid #130f1d; transform: rotate(-45deg); box-shadow: 0 0 10px rgba(255, 139, 167, 0.5);"></div>`,
+  html: `<div style="background-color: #ff8ba7; width: 24px; height: 24px; border-radius: 50% 50% 50% 0; border: 2px solid white; transform: rotate(-45deg); box-shadow: 0 4px 10px rgba(255, 139, 167, 0.4);"></div>`,
   iconSize: [24, 24],
   iconAnchor: [12, 24],
   popupAnchor: [0, -26],
@@ -15,7 +15,7 @@ const customPinkIcon = L.divIcon({
 // Create a custom question mark icon for the mystery destination
 const questionIcon = L.divIcon({
   className: 'custom-pin-question',
-  html: `<div style="background-color: #a7a1ff; width: 32px; height: 32px; border-radius: 50%; border: 2px solid #130f1d; display: flex; items-center; justify-center; box-shadow: 0 0 15px rgba(167, 161, 255, 0.5); font-weight: bold; color: #130f1d; font-size: 20px;">?</div>`,
+  html: `<div style="background-color: #D1495B; width: 32px; height: 32px; border-radius: 50%; border: 2px solid white; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 15px rgba(209, 73, 91, 0.3); font-weight: bold; color: white; font-size: 20px;">?</div>`,
   iconSize: [32, 32],
   iconAnchor: [16, 16],
   popupAnchor: [0, -16],
@@ -82,15 +82,21 @@ export function Roadmap() {
     
     L.control.zoom({ position: 'bottomright' }).addTo(map);
     
-    // Using a dark themed map for the Zen aesthetic
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+    // Using a light themed map for the new aesthetic
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
       subdomains: 'abcd',
       maxZoom: 20
     }).addTo(map);
 
-    layerGroupRef.current = L.layerGroup().addTo(map);
+    layerGroupRef.current = L.LayerGroup().addTo(map);
     mapRef.current = map;
+
+    // Critical: ensure map fills container after layout/animation
+    setTimeout(() => {
+      map.invalidateSize();
+      cargarYear(activeYear);
+    }, 50);
 
     return () => {
       map.remove();
@@ -99,10 +105,12 @@ export function Roadmap() {
   }, []);
 
   useEffect(() => {
-    cargarAño(activeYear);
+    if (mapRef.current) {
+      cargarYear(activeYear);
+    }
   }, [activeYear]);
 
-  const cargarAño = (año: string) => {
+  const cargarYear = (year: string) => {
     if (!mapRef.current || !layerGroupRef.current) return;
 
     const map = mapRef.current;
@@ -110,7 +118,7 @@ export function Roadmap() {
 
     layerGroup.clearLayers();
 
-    const ubicaciones = routesByYear[año];
+    const ubicaciones = routesByYear[year];
     if (!ubicaciones || ubicaciones.length === 0) return;
 
     const coordsArray: [number, number][] = [];
@@ -118,15 +126,15 @@ export function Roadmap() {
     ubicaciones.forEach((ubicacion, index) => {
       coordsArray.push(ubicacion.coords);
 
-      const isLastPointOf2026 = año === '2026' && index === ubicaciones.length - 1;
+      const isLastPointOf2026 = year === '2026' && index === ubicaciones.length - 1;
       const markerIcon = isLastPointOf2026 ? questionIcon : customPinkIcon;
 
       const marker = L.marker(ubicacion.coords, { icon: markerIcon });
       
       const popupContent = `
         <div class="text-center font-sans p-1">
-          <h3 class="font-bold text-lg text-rose-600 mb-1 leading-tight">${ubicacion.name}</h3>
-          <p class="text-gray-700 text-sm m-0 leading-snug">${ubicacion.message}</p>
+          <h3 class="font-bold text-lg text-[#D1495B] mb-1 leading-tight">${ubicacion.name}</h3>
+          <p class="text-[#5F4B66]/80 text-sm m-0 leading-snug">${ubicacion.message}</p>
         </div>
       `;
       
@@ -140,10 +148,10 @@ export function Roadmap() {
 
     if (coordsArray.length > 1) {
       const polyline = L.polyline(coordsArray, {
-        color: '#0ea5e9',
+        color: '#FF8BA7',
         weight: 4,
         dashArray: '8, 8',
-        opacity: 0.8,
+        opacity: 0.6,
         lineCap: 'round',
         lineJoin: 'round'
       });
@@ -152,6 +160,9 @@ export function Roadmap() {
 
     const bounds = L.latLngBounds(coordsArray);
     map.flyToBounds(bounds, { padding: [50, 50], duration: 1.5 });
+    
+    // Always call invalidateSize after flying to ensure it's still correct
+    setTimeout(() => map.invalidateSize(), 1500);
   };
 
   return (
@@ -226,8 +237,8 @@ export function Roadmap() {
           </div>
 
           {/* Mapa */}
-          <div className="flex-1 h-[350px] md:h-[500px] rounded-[1.5rem] md:rounded-[2rem] overflow-hidden border border-pink-100 relative z-0">
-            <div ref={mapContainerRef} className="w-full h-full absolute inset-0 z-0"></div>
+          <div className="flex-1 h-[350px] md:h-[500px] rounded-[1.5rem] md:rounded-[2rem] overflow-hidden border border-pink-100 relative shadow-inner bg-pink-50/20">
+            <div ref={mapContainerRef} className="w-full h-full relative"></div>
           </div>
         </div>
       </section>
