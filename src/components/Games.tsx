@@ -221,6 +221,7 @@ export function Games({ onUnlockWeb, onNavigateHome }: GamesProps) {
           <button
             onClick={async () => {
               localStorage.removeItem('unlocked_levels_v4');
+              localStorage.removeItem('web_unlocked_v4');
               await syncGlobalUnlockedLevels([]);
               window.location.reload();
             }}

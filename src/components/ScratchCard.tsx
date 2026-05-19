@@ -38,7 +38,7 @@ export function ScratchCard({ tipoRegalo, imagenRegalo, onClose, onComplete }: S
     
     // Wrap text pseudo logic
     ctx.fillText('¡Rasca para descubrir', canvas.width / 2, canvas.height / 2 - 10);
-    ctx.fillText('tu regalo!', canvas.width / 2, canvas.height / 2 + 20);
+    ctx.fillText('el próximo objeto!', canvas.width / 2, canvas.height / 2 + 20);
 
   }, []);
 
@@ -144,7 +144,7 @@ export function ScratchCard({ tipoRegalo, imagenRegalo, onClose, onComplete }: S
           <X className="w-5 h-5" />
         </button>
 
-        <h2 className="text-3xl font-serif font-bold text-rose-600 mb-6 text-center">{tipoRegalo}</h2>
+        <h2 className="text-3xl font-serif font-bold text-rose-600 mb-6 text-center">¡Nuevo objeto desbloqueado!</h2>
 
         <div className="relative w-[300px] h-[300px] mb-8 rounded-2xl overflow-hidden shadow-inner border border-rose-100 bg-gray-50 flex items-center justify-center">
           {/* Base image representing the gift */}

@@ -39,6 +39,7 @@ export default function App() {
     // Check reset flag
     if (params.has('reset')) {
       localStorage.removeItem('unlocked_levels_v4');
+      localStorage.removeItem('web_unlocked_v4');
       import('./firebaseHelper').then(({ syncGlobalUnlockedLevels }) => {
          syncGlobalUnlockedLevels([]);
          window.location.href = window.location.pathname;
@@ -55,6 +56,18 @@ export default function App() {
       }
     } else {
       setCurrentSection('games');
+    }
+
+    // Sync unlocked levels to firebase on mount just in case
+    const storedLevels = localStorage.getItem('unlocked_levels_v4');
+    if (storedLevels) {
+      import('./firebaseHelper').then(({ syncGlobalUnlockedLevels }) => {
+         try {
+           syncGlobalUnlockedLevels(JSON.parse(storedLevels));
+         } catch (e) {
+           console.error(e);
+         }
+      });
     }
   }, []);
 
