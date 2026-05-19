@@ -7,7 +7,7 @@ import { Loader2 } from 'lucide-react';
  * SUSTITUYE ESTOS VALORES POR TUS CARACTERÍSTICAS
  */
 const GITHUB_USER = 'Danicabezas33';
-const GITHUB_REPO = 'https://github.com/Danicabezas33/GiftApp2.git';
+const GITHUB_REPO = 'GiftApp2';
 
 const YEARS = ['ano1', 'ano2', 'ano3', 'ano4', 'ano5'];
 
