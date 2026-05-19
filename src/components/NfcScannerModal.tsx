@@ -26,7 +26,6 @@ export function NfcScannerModal({ levelId, onComplete }: { levelId: number, onCo
           spread: 80,
           origin: { y: 0.6 },
           colors: ['#06b6d4', '#f43f5e', '#a855f7'],
-          useWorker: false,
           disableForReducedMotion: true
         });
       }, 1000);

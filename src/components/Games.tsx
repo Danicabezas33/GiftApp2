@@ -1,5 +1,5 @@
 import { motion, AnimatePresence } from 'motion/react';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Lock, Unlock, Globe, Sparkles, UtensilsCrossed, Flame, Waves, X, RadioReceiver } from 'lucide-react';
 import { listenToLatestUnlock, syncGlobalUnlockedLevels } from '../firebaseHelper';
 import { NfcScannerModal } from './NfcScannerModal';
@@ -29,6 +29,11 @@ export function Games({ onUnlockWeb, onNavigateHome }: GamesProps) {
   const [unlockedLevels, setUnlockedLevels] = useState<number[]>(() => {
     return JSON.parse(localStorage.getItem('unlocked_levels_v4') || '[]');
   });
+  
+  const unlockedLevelsRef = useRef<number[]>(unlockedLevels);
+  useEffect(() => {
+    unlockedLevelsRef.current = unlockedLevels;
+  }, [unlockedLevels]);
 
   const [revealedGift, setRevealedGift] = useState<number | null>(null);
   const [modalPhase, setModalPhase] = useState<'none' | 'minigame' | 'scratch' | 'nfc' | 'web_unlocked'>('none');
@@ -36,7 +41,7 @@ export function Games({ onUnlockWeb, onNavigateHome }: GamesProps) {
 
   useEffect(() => {
     // 1. Trigger web unlock if levels are open
-    if (unlockedLevels.length > 0 && onUnlockWeb) {
+    if (unlockedLevelsRef.current.length > 0 && onUnlockWeb) {
       onUnlockWeb();
     }
 
@@ -44,21 +49,18 @@ export function Games({ onUnlockWeb, onNavigateHome }: GamesProps) {
     const unsubscribe = listenToLatestUnlock((data) => {
       if (data && data.levelId && typeof data.levelId === 'number') {
         const id = data.levelId;
-        // Check if it's a valid ID by reading the most recent state using functional update
-        // We use setUnlockedLevels just to access the latest state without putting it in dependency array
-        setUnlockedLevels(currentLevels => {
-          if (id >= 1 && id <= 5 && !currentLevels.includes(id)) {
-            // Check order: Must unlock 1 first, then 2, etc.
-            const isExpectedOrder = id === 1 || currentLevels.includes(id - 1);
-            if (isExpectedOrder) {
-              setIncomingLevelId(id);
-              setModalPhase('nfc');
-            } else {
-              console.log(`Scan ignorado: se esperaba nivel previo antes de ${id}.`);
-            }
+        const currentLevels = unlockedLevelsRef.current;
+        
+        if (id >= 1 && id <= 5 && !currentLevels.includes(id)) {
+          // Check order: Must unlock 1 first, then 2, etc.
+          const isExpectedOrder = id === 1 || currentLevels.includes(id - 1);
+          if (isExpectedOrder) {
+            setIncomingLevelId(id);
+            setModalPhase('nfc');
+          } else {
+            console.log(`Scan ignorado: se esperaba nivel previo antes de ${id}.`);
           }
-          return currentLevels;
-        });
+        }
       }
     });
 

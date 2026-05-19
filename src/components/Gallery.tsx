@@ -1,6 +1,6 @@
-import { motion } from 'motion/react';
+import { motion, AnimatePresence } from 'motion/react';
 import { useState, useEffect } from 'react';
-import { Loader2 } from 'lucide-react';
+import { Loader2, X, PlayCircle } from 'lucide-react';
 
 /**
  * Configuración del Repositorio de GitHub
@@ -22,6 +22,7 @@ export function Gallery() {
   const [images, setImages] = useState<GithubFile[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [selectedMedia, setSelectedMedia] = useState<GithubFile | null>(null);
 
   useEffect(() => {
     async function fetchGalleryImages(year: string) {
@@ -42,7 +43,7 @@ export function Gallery() {
 
         const data = await response.json();
 
-        const validExtensions = ['.jpg', '.jpeg', '.png', '.webp'];
+        const validExtensions = ['.jpg', '.jpeg', '.png', '.webp', '.mp4', '.webm', '.mov'];
         const imageFiles = data.filter((file: any) => {
           if (file.type !== 'file') return false;
           
@@ -65,6 +66,8 @@ export function Gallery() {
     fetchGalleryImages(currentYear);
   }, [currentYear]);
 
+  const isVideo = (filename: string) => /\.(mp4|webm|mov)$/i.test(filename);
+
   return (
     <motion.div 
       initial={{ opacity: 0 }}
@@ -74,22 +77,25 @@ export function Gallery() {
     >
       <div className="text-center mb-10">
         <h2 className="text-5xl font-script text-rose-600 mb-4 drop-shadow-sm">Galería de Recuerdos</h2>
-        <p className="text-rose-500/80 font-serif">Consumiendo la API de GitHub en tiempo real</p>
+        <p className="text-rose-500/80 font-serif">Nuestros momentos en la nube</p>
       </div>
 
-      {/* Selector de Años / Pestañas */}
-      <div className="flex flex-wrap justify-center gap-3 mb-10">
+      {/* Selector de Años / Pestañas Minimalista */}
+      <div className="flex justify-center border-b-2 border-rose-100/50 mb-10 w-full overflow-x-auto gap-4 md:gap-12 px-4 scrollbar-hide">
         {YEARS.map((year, index) => (
           <button
             key={year}
             onClick={() => setCurrentYear(year)}
-            className={`px-6 py-2.5 rounded-full font-medium transition-all duration-300 ${
+            className={`pb-4 px-2 whitespace-nowrap text-lg font-medium transition-colors relative ${
               currentYear === year 
-                ? 'bg-gradient-to-r from-rose-500 to-pink-500 text-white shadow-lg transform scale-105' 
-                : 'bg-white/60 backdrop-blur-sm text-gray-600 hover:bg-white shadow-sm border border-rose-100 hover:border-rose-300 hover:text-rose-500'
+                ? 'text-rose-600' 
+                : 'text-gray-400 hover:text-rose-400'
             }`}
           >
             Año {index + 1}
+            {currentYear === year && (
+              <motion.div layoutId="activeTabGallery" className="absolute bottom-[-2px] left-0 right-0 h-[3px] bg-rose-500 rounded-t-full" />
+            )}
           </button>
         ))}
       </div>
@@ -99,40 +105,104 @@ export function Gallery() {
         {loading ? (
           <div className="flex flex-col items-center justify-center p-20 text-rose-400">
              <Loader2 className="w-10 h-10 animate-spin mb-4" />
-             <p className="animate-pulse font-medium">Buscando imágenes en GitHub...</p>
+             <p className="animate-pulse font-medium">Buscando recuerdos en GitHub...</p>
           </div>
         ) : error ? (
            <div className="py-12 px-6 text-center bg-rose-50/80 text-rose-600 rounded-2xl border border-rose-200">
              <p className="font-bold mb-2">Ops, algo salió mal</p>
              <p className="text-sm opacity-90">{error}</p>
-             <p className="text-sm mt-4 opacity-75">Comprueba que el repositorio es público y que has configurado los placeholders GITHUB_USER y GITHUB_REPO.</p>
+             <p className="text-sm mt-4 opacity-75">Sube las fotos o videos a la carpeta public/gallery/{currentYear} de tu repositorio en GitHub para que aparezcan aquí automáticamente.</p>
            </div>
         ) : images.length === 0 ? (
           <div className="py-16 text-center text-gray-500 bg-white/60 backdrop-blur-sm rounded-2xl shadow-sm border border-rose-100">
-            No se encontraron imágenes válidas en esta carpeta.
+            No se encontraron imágenes o videos válidos en esta carpeta.
           </div>
         ) : (
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {images.map(image => (
-              <div key={image.name} className="group relative rounded-2xl overflow-hidden shadow-sm border border-rose-100 aspect-[4/3] bg-rose-50 cursor-pointer">
-                <img 
-                  src={image.download_url} 
-                  alt={image.name} 
-                  className="w-full h-full object-cover transform transition-transform duration-500 group-hover:scale-110"
-                  onError={(e: any) => {
-                    e.target.src = 'https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=800&q=80';
-                  }}
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
-                  <span className="text-white text-xs font-medium truncate drop-shadow-md">
-                    {image.name}
-                  </span>
+            {images.map(media => {
+              const video = isVideo(media.name);
+              return (
+                <div 
+                  key={media.name} 
+                  onClick={() => setSelectedMedia(media)}
+                  className="group relative rounded-2xl overflow-hidden shadow-sm border border-rose-100 aspect-[4/3] bg-rose-50 cursor-pointer"
+                >
+                  {video ? (
+                    <>
+                      <video 
+                        src={media.download_url} 
+                        className="w-full h-full object-cover transform transition-transform duration-500 group-hover:scale-105 opacity-80"
+                        muted playsInline
+                      />
+                      <div className="absolute inset-0 flex items-center justify-center bg-black/20 group-hover:bg-black/10 transition-colors">
+                        <PlayCircle className="w-12 h-12 text-white/90 drop-shadow-md" />
+                      </div>
+                    </>
+                  ) : (
+                    <img 
+                      src={media.download_url} 
+                      alt={media.name} 
+                      className="w-full h-full object-cover transform transition-transform duration-500 group-hover:scale-110"
+                      onError={(e: any) => {
+                        e.target.src = 'https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=800&q=80';
+                      }}
+                    />
+                  )}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
+                    <span className="text-white text-xs font-medium truncate drop-shadow-md">
+                      {video ? 'Video' : 'Foto'}
+                    </span>
+                  </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         )}
       </div>
+
+      {/* Lightbox / Modal de vista en grande */}
+      <AnimatePresence>
+        {selectedMedia && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 p-4 backdrop-blur-sm"
+            onClick={() => setSelectedMedia(null)}
+          >
+            <button 
+              className="absolute top-6 right-6 p-2 bg-white/10 hover:bg-white/20 rounded-full text-white transition-colors"
+              onClick={(e) => { e.stopPropagation(); setSelectedMedia(null); }}
+            >
+              <X className="w-8 h-8" />
+            </button>
+            <motion.div 
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              transition={{ type: "spring", damping: 25, stiffness: 300 }}
+              className="relative max-w-5xl max-h-[90vh] w-full flex items-center justify-center pointer-events-none"
+            >
+              {isVideo(selectedMedia.name) ? (
+                <video 
+                  src={selectedMedia.download_url} 
+                  controls 
+                  autoPlay
+                  className="max-w-full max-h-[85vh] rounded-xl shadow-2xl pointer-events-auto"
+                  onClick={(e) => e.stopPropagation()}
+                />
+              ) : (
+                <img 
+                  src={selectedMedia.download_url} 
+                  alt={selectedMedia.name}
+                  className="max-w-full max-h-[85vh] object-contain rounded-xl shadow-2xl pointer-events-auto"
+                  onClick={(e) => e.stopPropagation()}
+                />
+              )}
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </motion.div>
   );
 }

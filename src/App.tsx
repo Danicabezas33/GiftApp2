@@ -41,9 +41,16 @@ export default function App() {
     if (params.has('reset')) {
       localStorage.removeItem('unlocked_levels_v4');
       localStorage.removeItem('web_unlocked_v4');
-      import('./firebaseHelper').then(({ syncGlobalUnlockedLevels }) => {
-         syncGlobalUnlockedLevels([]);
-         window.location.href = window.location.pathname;
+      import('./firebaseHelper').then(({ syncGlobalUnlockedLevels, clearLatestUnlock }) => {
+         Promise.all([
+           syncGlobalUnlockedLevels([]),
+           clearLatestUnlock()
+         ]).then(() => {
+           window.location.search = '';
+         }).catch(err => {
+           console.error("Reset error", err);
+           window.location.search = '';
+         });
       });
       return;
     }

@@ -11,13 +11,7 @@ export function MobileScanner({ id }: { id: number }) {
     const sendPulse = async () => {
       try {
         const firebaseLevels = await getGlobalUnlockedLevels();
-        let localLevels: number[] = [];
-        try {
-          const stored = localStorage.getItem('unlocked_levels_v4');
-          if (stored) localLevels = JSON.parse(stored);
-        } catch (e) {}
-
-        const unlockedLevels = [...new Set([...firebaseLevels, ...localLevels])];
+        const unlockedLevels = firebaseLevels;
         
         // Validation check
         if (id < 1 || id > 5) {

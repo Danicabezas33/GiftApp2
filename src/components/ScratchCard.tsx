@@ -87,7 +87,6 @@ export function ScratchCard({ tipoRegalo, imagenRegalo, onClose, onComplete }: S
         spread: 70,
         origin: { y: 0.6 },
         colors: ['#fb7185', '#f43f5e', '#e11d48'],
-        useWorker: false,
         disableForReducedMotion: true
       });
     }
