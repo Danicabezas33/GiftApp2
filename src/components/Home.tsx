@@ -123,7 +123,7 @@ export function Home({ onNavigate }: HomeProps) {
           className="md:col-span-7 md:row-span-2 bg-white rounded-3xl md:rounded-[32px] shadow-lg shadow-[#FFC8DD]/50 overflow-hidden relative min-h-[300px] md:min-h-full group"
         >
           <video 
-            src="https://raw.githubusercontent.com/Danicabezas33/GiftApp2/main/public/photos/home/video-home.mp4"
+            src="https://raw.githubusercontent.com/Danicabezas33/GiftApp2/main/public/home/video-home.mp4"
             autoPlay 
             loop 
             muted 
