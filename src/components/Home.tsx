@@ -1,96 +1,114 @@
 import { motion } from 'motion/react';
-import { Heart } from 'lucide-react';
+import { Play, Music, CalendarHeart } from 'lucide-react';
 
-export function Home() {
-  // Background floating hearts
-  const hearts = Array.from({ length: 15 }).map((_, i) => ({
-    id: i,
-    x: Math.random() * 100,
-    y: Math.random() * 100,
-    scale: 0.5 + Math.random() * 1,
-    duration: 10 + Math.random() * 20,
-    delay: Math.random() * 5
-  }));
+interface HomeProps {
+  onNavigate?: (section: string) => void;
+}
 
+export function Home({ onNavigate }: HomeProps) {
   return (
     <motion.div 
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="relative min-h-[80vh] flex flex-col items-center justify-center py-12 px-4 overflow-hidden mt-8"
+      className="relative min-h-[80vh] w-full max-w-6xl mx-auto flex flex-col justify-center py-6 px-4 md:px-8 mt-4 md:mt-8"
     >
-      {/* Background decorations */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        {hearts.map(heart => (
-          <motion.div
-            key={heart.id}
-            className="absolute text-[#FF8BA7]/30"
-            style={{ left: `${heart.x}%`, top: `${heart.y}%` }}
-            animate={{ 
-              y: [0, -150, 0],
-              opacity: [0.1, 0.4, 0.1],
-              rotate: [0, 45, -45, 0]
-            }}
-            transition={{ 
-              duration: heart.duration,
-              repeat: Infinity,
-              ease: "linear",
-              delay: heart.delay
-            }}
-          >
-            <Heart size={24 * heart.scale} fill="currentColor" />
-          </motion.div>
-        ))}
-      </div>
-
-      <motion.div 
-        initial={{ scale: 0.8, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        transition={{ duration: 1.5, type: "spring" }}
-        className="relative z-10 w-64 h-64 md:w-80 md:h-80 rounded-full overflow-hidden mb-12 ring-[12px] ring-white shadow-[0_0_80px_rgba(255,139,167,0.3)] group"
-      >
-        <img 
-          src="https://raw.githubusercontent.com/Danicabezas33/GiftApp2/main/public/photos/home.jpg" 
-          onError={(e) => {
-            (e.target as HTMLImageElement).src = "https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=800&q=80"
-          }}
-          alt="Nosotros" 
-          className="w-full h-full object-cover transform hover:scale-105 transition-transform duration-[2000ms]"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-pink-900/10 to-transparent group-hover:opacity-0 transition-opacity duration-1000" />
-      </motion.div>
-      
-      <motion.h1 
-        initial={{ y: 20, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ delay: 0.3 }}
-        className="text-5xl md:text-8xl font-script text-[#D1495B] mb-8 z-10 text-center drop-shadow-[0_2px_10px_rgba(255,139,167,0.4)] font-medium"
-      >
-        Felices 5 años, mi niña preciosa
-      </motion.h1>
-      
-      <motion.div 
-        initial={{ y: 30, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ delay: 0.6 }}
-        className="relative z-10 max-w-2xl bg-white p-8 md:p-16 rounded-[2.5rem] shadow-xl shadow-pink-100/50 border border-pink-50 text-center"
-      >
-        <div className="absolute -top-10 -left-6 text-5xl opacity-40 select-none">✨</div>
-        <div className="absolute -bottom-10 -right-6 text-5xl opacity-40 select-none">❤️</div>
+      <div className="grid grid-cols-1 md:grid-cols-12 auto-rows-auto md:auto-rows-[16rem] gap-4 md:gap-6">
         
-        <p className="text-[#5F4B66]/90 text-lg md:text-2xl leading-relaxed mb-8 font-serif italic border-l-4 border-pink-200/50 pl-6 md:pl-8 text-left">
-          "Parece que fue ayer cuando empezamos esta hermosa aventura, pero ya han pasado 5 increíbles años.
-          Cada día a tu lado ha sido un regalo, lleno de risas, aprendizajes y un amor que no deja de crecer."
-        </p>
-        <p className="text-pink-900/70 text-base md:text-xl leading-relaxed mb-10 text-left pl-6 md:pl-8 border-l-4 border-pink-100/30">
-          No me imagino mi vida sin ti, eres mi compañera, mi mejor amiga y el gran amor de mi vida.
-          He creado esta pequeña página para recordar algunos de nuestros mejores momentos y celebrar todo lo 
-          que hemos construido juntos. ¡Y lo que nos falta!
-        </p>
-        <p className="font-script text-5xl text-[#FF8BA7] mt-10 mb-2 drop-shadow-sm">
-          Te amo con todo mi corazón.
-        </p>
-      </motion.div>
+        {/* Cell 1: Photo - spans 7 columns */}
+        <motion.div 
+          initial={{ y: 20, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ delay: 0.1, duration: 0.5 }}
+          className="md:col-span-7 md:row-span-2 bg-white rounded-3xl md:rounded-[32px] shadow-lg shadow-[#FFC8DD]/50 overflow-hidden relative min-h-[300px] md:min-h-full group"
+        >
+          <img 
+            src="https://raw.githubusercontent.com/Danicabezas33/GiftApp2/main/public/photos/home.jpg" 
+            onError={(e) => {
+              (e.target as HTMLImageElement).src = "https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=800&q=80"
+            }}
+            alt="Nosotros" 
+            className="w-full h-full object-cover transform hover:scale-105 transition-transform duration-[2000ms]"
+          />
+        </motion.div>
+
+        {/* Cell 2: Letter - spans 5 columns */}
+        <motion.div 
+          initial={{ y: 20, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ delay: 0.2, duration: 0.5 }}
+          className="md:col-span-5 md:row-span-2 bg-white rounded-3xl md:rounded-[32px] shadow-lg shadow-[#FFC8DD]/50 p-8 md:p-10 flex flex-col justify-center relative overflow-hidden"
+        >
+          <div className="absolute -top-10 -right-10 text-[#FFC8DD]/20 text-9xl">❤️</div>
+          
+          <h1 className="font-serif tracking-tight text-4xl lg:text-5xl font-extralight text-[#4A3B52] mb-6 relative z-10">
+            Felices 5 años,<br />mi niña preciosa
+          </h1>
+          
+          <div className="space-y-4 relative z-10">
+            <p className="font-sans text-base lg:text-lg leading-relaxed font-normal text-slate-700">
+              Cada día a tu lado ha sido un regalo, lleno de risas, aprendizajes y un amor que no deja de crecer.
+            </p>
+            <p className="font-sans text-base lg:text-lg leading-relaxed font-normal text-slate-700">
+              No me imagino mi vida sin ti, eres mi compañera, mi mejor amiga y el gran amor de mi vida. He creado esta pequeña página para recordar algunos de nuestros mejores momentos y celebrar todo lo que hemos construido juntos.
+            </p>
+            <p className="font-sans font-medium text-[#4A3B52] pt-2">
+              Te amo con todo mi corazón.
+            </p>
+          </div>
+        </motion.div>
+
+        {/* Cell 3: Counter */}
+        <motion.div 
+          initial={{ y: 20, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ delay: 0.3, duration: 0.5 }}
+          className="md:col-span-4 bg-white rounded-3xl md:rounded-[32px] shadow-lg shadow-[#FFC8DD]/50 p-6 md:p-8 flex flex-col items-center justify-center min-h-[200px]"
+        >
+          <CalendarHeart className="w-8 h-8 text-[#A2D2FF] mb-3 opacity-90" />
+          <span className="text-5xl lg:text-6xl font-serif text-[#4A3B52] tracking-tighter mb-1">1826</span>
+          <span className="font-sans text-slate-500 tracking-widest text-xs uppercase font-medium mb-1">Días Juntos</span>
+          <span className="font-serif text-[#CDB4DB] text-lg">5 Años de Amor</span>
+        </motion.div>
+
+        {/* Cell 4: CTA Button */}
+        <motion.div 
+          initial={{ y: 20, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ delay: 0.4, duration: 0.5 }}
+          className="md:col-span-4 bg-white rounded-3xl md:rounded-[32px] shadow-lg shadow-[#FFC8DD]/50 min-h-[200px] overflow-hidden"
+        >
+          <button 
+            onClick={() => onNavigate && onNavigate('games')}
+            className="w-full h-full flex flex-col items-center justify-center p-6 md:p-8 group relative bg-[#FFAFCC] hover:bg-[#FFC8DD] transition-colors"
+          >
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.2),transparent)] opacity-0 group-hover:opacity-100 transition-opacity"></div>
+            
+            <div className="w-16 h-16 bg-white text-[#FFAFCC] rounded-full flex items-center justify-center mb-4 shadow-sm animate-pulse group-hover:scale-110 transition-transform">
+              <Play className="w-6 h-6 ml-1" fill="currentColor" />
+            </div>
+            <span className="font-sans font-semibold text-lg text-[#4A3B52] relative z-10">Empezar Gincana</span>
+            <span className="font-sans text-sm text-[#4A3B52]/70 mt-1 relative z-10 transition-colors">Nivel 1</span>
+          </button>
+        </motion.div>
+
+        {/* Cell 5: Music Widget Concept (Integrada visualmente) */}
+        <motion.div 
+          initial={{ y: 20, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ delay: 0.5, duration: 0.5 }}
+          className="md:col-span-4 bg-white rounded-3xl md:rounded-[32px] shadow-lg shadow-[#FFC8DD]/50 p-6 md:p-8 flex flex-col items-center justify-center min-h-[200px]"
+        >
+          <div className="w-14 h-14 bg-[#BDE0FE]/30 rounded-full flex items-center justify-center mb-4 text-[#A2D2FF]">
+            <Music className="w-6 h-6" />
+          </div>
+          <span className="font-sans font-medium text-[#4A3B52] text-lg">Banda Sonora</span>
+          <span className="font-sans text-xs text-slate-500 mt-1 text-center max-w-[200px]">
+            Explora y controla nuestra música desde el reproductor flotante
+          </span>
+        </motion.div>
+
+      </div>
     </motion.div>
   );
 }

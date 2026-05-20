@@ -96,7 +96,7 @@ export function MinigameCherryBlossom({ onWin }: MinigameCherryProps) {
   return (
     <div 
       ref={containerRef}
-      className={`relative w-full h-[70vh] min-h-[400px] max-h-[600px] overflow-hidden rounded-2xl shadow-xl transition-colors duration-1000 select-none ${
+      className={`relative w-full h-[400px] overflow-hidden rounded-2xl shadow-xl transition-colors duration-1000 select-none ${
         phase === 'season' 
           ? 'bg-gradient-to-b from-sky-400 to-cyan-100'
           : phase === 'bloom' || phase === 'done' 

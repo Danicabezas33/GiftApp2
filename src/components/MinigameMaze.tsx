@@ -429,14 +429,31 @@ export function MinigameMaze({ onWin }: MinigameMazeProps) {
 
       ctx.restore();
 
+      // Optimize lighting performance by drawing black rectangles outside the radius,
+      // and only drawing the gradient in the inner square to avoid full screen gradient rendering.
       ctx.globalCompositeOperation = 'source-over';
       const gradient = ctx.createRadialGradient(player.x, player.y, actualRadius * 0.2, player.x, player.y, actualRadius);
       gradient.addColorStop(0, 'rgba(0,0,0,0)');
       gradient.addColorStop(0.6, 'rgba(0,0,0,0.6)');
       gradient.addColorStop(1, 'rgba(0,0,0,0.98)');
       
+      ctx.fillStyle = 'rgba(0,0,0,0.98)';
+      // Top rect
+      ctx.fillRect(0, 0, canvas.width, Math.max(0, player.y - actualRadius));
+      // Bottom rect
+      ctx.fillRect(0, Math.min(canvas.height, player.y + actualRadius), canvas.width, canvas.height - (player.y + actualRadius));
+      // Left rect
+      ctx.fillRect(0, Math.max(0, player.y - actualRadius), Math.max(0, player.x - actualRadius), Math.min(canvas.height, player.y + actualRadius) - Math.max(0, player.y - actualRadius));
+      // Right rect
+      ctx.fillRect(Math.min(canvas.width, player.x + actualRadius), Math.max(0, player.y - actualRadius), canvas.width - (player.x + actualRadius), Math.min(canvas.height, player.y + actualRadius) - Math.max(0, player.y - actualRadius));
+      
       ctx.fillStyle = gradient;
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.fillRect(
+        Math.max(0, player.x - actualRadius), 
+        Math.max(0, player.y - actualRadius), 
+        Math.min(canvas.width, player.x + actualRadius) - Math.max(0, player.x - actualRadius), 
+        Math.min(canvas.height, player.y + actualRadius) - Math.max(0, player.y - actualRadius)
+      );
       
       if (isTransitioning) {
           ctx.fillStyle = `rgba(0, 0, 0, ${transitionAmount})`;

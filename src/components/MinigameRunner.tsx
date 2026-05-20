@@ -508,10 +508,8 @@ export function MinigameRunner({ onWin }: MinigameRunnerProps) {
           // AC style bite/hole
           ctx.beginPath();
           ctx.arc(-4, 4, 3, 0, Math.PI * 2);
-          ctx.globalCompositeOperation = 'destination-out';
-          ctx.fillStyle = '#000000';
+          ctx.fillStyle = '#ffffff';
           ctx.fill();
-          ctx.globalCompositeOperation = 'source-over';
         }
         
         ctx.restore();

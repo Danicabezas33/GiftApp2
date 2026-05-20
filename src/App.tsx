@@ -76,16 +76,16 @@ export default function App() {
   }
 
   return (
-    <div className="min-h-screen bg-[#FAF8F5] text-[#5F4B66] selection:bg-[#FF8BA7]/30 selection:text-[#5F4B66]">
+    <div className="min-h-screen bg-[#FFF5F8] text-[#4A3B52] selection:bg-[#FFAFCC]/30 selection:text-[#4A3B52]">
       {unlockedWeb && <Navbar currentSection={currentSection} setCurrentSection={setCurrentSection} />}
       
       <main className={`pb-24 ${unlockedWeb ? 'pt-16' : 'pt-4 md:pt-8'} flex min-h-screen flex-col items-center justify-center relative overflow-hidden`}>
         <div className="absolute inset-0 pointer-events-none overflow-hidden -z-10">
-          <div className="absolute top-[-20%] right-[-10%] w-[60%] h-[60%] rounded-full bg-[radial-gradient(circle,rgba(252,211,222,0.6)_0%,transparent_70%)]" />
-          <div className="absolute bottom-[-20%] left-[-10%] w-[60%] h-[60%] rounded-full bg-[radial-gradient(circle,rgba(254,240,138,0.4)_0%,transparent_70%)]" />
+          <div className="absolute top-[-20%] right-[-10%] w-[60%] h-[60%] rounded-full bg-[radial-gradient(circle,rgba(255,200,221,0.6)_0%,transparent_70%)]" />
+          <div className="absolute bottom-[-20%] left-[-10%] w-[60%] h-[60%] rounded-full bg-[radial-gradient(circle,rgba(189,224,254,0.4)_0%,transparent_70%)]" />
         </div>
         <AnimatePresence mode="wait">
-          {unlockedWeb && currentSection === 'home' && <Home key="home" />}
+          {unlockedWeb && currentSection === 'home' && <Home key="home" onNavigate={setCurrentSection} />}
           {unlockedWeb && currentSection === 'roadmap' && <Roadmap key="roadmap" />}
           {unlockedWeb && currentSection === 'memories' && <Memories key="memories" />}
           {unlockedWeb && currentSection === 'gallery' && <Gallery key="gallery" />}

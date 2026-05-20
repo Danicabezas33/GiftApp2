@@ -220,7 +220,7 @@ export function Games({ onUnlockWeb, onNavigateHome }: GamesProps) {
                   }`}>
                     {isCompleted && (
                       <img 
-                        src={`/regalo${gift.id}.jpg`} 
+                        src={`https://raw.githubusercontent.com/Danicabezas33/GiftApp2/main/public/photos/regalo${gift.id}.jpg`} 
                         alt={gift.title} 
                         className="absolute inset-0 w-full h-full object-cover z-10 transition-opacity duration-300 opacity-90 group-hover:opacity-100"
                         onError={(e) => { 
@@ -354,7 +354,7 @@ export function Games({ onUnlockWeb, onNavigateHome }: GamesProps) {
               initial={{ scale: 0.9, y: 20 }}
               animate={{ scale: 1, y: 0 }}
               exit={{ scale: 0.9, y: 20 }}
-              className="bg-white rounded-[2.5rem] overflow-hidden shadow-2xl shadow-pink-200/50 max-w-lg w-full relative border border-pink-50 text-center flex flex-col"
+              className="bg-white rounded-[2.5rem] overflow-y-auto shadow-2xl shadow-pink-200/50 max-w-lg w-full max-h-[95vh] relative border border-pink-50 text-center flex flex-col"
               onClick={e => e.stopPropagation()}
             >
               <button 
