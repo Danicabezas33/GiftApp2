@@ -174,7 +174,7 @@ export default function Roadmap() {
       <section>
         <h2 className="text-4xl md:text-6xl font-script text-center text-spring-secondary mb-12 md:mb-20 drop-shadow-sm">Nuestra Historia</h2>
         
-        <div className="relative border-l-2 border-spring-primary/20 ml-2 md:ml-12">
+        <div className="relative border-l-2 border-spring-primary/20 ml-4 md:ml-12">
           {milestones.map((m, i) => (
             <motion.div 
               initial={{ opacity: 0, x: -20 }}
@@ -182,9 +182,9 @@ export default function Roadmap() {
               viewport={{ once: true, margin: "-50px" }}
               transition={{ delay: i * 0.1, duration: 0.8 }}
               key={i} 
-              className="mb-12 md:mb-16 ml-6 md:ml-16 relative"
+              className="mb-12 md:mb-16 ml-6 md:ml-12 relative"
             >
-              <div className="absolute w-4 h-4 md:w-5 md:h-5 bg-spring-primary rounded-full top-8 md:top-12 -left-[32px] md:-left-[75px] shadow-[0_0_15px_rgba(255,139,167,0.6)] border-2 border-white z-10"></div>
+              <div className="absolute w-4 h-4 md:w-5 md:h-5 bg-spring-primary rounded-full top-8 md:top-12 -left-[33px] md:-left-[59px] shadow-[0_0_15px_rgba(255,139,167,0.6)] border-2 border-white z-10"></div>
               
               <div className="glass p-1 md:p-1.5 rounded-[1.5rem] md:rounded-[2rem] overflow-hidden flex flex-col md:flex-row gap-0 md:gap-4 items-stretch group hover:border-spring-primary/30 transition-all duration-500 shadow-sm hover:shadow-md">
                 <div className="p-6 md:p-10 flex-1 flex flex-col justify-center">
