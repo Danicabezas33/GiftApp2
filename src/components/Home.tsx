@@ -1,11 +1,83 @@
-import { motion } from 'motion/react';
-import { Play, Music, CalendarHeart } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'motion/react';
+import { Play, CalendarHeart } from 'lucide-react';
 
 interface HomeProps {
   onNavigate?: (section: string) => void;
 }
 
+const Heart8Bit = ({ className = "w-16 h-16" }) => (
+  <svg 
+    xmlns="http://www.w3.org/2000/svg" 
+    viewBox="0 0 11 10" 
+    fill="currentColor" 
+    className={className}
+  >
+    <rect x="1" y="0" width="2" height="1" />
+    <rect x="8" y="0" width="2" height="1" />
+    <rect x="0" y="1" width="4" height="1" />
+    <rect x="7" y="1" width="4" height="1" />
+    <rect x="0" y="2" width="11" height="1" />
+    <rect x="0" y="3" width="11" height="1" />
+    <rect x="0" y="4" width="11" height="1" />
+    <rect x="1" y="5" width="9" height="1" />
+    <rect x="2" y="6" width="7" height="1" />
+    <rect x="3" y="7" width="5" height="1" />
+    <rect x="4" y="8" width="3" height="1" />
+    <rect x="5" y="9" width="1" height="1" />
+  </svg>
+);
+
+const StatItem = ({ label, targetValue }: { label: string, targetValue: number }) => {
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    let startTime: number | null = null;
+    let animId: number;
+    const duration = 2000;
+    
+    const animate = (currentTime: number) => {
+      if (!startTime) startTime = currentTime;
+      const progress = Math.min((currentTime - startTime) / duration, 1);
+      const easeProgress = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
+      setCount(Math.floor(easeProgress * targetValue));
+      if (progress < 1) {
+        animId = requestAnimationFrame(animate);
+      }
+    };
+    animId = requestAnimationFrame(animate);
+    return () => cancelAnimationFrame(animId);
+  }, [targetValue]);
+
+  return (
+    <div className="flex flex-col items-center">
+      <span className="text-5xl font-bold text-[#FFAFCC] mb-1">{count}</span>
+      <span className="text-xs uppercase font-medium tracking-widest text-[#CDB4DB]">{label}</span>
+    </div>
+  );
+};
+
 export function Home({ onNavigate }: HomeProps) {
+  const [popups, setPopups] = useState<{id: number, text: string, x: number, y: number}[]>([]);
+  const phrases = ["¡Guapa!", "¡Preciosa!", "¡Te amo!", "¡Mi niña!", "¡Bombón!"];
+
+  const handleLoveBomb = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    
+    const newPopup = {
+      id: Date.now() + Math.random(),
+      text: phrases[Math.floor(Math.random() * phrases.length)],
+      x: Math.random() * (rect.width - 60) + 10,
+      y: Math.random() * (rect.height - 40) + 10
+    };
+    
+    setPopups(prev => [...prev, newPopup]);
+    
+    setTimeout(() => {
+      setPopups(prev => prev.filter(p => p.id !== newPopup.id));
+    }, 2000);
+  };
+
   return (
     <motion.div 
       initial={{ opacity: 0 }}
@@ -71,12 +143,54 @@ export function Home({ onNavigate }: HomeProps) {
           <span className="font-serif text-[#CDB4DB] text-lg">5 Años de Amor</span>
         </motion.div>
 
-        {/* Cell 4: CTA Button */}
+        {/* Cell 4: Stats */}
         <motion.div 
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.4, duration: 0.5 }}
-          className="md:col-span-4 bg-white rounded-3xl md:rounded-[32px] shadow-lg shadow-[#FFC8DD]/50 min-h-[200px] overflow-hidden"
+          className="md:col-span-8 bg-white rounded-3xl md:rounded-[32px] shadow-lg shadow-[#FFC8DD]/30 p-6 md:p-8 flex items-center justify-around min-h-[200px]"
+        >
+          <StatItem label="Países" targetValue={6} />
+          <StatItem label="Kilómetros" targetValue={4820} />
+          <StatItem label="Aventuras" targetValue={100} />
+        </motion.div>
+
+        {/* Cell 5: Love Bomb Button */}
+        <motion.div 
+          initial={{ y: 20, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ delay: 0.5, duration: 0.5 }}
+          className="md:col-span-4 bg-white rounded-3xl md:rounded-[32px] shadow-lg shadow-[#FFC8DD]/30 p-6 md:p-8 flex flex-col items-center justify-center min-h-[200px] relative overflow-hidden"
+        >
+          <button 
+            onClick={handleLoveBomb}
+            className="w-24 h-24 bg-[#FFAFCC] hover:bg-[#FFC8DD] text-white rounded-full flex items-center justify-center shadow-md animate-pulse transition-colors relative z-10"
+          >
+            <Heart8Bit className="w-10 h-10" />
+          </button>
+          
+          <AnimatePresence>
+            {popups.map(popup => (
+              <motion.div
+                key={popup.id}
+                initial={{ opacity: 0, y: popup.y + 20, x: popup.x }}
+                animate={{ opacity: 1, y: popup.y - 40, x: popup.x }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 1.5, ease: "easeOut" }}
+                className="absolute bg-white border border-[#FFAFCC] text-[#4A3B52] px-3 py-1 rounded-full text-sm font-bold shadow-sm pointer-events-none whitespace-nowrap z-0"
+              >
+                {popup.text}
+              </motion.div>
+            ))}
+          </AnimatePresence>
+        </motion.div>
+
+        {/* Cell 6: CTA Button - Now spans 8 cols */}
+        <motion.div 
+          initial={{ y: 20, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ delay: 0.6, duration: 0.5 }}
+          className="md:col-span-8 bg-white rounded-3xl md:rounded-[32px] shadow-lg shadow-[#FFC8DD]/30 min-h-[200px] overflow-hidden"
         >
           <button 
             onClick={() => onNavigate && onNavigate('games')}
@@ -87,25 +201,9 @@ export function Home({ onNavigate }: HomeProps) {
             <div className="w-16 h-16 bg-white text-[#FFAFCC] rounded-full flex items-center justify-center mb-4 shadow-sm animate-pulse group-hover:scale-110 transition-transform">
               <Play className="w-6 h-6 ml-1" fill="currentColor" />
             </div>
-            <span className="font-sans font-semibold text-lg text-[#4A3B52] relative z-10">Empezar Gincana</span>
-            <span className="font-sans text-sm text-[#4A3B52]/70 mt-1 relative z-10 transition-colors">Nivel 1</span>
+            <span className="font-sans font-semibold text-xl text-white drop-shadow-sm relative z-10">Empezar Gincana</span>
+            <span className="font-sans text-white/80 mt-1 relative z-10 transition-colors uppercase tracking-widest text-xs font-bold">Nivel 1</span>
           </button>
-        </motion.div>
-
-        {/* Cell 5: Music Widget Concept (Integrada visualmente) */}
-        <motion.div 
-          initial={{ y: 20, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ delay: 0.5, duration: 0.5 }}
-          className="md:col-span-4 bg-white rounded-3xl md:rounded-[32px] shadow-lg shadow-[#FFC8DD]/50 p-6 md:p-8 flex flex-col items-center justify-center min-h-[200px]"
-        >
-          <div className="w-14 h-14 bg-[#BDE0FE]/30 rounded-full flex items-center justify-center mb-4 text-[#A2D2FF]">
-            <Music className="w-6 h-6" />
-          </div>
-          <span className="font-sans font-medium text-[#4A3B52] text-lg">Banda Sonora</span>
-          <span className="font-sans text-xs text-slate-500 mt-1 text-center max-w-[200px]">
-            Explora y controla nuestra música desde el reproductor flotante
-          </span>
         </motion.div>
 
       </div>
