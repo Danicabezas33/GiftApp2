@@ -55,10 +55,16 @@ const CloudPixel = ({ className = "w-12 h-8" }) => (
   </svg>
 );
 
-const StatItem = ({ label, targetValue }: { label: string, targetValue: number | string}) => {
-  const [count, setCount] = useState(0);
+const StatItem = ({ label, targetValue }: { label: string, targetValue: number | string }) => {
+  const [count, setCount] = useState<number | string>(0);
 
   useEffect(() => {
+    // Si el valor no es un número (es "∞"), no animamos, mostramos directo
+    if (typeof targetValue !== 'number') {
+      setCount(targetValue);
+      return;
+    }
+
     let startTime: number | null = null;
     let animId: number;
     const duration = 2000;
@@ -67,19 +73,27 @@ const StatItem = ({ label, targetValue }: { label: string, targetValue: number |
       if (!startTime) startTime = currentTime;
       const progress = Math.min((currentTime - startTime) / duration, 1);
       const easeProgress = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
+      
+      // Solo multiplicamos si es número
       setCount(Math.floor(easeProgress * targetValue));
+      
       if (progress < 1) {
         animId = requestAnimationFrame(animate);
       }
     };
+    
     animId = requestAnimationFrame(animate);
     return () => cancelAnimationFrame(animId);
   }, [targetValue]);
 
   return (
     <div className="flex flex-col items-center">
-      <span className="text-5xl font-bold text-[#FFAFCC] mb-1">{count}</span>
-      <span className="text-xs uppercase font-medium tracking-widest text-[#CDB4DB]">{label}</span>
+      <span className="text-5xl font-bold text-[#FFAFCC] mb-1">
+        {count}
+      </span>
+      <span className="text-xs uppercase font-medium tracking-widest text-[#CDB4DB]">
+        {label}
+      </span>
     </div>
   );
 };
@@ -206,8 +220,8 @@ export function Home({ onNavigate }: HomeProps) {
           {/* Stats */}
           <div className="relative z-10 w-full flex items-center justify-around">
             <StatItem label="Países" targetValue={4} />
-            <StatItem label="Gordito/Gordita enviados" targetValue={8754} />
-            <StatItem label="Stickers de Stitch enamorado" targetValue="∞" />
+            <StatItem label="Gordito enviados" targetValue={8754} />
+            <StatItem label="Stickers Stitch" targetValue="∞" />
           </div>
         </motion.div>
 
