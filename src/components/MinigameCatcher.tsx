@@ -189,7 +189,7 @@ export function MinigameCatcher({ onWin }: MinigameCatcherProps) {
         bgGrad.addColorStop(0, '#fdf4ff'); // fuchsia-50
         bgGrad.addColorStop(1, '#ccfbf1'); // teal-50
       } else {
-        bgGrad.addColorStop(0, '#fce7f3'); // pink-100
+        bgGrad.addColorStop(0, '#FFC8DD'); // pink-100
         bgGrad.addColorStop(1, '#d1fae5'); // emerald-100
       }
       ctx.fillStyle = bgGrad;
@@ -198,7 +198,7 @@ export function MinigameCatcher({ onWin }: MinigameCatcherProps) {
       drawHanok();
 
       // Petals layer
-      ctx.fillStyle = '#fbcfe8'; // pink-200
+      ctx.fillStyle = '#FFAFCC'; // pink-200
       for (const p of petals) {
         p.time += dt;
         p.baseY = (p.baseY || p.y) + p.speed * dt;
@@ -383,10 +383,10 @@ export function MinigameCatcher({ onWin }: MinigameCatcherProps) {
             <p className="font-serif text-lg text-teal-800 mb-4 px-4 text-center">
               Desliza el cuenco de cerámica para jugar.<br/>Atrapa las Gotas de Esencia (100 pts) antes de 45s.
             </p>
-            <p className="text-sm text-pink-600 font-bold mb-6">¡Combo Glow x2 al atrapar 3 seguidas!</p>
+            <p className="text-sm text-[#CDB4DB] font-bold mb-6">¡Combo Glow x2 al atrapar 3 seguidas!</p>
             <button 
               onClick={startGame}
-              className="px-6 py-2 bg-gradient-to-r from-pink-400 to-teal-400 text-white font-bold rounded-full hover:from-pink-500 hover:to-teal-500 transition-all shadow-md cursor-pointer transform hover:scale-105"
+              className="px-6 py-2 bg-gradient-to-r from-[#FFAFCC] to-teal-400 text-white font-bold rounded-full hover:from-[#FFC8DD] hover:to-teal-500 transition-all shadow-md cursor-pointer transform hover:scale-105"
             >
               Comenzar
             </button>
@@ -399,7 +399,7 @@ export function MinigameCatcher({ onWin }: MinigameCatcherProps) {
              <p className="text-gray-600 mb-4">Conseguiste {score} puntos.</p>
              <button 
               onClick={startGame}
-              className="px-6 py-2 bg-gradient-to-r from-pink-400 to-teal-400 text-white font-bold rounded-full hover:from-pink-500 hover:to-teal-500 transition-colors shadow-md cursor-pointer"
+              className="px-6 py-2 bg-gradient-to-r from-[#FFAFCC] to-teal-400 text-white font-bold rounded-full hover:from-[#FFC8DD] hover:to-teal-500 transition-colors shadow-md cursor-pointer"
             >
               Intentar de nuevo
             </button>
@@ -408,8 +408,8 @@ export function MinigameCatcher({ onWin }: MinigameCatcherProps) {
 
         {isWon && (
           <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none z-20">
-             <div className="bg-white/90 backdrop-blur-md px-8 py-6 rounded-2xl shadow-xl text-center border-2 border-pink-200 animate-bounce">
-                <p className="font-serif text-3xl text-pink-500 font-bold mb-2">¡Completado!</p>
+             <div className="bg-white/90 backdrop-blur-md px-8 py-6 rounded-2xl shadow-xl text-center border-2 border-[#FFC8DD] animate-bounce">
+                <p className="font-serif text-3xl text-[#FFAFCC] font-bold mb-2">¡Completado!</p>
                 <p className="text-teal-600 font-medium">+100 Puntos</p>
              </div>
           </div>
@@ -420,7 +420,7 @@ export function MinigameCatcher({ onWin }: MinigameCatcherProps) {
             <div className={`absolute top-4 left-4 backdrop-blur-sm px-4 py-2 rounded-full font-bold text-sm shadow-sm z-10 transition-colors duration-300 ${isCombo ? 'bg-amber-100/90 text-amber-600 ring-2 ring-amber-300' : 'bg-white/80 text-teal-600'}`}>
               Puntos: {score} / 100
             </div>
-            <div className={`absolute top-4 right-4 backdrop-blur-sm px-4 py-2 rounded-full font-bold text-sm shadow-sm z-10 transition-colors duration-300 ${timeLeft <= 10 ? 'bg-rose-100 text-rose-600 animate-pulse' : 'bg-white/80 text-pink-500'}`}>
+            <div className={`absolute top-4 right-4 backdrop-blur-sm px-4 py-2 rounded-full font-bold text-sm shadow-sm z-10 transition-colors duration-300 ${timeLeft <= 10 ? 'bg-rose-100 text-rose-600 animate-pulse' : 'bg-white/80 text-[#FFAFCC]'}`}>
               {timeLeft}s
             </div>
             {isCombo && (

@@ -193,7 +193,7 @@ export function MinigameCherryBlossom({ onWin }: MinigameCherryProps) {
                       rotate: Math.random() * 360
                     }}
                     transition={{ repeat: Infinity, duration: 4 + Math.random() * 5, ease: 'linear', delay: Math.random() * 5 }}
-                    className="absolute w-5 h-5 bg-pink-200/80 rounded-full blur-[1px]"
+                    className="absolute w-5 h-5 bg-[#FFC8DD]/80 rounded-full blur-[1px]"
                     style={{ borderRadius: '50% 0 50% 50%' }}
                   />
               ))}
@@ -268,7 +268,7 @@ export function MinigameCherryBlossom({ onWin }: MinigameCherryProps) {
             exit={{ opacity: 0 }}
             className="absolute inset-0 z-50 bg-black/60 backdrop-blur-sm flex flex-col items-center justify-center p-6 text-center"
           >
-            <h3 className="font-serif text-4xl md:text-5xl text-pink-100 mb-6 font-bold drop-shadow-md tracking-wide">El Árbol de la Vida</h3>
+            <h3 className="font-serif text-4xl md:text-5xl text-[#CDB4DB] mb-6 font-bold drop-shadow-md tracking-wide">El Árbol de la Vida</h3>
             <p className="text-white/90 mb-10 text-xl max-w-md font-light leading-relaxed">
               Toda gran historia tiene un comienzo.<br/> Planta la semilla de nuestro futuro y acompáñala a crecer a través del tiempo.
             </p>
@@ -358,7 +358,7 @@ export function MinigameCherryBlossom({ onWin }: MinigameCherryProps) {
                        initial={{ opacity: 0, scale: 0.8 }}
                        animate={{ opacity: 1, scale: 1 }}
                        transition={{ duration: 2 }}
-                       className="absolute -top-[50px] -left-[100px] w-[500px] h-[400px] bg-pink-400/30 rounded-full blur-3xl pointer-events-none mix-blend-screen"
+                       className="absolute -top-[50px] -left-[100px] w-[500px] h-[400px] bg-[#FFAFCC]/30 rounded-full blur-3xl pointer-events-none mix-blend-screen"
                     />
                   )}
                 </AnimatePresence>
@@ -403,12 +403,12 @@ export function MinigameCherryBlossom({ onWin }: MinigameCherryProps) {
                            <motion.div
                              animate={{
                                  scale: isBloomed ? 1.6 : 1,
-                                 backgroundColor: isBloomed ? '#fbcfe8' : '#3f6212', // pink-200 vs lime-800
+                                 backgroundColor: isBloomed ? '#FFAFCC' : '#3f6212', // pink-200 vs lime-800
                                  rotate: isBloomed ? Math.random() * 90 - 45 : 0,
                                  borderRadius: isBloomed ? '0 50% 50% 50%' : '50%',
                              }}
                              transition={{ type: 'spring', bounce: 0.6 }}
-                             className={`w-10 h-10 shadow-lg border-2 relative origin-center flex items-center justify-center ${isBloomed ? 'border-pink-300' : 'border-lime-950/50'} z-10`}
+                             className={`w-10 h-10 shadow-lg border-2 relative origin-center flex items-center justify-center ${isBloomed ? 'border-[#FFAFCC]' : 'border-lime-950/50'} z-10`}
                            >
                               {isBloomed && (
                                   <>
@@ -416,10 +416,10 @@ export function MinigameCherryBlossom({ onWin }: MinigameCherryProps) {
                                     <div className="w-2 h-2 bg-yellow-300 rounded-full z-10" />
                                     
                                     {/* Petal accents */}
-                                    <div className="absolute -top-1 w-3 h-3 bg-pink-100 rounded-full opacity-80" />
-                                    <div className="absolute -bottom-1 w-3 h-3 bg-pink-100 rounded-full opacity-80" />
-                                    <div className="absolute -left-1 w-3 h-3 bg-pink-100 rounded-full opacity-80" />
-                                    <div className="absolute -right-1 w-3 h-3 bg-pink-100 rounded-full opacity-80" />
+                                    <div className="absolute -top-1 w-3 h-3 bg-[#FFC8DD] rounded-full opacity-80" />
+                                    <div className="absolute -bottom-1 w-3 h-3 bg-[#FFC8DD] rounded-full opacity-80" />
+                                    <div className="absolute -left-1 w-3 h-3 bg-[#FFC8DD] rounded-full opacity-80" />
+                                    <div className="absolute -right-1 w-3 h-3 bg-[#FFC8DD] rounded-full opacity-80" />
                                   </>
                               )}
                            </motion.div>
@@ -577,7 +577,7 @@ export function MinigameCherryBlossom({ onWin }: MinigameCherryProps) {
                     initial={{ y: 20, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
                     transition={{ delay: 0.8, duration: 1 }}
-                    className="text-4xl md:text-6xl font-script text-pink-100 mb-8 drop-shadow-xl"
+                    className="text-4xl md:text-6xl font-script text-[#CDB4DB] mb-8 drop-shadow-xl"
                   >
                     Nuestra historia ha florecido
                   </motion.h2>
@@ -590,7 +590,7 @@ export function MinigameCherryBlossom({ onWin }: MinigameCherryProps) {
                     <p className="text-xl text-white/95 font-serif font-medium leading-relaxed drop-shadow-sm mb-4">
                        Tu recompensa real te espera...
                     </p>
-                    <p className="text-2xl md:text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-pink-300 via-rose-300 to-pink-300 drop-shadow-sm leading-tight">
+                    <p className="text-2xl md:text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-[#FFAFCC] via-rose-300 to-[#FFC8DD] drop-shadow-sm leading-tight">
                        ¡Vamos a construir nuestro propio Ciruelo en Flor juntos!
                     </p>
                   </motion.div>

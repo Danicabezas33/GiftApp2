@@ -134,18 +134,18 @@ export function ScratchCard({ tipoRegalo, imagenRegalo, onClose, onComplete }: S
         initial={{ scale: 0.9, y: 20 }}
         animate={{ scale: 1, y: 0 }}
         exit={{ scale: 0.9, y: 20 }}
-        className="bg-white rounded-[2.5rem] p-8 md:p-12 shadow-2xl shadow-pink-200/50 max-w-md w-full relative border border-pink-50 flex flex-col items-center"
+        className="bg-white rounded-[2.5rem] p-8 md:p-12 shadow-2xl shadow-[#FFC8DD]/50 max-w-md w-full relative border border-[#FFC8DD]/30 flex flex-col items-center"
       >
         <button 
           onClick={onClose}
-          className="absolute top-6 right-6 text-[#9D84A3] hover:text-[#D1495B] transition-colors z-20"
+          className="absolute top-6 right-6 text-[#CDB4DB] hover:text-[#4A3B52] transition-colors z-20"
         >
           <X className="w-6 h-6" />
         </button>
 
-        <h2 className="text-3xl font-serif font-bold text-[#D1495B] mb-8 text-center drop-shadow-sm">¡Objeto descubierto!</h2>
+        <h2 className="text-3xl font-serif font-bold text-[#4A3B52] mb-8 text-center drop-shadow-sm">¡Objeto descubierto!</h2>
 
-        <div className="relative w-64 h-64 md:w-80 md:h-80 mb-10 rounded-[2rem] overflow-hidden shadow-lg shadow-pink-100/50 border border-pink-50 bg-pink-50/30 flex items-center justify-center">
+        <div className="relative w-64 h-64 md:w-80 md:h-80 mb-10 rounded-[2rem] overflow-hidden shadow-lg shadow-[#FFC8DD]/50 border border-[#FFC8DD]/30 bg-[#FFC8DD]/30 flex items-center justify-center">
           {/* Base image representing the gift */}
           <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none p-4">
              <img src={imagenRegalo} alt={tipoRegalo} className="w-full h-full object-cover rounded-xl" />
@@ -180,7 +180,7 @@ export function ScratchCard({ tipoRegalo, imagenRegalo, onClose, onComplete }: S
             >
               <button
                 onClick={onComplete}
-                className="w-full py-5 bg-[#FF8BA7] text-white rounded-2xl font-bold text-xl hover:scale-[1.02] active:scale-95 transition-all shadow-[0_4px_15px_rgba(255,139,167,0.5)]"
+                className="w-full py-5 bg-[#FFAFCC] text-white rounded-2xl font-bold text-xl hover:scale-[1.02] active:scale-95 transition-all shadow-[0_4px_15px_rgba(255,139,167,0.5)]"
               >
                 Recoger y continuar
               </button>

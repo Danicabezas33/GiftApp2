@@ -139,12 +139,12 @@ export function MusicPlayer() {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 10 }}
-            className="bg-white/90 backdrop-blur-md px-4 py-2 rounded-2xl shadow-lg border border-pink-50 mb-1 max-w-[180px] md:max-w-[220px] overflow-hidden"
+            className="bg-white/90 backdrop-blur-md px-4 py-2 rounded-2xl shadow-lg border border-[#FFC8DD]/30 mb-1 max-w-[180px] md:max-w-[220px] overflow-hidden"
           >
             <div className="flex items-center gap-3 overflow-hidden whitespace-nowrap">
-              <Music className="w-4 h-4 text-[#FF8BA7] shrink-0 animate-pulse" />
+              <Music className="w-4 h-4 text-[#FFAFCC] shrink-0 animate-pulse" />
               <div className="overflow-hidden flex-1 relative flex">
-                <p className="text-[10px] md:text-xs font-medium text-[#5F4B66]/80 animate-marquee pr-4 tracking-wider uppercase">
+                <p className="text-[10px] md:text-xs font-medium text-[#4A3B52]/80 animate-marquee pr-4 tracking-wider uppercase">
                   {cleanupTrackName(playlist[currentIndex])}
                 </p>
               </div>
@@ -160,50 +160,50 @@ export function MusicPlayer() {
               initial={{ opacity: 0, x: 20, scale: 0.9 }}
               animate={{ opacity: 1, x: 0, scale: 1 }}
               exit={{ opacity: 0, x: 10, scale: 0.9 }}
-              className="bg-white/90 backdrop-blur-md rounded-full shadow-lg p-3 px-5 flex items-center gap-3 border border-pink-50"
+              className="bg-white/90 backdrop-blur-md rounded-full shadow-lg p-3 px-5 flex items-center gap-3 border border-[#FFC8DD]/30"
             >
               <input 
                 type="range" 
                 min="0" max="1" step="0.01" 
                 value={volume}
                 onChange={(e) => setVolume(parseFloat(e.target.value))}
-                className="w-20 md:w-28 accent-[#FF8BA7] cursor-pointer opacity-80"
+                className="w-20 md:w-28 accent-[#FFAFCC] cursor-pointer opacity-80"
               />
             </motion.div>
           )}
         </AnimatePresence>
 
-        <div className="bg-white/95 backdrop-blur-md rounded-full shadow-[0_4px_15px_rgba(255,139,167,0.15)] p-2 md:p-2.5 flex items-center gap-1 border border-pink-50 transition-all duration-500 hover:border-pink-200">
+        <div className="bg-white/95 backdrop-blur-md rounded-full shadow-[0_4px_15px_rgba(255,139,167,0.15)] p-2 md:p-2.5 flex items-center gap-1 border border-[#FFC8DD]/30 transition-all duration-500 hover:border-[#FFC8DD]">
           <button 
             onClick={() => {
               if(volume > 0) setVolume(0);
               else setVolume(0.5);
             }}
-            className="w-8 h-8 md:w-9 md:h-9 rounded-full flex items-center justify-center text-[#9D84A3] hover:text-[#FF8BA7] hover:bg-pink-50 transition-all"
+            className="w-8 h-8 md:w-9 md:h-9 rounded-full flex items-center justify-center text-[#CDB4DB] hover:text-[#FFAFCC] hover:bg-[#FFF0F5] transition-all"
           >
             <VolumeIcon className="w-4 h-4 md:w-5 md:h-5" />
           </button>
           
-          <div className="w-px h-5 md:h-6 bg-pink-100 mx-1"></div>
+          <div className="w-px h-5 md:h-6 bg-[#FFC8DD] mx-1"></div>
 
           <div className="flex items-center gap-1 px-1">
             <button 
               onClick={handlePrev}
-              className="w-8 h-8 md:w-9 md:h-9 rounded-full flex items-center justify-center text-[#9D84A3] hover:text-[#5F4B66] hover:bg-pink-50 transition-all"
+              className="w-8 h-8 md:w-9 md:h-9 rounded-full flex items-center justify-center text-[#CDB4DB] hover:text-[#4A3B52] hover:bg-[#FFF0F5] transition-all"
             >
               <SkipBack className="w-4 h-4 md:w-5 md:h-5" />
             </button>
  
             <button 
               onClick={togglePlay}
-              className="bg-[#FF8BA7] text-white w-10 h-10 md:w-12 md:h-12 rounded-full flex items-center justify-center transition-all duration-500 shadow-[0_4px_15px_rgba(255,139,167,0.4)] hover:scale-105 active:scale-95 hover:bg-[#ff99b3]"
+              className="bg-[#FFAFCC] text-white w-10 h-10 md:w-12 md:h-12 rounded-full flex items-center justify-center transition-all duration-500 shadow-[0_4px_15px_rgba(255,139,167,0.4)] hover:scale-105 active:scale-95 hover:bg-[#ff99b3]"
             >
               {isPlaying ? <Pause className="w-5 h-5 md:w-6 md:h-6" fill="currentColor" /> : <Play className="w-5 h-5 md:w-6 md:h-6 ml-1" fill="currentColor" />}
             </button>
  
             <button 
               onClick={handleNext}
-              className="w-8 h-8 md:w-9 md:h-9 rounded-full flex items-center justify-center text-[#9D84A3] hover:text-[#5F4B66] hover:bg-pink-50 transition-all"
+              className="w-8 h-8 md:w-9 md:h-9 rounded-full flex items-center justify-center text-[#CDB4DB] hover:text-[#4A3B52] hover:bg-[#FFF0F5] transition-all"
             >
               <SkipForward className="w-4 h-4 md:w-5 md:h-5" />
             </button>

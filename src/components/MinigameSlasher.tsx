@@ -705,7 +705,7 @@ export function MinigameSlasher({ onWin }: MinigameSlasherProps) {
         {!isPlaying && glowPower === 0 && !isGameOver && !isWon && (
           <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/60 backdrop-blur-sm z-10">
             <h3 className="font-sans text-2xl text-cyan-400 mb-2 font-bold uppercase tracking-widest drop-shadow-[0_0_10px_rgba(0,255,255,0.8)]">K-Drama City</h3>
-            <p className="text-pink-100 mb-6 max-w-xs text-center text-sm px-4 shadow-black drop-shadow-md">
+            <p className="text-[#CDB4DB] mb-6 max-w-xs text-center text-sm px-4 shadow-black drop-shadow-md">
               Desliza tu dedo para destruir los Cristales Oscuros.<br/>Enciende la ciudad.<br/>¡CUIDADO! No cortes los cristales ROJOS.
             </p>
             <button 
@@ -719,9 +719,9 @@ export function MinigameSlasher({ onWin }: MinigameSlasherProps) {
 
         {isWon && (
           <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none z-20">
-             <div className="bg-black/80 backdrop-blur-md px-8 py-6 rounded-xl shadow-[0_0_30px_rgba(255,0,255,0.5)] border border-pink-500 text-center">
+             <div className="bg-black/80 backdrop-blur-md px-8 py-6 rounded-xl shadow-[0_0_30px_rgba(255,0,255,0.5)] border border-[#FFC8DD]/300 text-center">
                 <p className="font-sans uppercase tracking-widest text-2xl text-cyan-400 font-bold mb-2 animate-pulse">¡Ciudad Encendida!</p>
-                <p className="text-pink-300">Glow Power 100%</p>
+                <p className="text-[#CDB4DB]">Glow Power 100%</p>
              </div>
           </div>
         )}
@@ -730,7 +730,7 @@ export function MinigameSlasher({ onWin }: MinigameSlasherProps) {
           <div className="absolute top-4 left-4 right-4 pointer-events-none z-10">
              <div className="w-full h-3 bg-gray-900 rounded-full border border-gray-700 overflow-hidden">
                 <div 
-                   className="h-full bg-gradient-to-r from-cyan-400 to-pink-500 transition-all duration-300 shadow-[0_0_10px_rgba(0,255,255,0.8)]"
+                   className="h-full bg-gradient-to-r from-cyan-400 to-[#FFAFCC] transition-all duration-300 shadow-[0_0_10px_rgba(0,255,255,0.8)]"
                    style={{ width: `${glowPower}%` }}
                 ></div>
              </div>

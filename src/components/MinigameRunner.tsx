@@ -530,7 +530,7 @@ export function MinigameRunner({ onWin }: MinigameRunnerProps) {
 
   return (
     <div className="w-full flex justify-center">
-      <div className="w-full relative rounded-2xl overflow-hidden border border-[#FF8BA7]/30 shadow-inner min-h-[300px]">
+      <div className="w-full relative rounded-2xl overflow-hidden border border-[#FFAFCC]/30 shadow-inner min-h-[300px]">
         <canvas 
           ref={canvasRef} 
           className="w-full h-[300px] block cursor-pointer touch-none" 
@@ -538,13 +538,13 @@ export function MinigameRunner({ onWin }: MinigameRunnerProps) {
         
         {!isPlaying && timeLeft === 30 && !isGameOver && !isWon && (
           <div className="absolute inset-0 flex flex-col items-center justify-center bg-white/60 backdrop-blur-sm z-10">
-            <h3 className="font-serif text-xl text-[#D1495B] mb-2 font-bold">¡Escapa Nala!</h3>
-            <p className="text-[#5F4B66]/80 mb-6 max-w-xs text-center">
+            <h3 className="font-serif text-xl text-[#4A3B52] mb-2 font-bold">¡Escapa Nala!</h3>
+            <p className="text-[#4A3B52]/80 mb-6 max-w-xs text-center">
               ¡Ayuda a Nala a esquivar las hojas, zorros y mariposas durante 30 segundos!
             </p>
             <button 
               onClick={startGame}
-              className="px-6 py-2 bg-[#FF8BA7] text-white font-bold rounded-full hover:bg-pink-400 transition-colors shadow-md"
+              className="px-6 py-2 bg-[#FFAFCC] text-white font-bold rounded-full hover:bg-[#FFAFCC] transition-colors shadow-md"
             >
               Comenzar
             </button>
@@ -553,11 +553,11 @@ export function MinigameRunner({ onWin }: MinigameRunnerProps) {
 
         {isGameOver && (
           <div className="absolute inset-0 flex flex-col items-center justify-center bg-white/80 backdrop-blur-sm z-10">
-             <p className="font-serif text-xl text-[#D1495B] font-bold mb-2">¡Ups!</p>
-             <p className="text-[#5F4B66]/80 mb-4">Aguantaste {30 - timeLeft} segundos</p>
+             <p className="font-serif text-xl text-[#4A3B52] font-bold mb-2">¡Ups!</p>
+             <p className="text-[#4A3B52]/80 mb-4">Aguantaste {30 - timeLeft} segundos</p>
              <button 
               onClick={startGame}
-              className="px-6 py-2 bg-[#FF8BA7] text-white font-bold rounded-full hover:bg-pink-400 transition-colors shadow-md"
+              className="px-6 py-2 bg-[#FFAFCC] text-white font-bold rounded-full hover:bg-[#FFAFCC] transition-colors shadow-md"
             >
               Intentar de nuevo
             </button>
@@ -566,15 +566,15 @@ export function MinigameRunner({ onWin }: MinigameRunnerProps) {
 
         {isWon && (
           <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none z-20">
-             <div className="bg-white/90 backdrop-blur-md px-6 py-4 rounded-xl shadow-xl text-center border border-pink-100 animate-bounce">
-                <p className="font-serif text-2xl text-[#FF8BA7] font-bold mb-1">¡Completado!</p>
-                <p className="text-[#5F4B66]/80">¡Has resistido 30 segundos!</p>
+             <div className="bg-white/90 backdrop-blur-md px-6 py-4 rounded-xl shadow-xl text-center border border-[#FFC8DD]/50 animate-bounce">
+                <p className="font-serif text-2xl text-[#FFAFCC] font-bold mb-1">¡Completado!</p>
+                <p className="text-[#4A3B52]/80">¡Has resistido 30 segundos!</p>
              </div>
           </div>
         )}
 
         {isPlaying && (
-          <div className="absolute top-4 right-4 bg-white/80 backdrop-blur-sm px-3 py-1 rounded-full text-[#D1495B] font-bold text-sm shadow-sm pointer-events-none">
+          <div className="absolute top-4 right-4 bg-white/80 backdrop-blur-sm px-3 py-1 rounded-full text-[#4A3B52] font-bold text-sm shadow-sm pointer-events-none">
             {timeLeft}s
           </div>
         )}

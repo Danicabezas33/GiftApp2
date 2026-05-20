@@ -125,15 +125,15 @@ export function Games({ onUnlockWeb, onNavigateHome }: GamesProps) {
             <motion.div
                animate={{ opacity: [0.3, 0.8, 0.3], scale: [0.95, 1.05, 0.95] }}
                transition={{ repeat: Infinity, duration: 3, ease: "easeInOut" }}
-               className="absolute inset-[-10px] bg-pink-100/40 rounded-full -z-20"
+               className="absolute inset-[-10px] bg-[#FFC8DD]/40 rounded-full -z-20"
             />
-            <div className="w-64 h-64 bg-white border border-pink-50 rounded-full flex items-center justify-center relative shadow-sm">
+            <div className="w-64 h-64 bg-white border border-[#FFC8DD]/30 rounded-full flex items-center justify-center relative shadow-sm">
                <motion.div
                   animate={{ rotate: 360 }}
                   transition={{ repeat: Infinity, duration: 30, ease: "linear" }}
-                  className="absolute inset-4 rounded-full border border-dashed border-[#FF8BA7]/40"
+                  className="absolute inset-4 rounded-full border border-dashed border-[#FFAFCC]/40"
                />
-               <RadioReceiver className="w-24 h-24 text-[#FF8BA7]/80" strokeWidth={1} />
+               <RadioReceiver className="w-24 h-24 text-[#FFAFCC]/80" strokeWidth={1} />
             </div>
           </motion.div>
           
@@ -142,36 +142,36 @@ export function Games({ onUnlockWeb, onNavigateHome }: GamesProps) {
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.5, duration: 1 }}
           >
-            <h2 className="text-4xl md:text-7xl font-script text-[#D1495B] mb-6 drop-shadow-sm">
+            <h2 className="text-4xl md:text-7xl font-script text-[#4A3B52] mb-6 drop-shadow-sm">
               Tu regalo te espera
             </h2>
-            <p className="text-lg md:text-2xl text-[#9D84A3] max-w-lg mx-auto font-serif leading-relaxed mb-12">
+            <p className="text-lg md:text-2xl text-[#CDB4DB] max-w-lg mx-auto font-serif leading-relaxed mb-12">
               Acerca el primer objeto al escáner NFC para comenzar el viaje...
             </p>
             
-            <div className="inline-flex items-center gap-5 bg-white shadow-xl shadow-pink-100/50 py-3 px-8 md:py-4 md:px-10 rounded-full border border-pink-50">
+            <div className="inline-flex items-center gap-5 bg-white shadow-xl shadow-[#FFC8DD]/50 py-3 px-8 md:py-4 md:px-10 rounded-full border border-[#FFC8DD]/30">
                <div className="flex space-x-1.5">
-                  <motion.div animate={{ opacity: [0.2, 1, 0.2], scale: [0.8, 1.2, 0.8] }} transition={{ repeat: Infinity, duration: 2, times: [0, 0.5, 1] }} className="w-2 h-2 bg-[#FF8BA7] rounded-full" />
-                  <motion.div animate={{ opacity: [0.2, 1, 0.2], scale: [0.8, 1.2, 0.8] }} transition={{ repeat: Infinity, duration: 2, delay: 0.4, times: [0, 0.5, 1] }} className="w-2 h-2 bg-[#FF8BA7] rounded-full" />
-                  <motion.div animate={{ opacity: [0.2, 1, 0.2], scale: [0.8, 1.2, 0.8] }} transition={{ repeat: Infinity, duration: 2, delay: 0.8, times: [0, 0.5, 1] }} className="w-2 h-2 bg-[#FF8BA7] rounded-full" />
+                  <motion.div animate={{ opacity: [0.2, 1, 0.2], scale: [0.8, 1.2, 0.8] }} transition={{ repeat: Infinity, duration: 2, times: [0, 0.5, 1] }} className="w-2 h-2 bg-[#FFAFCC] rounded-full" />
+                  <motion.div animate={{ opacity: [0.2, 1, 0.2], scale: [0.8, 1.2, 0.8] }} transition={{ repeat: Infinity, duration: 2, delay: 0.4, times: [0, 0.5, 1] }} className="w-2 h-2 bg-[#FFAFCC] rounded-full" />
+                  <motion.div animate={{ opacity: [0.2, 1, 0.2], scale: [0.8, 1.2, 0.8] }} transition={{ repeat: Infinity, duration: 2, delay: 0.8, times: [0, 0.5, 1] }} className="w-2 h-2 bg-[#FFAFCC] rounded-full" />
                </div>
-               <span className="text-sm font-mono font-bold text-[#FF8BA7] uppercase tracking-[0.3em]">Buscando...</span>
+               <span className="text-sm font-mono font-bold text-[#FFAFCC] uppercase tracking-[0.3em]">Buscando...</span>
             </div>
           </motion.div>
         </div>
       ) : (
         <>
           <div className="text-center mb-10 md:mb-16">
-            <h2 className="text-4xl md:text-7xl font-script text-[#D1495B] mb-6 drop-shadow-sm">Disfruta de los regalos</h2>
+            <h2 className="text-4xl md:text-7xl font-script text-[#4A3B52] mb-6 drop-shadow-sm">Disfruta de los regalos</h2>
             
-            <div className="flex items-center justify-center gap-4 bg-white shadow-xl shadow-pink-100/50 py-3 px-8 rounded-full max-w-sm mx-auto border border-pink-50 mt-8">
+            <div className="flex items-center justify-center gap-4 bg-white shadow-xl shadow-[#FFC8DD]/50 py-3 px-8 rounded-full max-w-sm mx-auto border border-[#FFC8DD]/30 mt-8">
               <motion.div
                 animate={{ scale: [1, 1.2, 1], opacity: [0.4, 0.8, 0.4] }}
                 transition={{ repeat: Infinity, duration: 3 }}
               >
-                <RadioReceiver className="w-5 h-5 text-[#FF8BA7]" />
+                <RadioReceiver className="w-5 h-5 text-[#FFAFCC]" />
               </motion.div>
-              <span className="font-mono text-xs tracking-[0.2em] uppercase text-[#9D84A3]">Esperando conexión física...</span>
+              <span className="font-mono text-xs tracking-[0.2em] uppercase text-[#CDB4DB]">Esperando conexión física...</span>
             </div>
           </div>
 
@@ -189,9 +189,9 @@ export function Games({ onUnlockWeb, onNavigateHome }: GamesProps) {
                   onClick={() => isCompleted && abrirNivel(gift.id)}
                   className={`relative overflow-hidden rounded-[2.5rem] p-10 transition-all duration-500 md:min-h-[280px] flex flex-col items-center justify-center text-center border group
                     ${isCompleted 
-                      ? 'bg-white hover:border-pink-200 cursor-pointer shadow-xl shadow-pink-100/50 border-pink-50' 
+                      ? 'bg-white hover:border-[#FFC8DD] cursor-pointer shadow-xl shadow-[#FFC8DD]/50 border-[#FFC8DD]/30' 
                       : isActive
-                        ? 'bg-[#FF8BA7] text-white border-[#FF8BA7] shadow-[0_10px_30px_rgba(255,139,167,0.5)] animate-[bounce_3s_infinite] cursor-default'
+                        ? 'bg-[#FFAFCC] text-white border-[#FFAFCC] shadow-[0_10px_30px_rgba(255,139,167,0.5)] animate-[bounce_3s_infinite] cursor-default'
                         : 'bg-slate-100 opacity-60 text-slate-400 border-slate-200 pointer-events-none'
                     }`}
                 >
@@ -201,7 +201,7 @@ export function Games({ onUnlockWeb, onNavigateHome }: GamesProps) {
                     </div>
                   )}
                   {isCompleted && (
-                    <div className="absolute top-6 right-6 text-[#FF8BA7]/40 opacity-0 group-hover:opacity-100 transition-opacity">
+                    <div className="absolute top-6 right-6 text-[#FFAFCC]/40 opacity-0 group-hover:opacity-100 transition-opacity">
                       <Unlock className="w-7 h-7" />
                     </div>
                   )}
@@ -213,7 +213,7 @@ export function Games({ onUnlockWeb, onNavigateHome }: GamesProps) {
 
                   <div className={`w-20 h-20 rounded-full flex items-center justify-center mb-6 transition-all duration-500 relative overflow-hidden ${
                     isCompleted 
-                      ? 'bg-pink-50 text-[#FF8BA7] group-hover:bg-[#FF8BA7] group-hover:text-white shadow-inner group-hover:shadow-[0_0_30px_rgba(255,139,167,0.4)]' 
+                      ? 'bg-[#FFF0F5] text-[#FFAFCC] group-hover:bg-[#FFAFCC] group-hover:text-white shadow-inner group-hover:shadow-[0_0_30px_rgba(255,139,167,0.4)]' 
                       : isActive
                         ? 'bg-white/20 text-white'
                         : 'bg-slate-200/50 text-slate-400'
@@ -232,12 +232,12 @@ export function Games({ onUnlockWeb, onNavigateHome }: GamesProps) {
                   </div>
                   
                   <h3 className={`text-2xl font-serif font-bold mb-2 ${
-                    isCompleted ? 'text-[#5F4B66]' : isActive ? 'text-white' : 'text-slate-400'
+                    isCompleted ? 'text-[#4A3B52]' : isActive ? 'text-white' : 'text-slate-400'
                   }`}>
                     Nivel {gift.id}
                   </h3>
                   <p className={`font-medium tracking-wide ${
-                    isCompleted ? 'text-[#FF8BA7]' : isActive ? 'text-white/80' : 'text-slate-400/70'
+                    isCompleted ? 'text-[#FFAFCC]' : isActive ? 'text-white/80' : 'text-slate-400/70'
                   }`}>
                     {isCompleted ? gift.title : isActive ? 'Escanea para desbloquear' : 'Bloqueado'}
                   </p>
@@ -246,7 +246,7 @@ export function Games({ onUnlockWeb, onNavigateHome }: GamesProps) {
                     <motion.div 
                       initial={{ scale: 0 }}
                       animate={{ scale: 1 }}
-                      className="mt-4 px-4 py-1 bg-[#FF8BA7]/10 border border-[#FF8BA7]/20 rounded-full text-[10px] text-[#FF8BA7] font-bold uppercase tracking-widest"
+                      className="mt-4 px-4 py-1 bg-[#FFAFCC]/10 border border-[#FFAFCC]/20 rounded-full text-[10px] text-[#FFAFCC] font-bold uppercase tracking-widest"
                     >
                       Completado
                     </motion.div>
@@ -267,7 +267,7 @@ export function Games({ onUnlockWeb, onNavigateHome }: GamesProps) {
               await syncGlobalUnlockedLevels([]);
               window.location.reload();
             }}
-            className="text-[#9D84A3] hover:text-[#FF8BA7] text-xs font-mono tracking-widest uppercase transition-all duration-300"
+            className="text-[#CDB4DB] hover:text-[#FFAFCC] text-xs font-mono tracking-widest uppercase transition-all duration-300"
           >
             Resetear Progreso
           </button>
@@ -278,7 +278,7 @@ export function Games({ onUnlockWeb, onNavigateHome }: GamesProps) {
               await syncGlobalUnlockedLevels(fullLevels);
               window.location.reload();
             }}
-            className="text-[#9D84A3] hover:text-[#FF8BA7] text-xs font-mono tracking-widest uppercase transition-all duration-300"
+            className="text-[#CDB4DB] hover:text-[#FFAFCC] text-xs font-mono tracking-widest uppercase transition-all duration-300"
           >
             Forzar Desbloqueo
           </button>
@@ -303,14 +303,14 @@ export function Games({ onUnlockWeb, onNavigateHome }: GamesProps) {
             <motion.div
               initial={{ scale: 0.8, y: 20 }}
               animate={{ scale: 1, y: 0 }}
-              className="bg-white p-12 md:p-16 rounded-[3rem] shadow-2xl shadow-pink-200/50 max-w-lg w-full relative overflow-hidden border border-pink-50"
+              className="bg-white p-12 md:p-16 rounded-[3rem] shadow-2xl shadow-[#FFC8DD]/50 max-w-lg w-full relative overflow-hidden border border-[#FFC8DD]/30"
             >
-              <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-[#FF8BA7] to-[#D1495B]" />
-              <Globe className="w-24 h-24 text-[#FF8BA7] mx-auto mb-8 drop-shadow-[0_2px_10px_rgba(255,139,167,0.4)]" />
-              <h2 className="text-4xl md:text-5xl font-script font-bold mb-6 text-[#D1495B]">
+              <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-[#FFAFCC] to-[#4A3B52]" />
+              <Globe className="w-24 h-24 text-[#FFAFCC] mx-auto mb-8 drop-shadow-[0_2px_10px_rgba(255,139,167,0.4)]" />
+              <h2 className="text-4xl md:text-5xl font-script font-bold mb-6 text-[#4A3B52]">
                 ¡Página web desbloqueada!
               </h2>
-              <p className="text-xl text-[#9D84A3] mb-10 font-serif leading-relaxed">
+              <p className="text-xl text-[#CDB4DB] mb-10 font-serif leading-relaxed">
                 Ahora tienes acceso a la experiencia completa. Explora la historia, recuerdos y la música de fondo.
               </p>
               <button
@@ -319,7 +319,7 @@ export function Games({ onUnlockWeb, onNavigateHome }: GamesProps) {
                   if (onUnlockWeb) onUnlockWeb();
                   if (onNavigateHome) onNavigateHome();
                 }}
-                className="w-full py-5 bg-[#FF8BA7] text-white rounded-2xl font-bold text-xl hover:scale-[1.02] active:scale-95 transition-all shadow-[0_4px_15px_rgba(255,139,167,0.4)]"
+                className="w-full py-5 bg-[#FFAFCC] text-white rounded-2xl font-bold text-xl hover:scale-[1.02] active:scale-95 transition-all shadow-[0_4px_15px_rgba(255,139,167,0.4)]"
               >
                 Comenzar experiencia
               </button>
@@ -354,7 +354,7 @@ export function Games({ onUnlockWeb, onNavigateHome }: GamesProps) {
               initial={{ scale: 0.9, y: 20 }}
               animate={{ scale: 1, y: 0 }}
               exit={{ scale: 0.9, y: 20 }}
-              className="bg-white rounded-[2.5rem] overflow-y-auto shadow-2xl shadow-pink-200/50 max-w-lg w-full max-h-[95vh] relative border border-pink-50 text-center flex flex-col"
+              className="bg-white rounded-[2.5rem] overflow-y-auto shadow-2xl shadow-[#FFC8DD]/50 max-w-lg w-full max-h-[95vh] relative border border-[#FFC8DD]/30 text-center flex flex-col"
               onClick={e => e.stopPropagation()}
             >
               <button 
@@ -362,21 +362,21 @@ export function Games({ onUnlockWeb, onNavigateHome }: GamesProps) {
                   setRevealedGift(null);
                   setModalPhase('none');
                 }}
-                className="absolute top-6 right-6 text-[#9D84A3] hover:text-[#D1495B] transition-colors z-20"
+                className="absolute top-6 right-6 text-[#CDB4DB] hover:text-[#4A3B52] transition-colors z-20"
               >
                 <X className="w-6 h-6" />
               </button>
 
-              <div className="bg-[#FF8BA7]/10 py-12 px-6 relative overflow-hidden border-b border-pink-50">
+              <div className="bg-[#FFAFCC]/10 py-12 px-6 relative overflow-hidden border-b border-[#FFC8DD]/30">
                 <div className="absolute top-[-20%] left-[-20%] w-[140%] h-[140%] -z-10 bg-[radial-gradient(ellipse_at_center,rgba(252,211,222,0.8)_0%,transparent_70%)] rounded-full" />
-                <activeGift.icon className="w-20 h-20 text-[#FF8BA7] mx-auto relative z-10 drop-shadow-sm" />
+                <activeGift.icon className="w-20 h-20 text-[#FFAFCC] mx-auto relative z-10 drop-shadow-sm" />
               </div>
 
               <div className="p-8 md:p-12 flex flex-col flex-1">
-                <span className="inline-block px-4 py-1 bg-[#FF8BA7] text-white text-[10px] font-bold tracking-[0.3em] uppercase rounded-full mb-6 mx-auto">
+                <span className="inline-block px-4 py-1 bg-[#FFAFCC] text-white text-[10px] font-bold tracking-[0.3em] uppercase rounded-full mb-6 mx-auto">
                   Misión Desbloqueada
                 </span>
-                <h3 className="text-3xl font-serif font-bold text-[#D1495B] mb-6">Mini-Desafío {activeGift.id}</h3>
+                <h3 className="text-3xl font-serif font-bold text-[#4A3B52] mb-6">Mini-Desafío {activeGift.id}</h3>
                 <div className="mb-10 w-full overflow-hidden flex-1 min-h-[300px]">
                   {activeGift.id === 1 ? (
                     <MinigameRunner onWin={handleMinigameWin} />
@@ -399,7 +399,7 @@ export function Games({ onUnlockWeb, onNavigateHome }: GamesProps) {
                     setRevealedGift(null);
                     setModalPhase('none');
                   }}
-                  className="w-full py-5 border border-pink-100 hover:bg-pink-50 text-[#9D84A3] hover:text-[#5F4B66] rounded-2xl font-bold text-lg transition-all duration-500"
+                  className="w-full py-5 border border-[#FFC8DD]/50 hover:bg-[#FFF0F5] text-[#CDB4DB] hover:text-[#4A3B52] rounded-2xl font-bold text-lg transition-all duration-500"
                 >
                   Cancelar desafío
                 </button>

@@ -76,8 +76,8 @@ export function Gallery() {
       className="w-full max-w-6xl mx-auto py-20 px-4 mt-8"
     >
       <div className="text-center mb-16">
-        <h2 className="text-5xl md:text-7xl font-script text-[#D1495B] mb-6 drop-shadow-sm">Galería de Recuerdos</h2>
-        <p className="text-[#9D84A3] font-serif text-lg">Nuestros momentos capturados</p>
+        <h2 className="text-5xl md:text-7xl font-script text-[#4A3B52] mb-6 drop-shadow-sm">Galería de Recuerdos</h2>
+        <p className="text-[#CDB4DB] font-serif text-lg">Nuestros momentos capturados</p>
       </div>
 
       {/* Selector de Años / Pestañas Minimalista */}
@@ -88,15 +88,15 @@ export function Gallery() {
             onClick={() => setCurrentYear(year)}
             className={`pb-4 px-6 whitespace-nowrap text-lg font-medium transition-all duration-500 relative ${
               currentYear === year 
-                ? 'text-[#FF8BA7]' 
-                : 'text-[#9D84A3] hover:text-[#5F4B66]'
+                ? 'text-[#FFAFCC]' 
+                : 'text-[#CDB4DB] hover:text-[#4A3B52]'
             }`}
           >
             Año {index + 1}
             {currentYear === year && (
               <motion.div 
                 layoutId="activeTabGallery" 
-                className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#FF8BA7] rounded-full shadow-[0_0_8px_rgba(255,139,167,0.8)]" 
+                className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#FFAFCC] rounded-full shadow-[0_0_8px_rgba(255,139,167,0.8)]" 
               />
             )}
           </button>
@@ -106,17 +106,17 @@ export function Gallery() {
       {/* Contenedor de la Galería */}
       <div className="min-h-[400px]">
         {loading ? (
-          <div className="flex flex-col items-center justify-center p-20 text-[#FF8BA7]">
+          <div className="flex flex-col items-center justify-center p-20 text-[#FFAFCC]">
              <Loader2 className="w-12 h-12 animate-spin mb-6 opacity-60" />
              <p className="animate-pulse font-serif tracking-widest text-sm uppercase opacity-60">Buscando memorias...</p>
           </div>
         ) : error ? (
-           <div className="py-12 px-8 text-center bg-white shadow-xl shadow-pink-100/50 rounded-[2rem] border border-pink-50 max-w-xl mx-auto">
-             <p className="font-bold text-[#D1495B] mb-3">Algo salió mal</p>
+           <div className="py-12 px-8 text-center bg-white shadow-xl shadow-[#FFC8DD]/50 rounded-[2rem] border border-[#FFC8DD]/30 max-w-xl mx-auto">
+             <p className="font-bold text-[#4A3B52] mb-3">Algo salió mal</p>
              <p className="text-sm text-pink-900/60 leading-relaxed">{error}</p>
            </div>
         ) : images.length === 0 ? (
-          <div className="py-20 text-center text-[#9D84A3] bg-white/50 rounded-[2.5rem] border border-pink-50 shadow-sm">
+          <div className="py-20 text-center text-[#CDB4DB] bg-white/50 rounded-[2.5rem] border border-[#FFC8DD]/30 shadow-sm">
             <Images className="w-16 h-16 mx-auto mb-6 opacity-30" strokeWidth={1} />
             <p className="font-serif italic text-lg">Aún no hay archivos en esta carpeta...</p>
           </div>
@@ -131,7 +131,7 @@ export function Gallery() {
                   animate={{ opacity: 1, scale: 1 }}
                   key={media.name} 
                   onClick={() => setSelectedMedia(media)}
-                  className="group relative rounded-3xl overflow-hidden shadow-lg shadow-pink-100/40 border border-pink-50 aspect-[4/3] bg-white cursor-pointer"
+                  className="group relative rounded-3xl overflow-hidden shadow-lg shadow-[#FFC8DD]/40 border border-[#FFC8DD]/30 aspect-[4/3] bg-white cursor-pointer"
                 >
                   {video ? (
                     <>
@@ -177,7 +177,7 @@ export function Gallery() {
             onClick={() => setSelectedMedia(null)}
           >
             <button 
-              className="absolute top-8 right-8 p-3 bg-pink-50 hover:bg-pink-100 rounded-full text-[#9D84A3] hover:text-[#D1495B] transition-all duration-300 shadow-sm"
+              className="absolute top-8 right-8 p-3 bg-[#FFF0F5] hover:bg-[#FFC8DD] rounded-full text-[#CDB4DB] hover:text-[#4A3B52] transition-all duration-300 shadow-sm"
               onClick={(e) => { e.stopPropagation(); setSelectedMedia(null); }}
             >
               <X className="w-8 h-8" />
@@ -188,20 +188,20 @@ export function Gallery() {
               exit={{ scale: 0.9, opacity: 0 }}
               className="relative max-w-6xl max-h-[90vh] w-full flex items-center justify-center p-4"
             >
-              <div className="absolute inset-0 bg-[#FF8BA7]/10 blur-[100px] rounded-full pointer-events-none" />
+              <div className="absolute inset-0 bg-[#FFAFCC]/10 blur-[100px] rounded-full pointer-events-none" />
               {isVideo(selectedMedia.name) ? (
                 <video 
                   src={selectedMedia.download_url} 
                   controls 
                   autoPlay
-                  className="max-w-full max-h-[80vh] rounded-3xl shadow-2xl shadow-pink-200/50 border border-pink-50 pointer-events-auto"
+                  className="max-w-full max-h-[80vh] rounded-3xl shadow-2xl shadow-[#FFC8DD]/50 border border-[#FFC8DD]/30 pointer-events-auto"
                   onClick={(e) => e.stopPropagation()}
                 />
               ) : (
                 <img 
                   src={selectedMedia.download_url} 
                   alt={selectedMedia.name}
-                  className="max-w-full max-h-[80vh] object-contain rounded-3xl shadow-2xl shadow-pink-200/50 border border-pink-50 pointer-events-auto"
+                  className="max-w-full max-h-[80vh] object-contain rounded-3xl shadow-2xl shadow-[#FFC8DD]/50 border border-[#FFC8DD]/30 pointer-events-auto"
                   onClick={(e) => e.stopPropagation()}
                 />
               )}
