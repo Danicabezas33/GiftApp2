@@ -75,7 +75,6 @@ export default function Roadmap() {
 
   useEffect(() => {
     if (!mapContainerRef.current) return;
-    if (mapRef.current) return;
 
     const map = L.map(mapContainerRef.current, {
       zoomControl: false
@@ -93,19 +92,14 @@ export default function Roadmap() {
     layerGroupRef.current = L.layerGroup().addTo(map);
     mapRef.current = map;
 
-    // Critical: ensure map fills container after layout/animation
+    // Optional invalidation if size changes on mount animation
     setTimeout(() => {
-      if (mapRef.current) {
-        mapRef.current.invalidateSize();
-        cargarAño(activeYear);
-      }
-    }, 250);
+       if (mapRef.current) mapRef.current.invalidateSize();
+    }, 300);
 
     return () => {
-      if (mapRef.current) {
-        mapRef.current.remove();
-        mapRef.current = null;
-      }
+      map.remove();
+      mapRef.current = null;
     };
   }, []);
 
@@ -243,7 +237,7 @@ export default function Roadmap() {
 
           {/* Mapa */}
           <div className="flex-1 h-[350px] md:h-[500px] rounded-[1.5rem] md:rounded-[2rem] overflow-hidden border border-spring-primary/20 relative z-0">
-            <div ref={mapContainerRef} className="w-full h-full absolute inset-0 z-0 text-spring-text"></div>
+            <div ref={mapContainerRef} className="w-full h-full absolute inset-0 z-0"></div>
           </div>
         </div>
       </section>

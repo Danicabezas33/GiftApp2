@@ -68,12 +68,6 @@ export function Games({ onUnlockWeb, onNavigateHome }: GamesProps) {
   }, [onUnlockWeb]);
 
   const handleNfcComplete = (id: number) => {
-    // Permanently unlock it
-    const newUnlocked = [...new Set([...unlockedLevels, id])];
-    setUnlockedLevels(newUnlocked);
-    localStorage.setItem('unlocked_levels_v4', JSON.stringify(newUnlocked));
-    syncGlobalUnlockedLevels(newUnlocked);
-    
     setIncomingLevelId(null);
     setRevealedGift(id);
     setModalPhase('minigame');
@@ -89,6 +83,13 @@ export function Games({ onUnlockWeb, onNavigateHome }: GamesProps) {
   };
 
   const handleScratchComplete = () => {
+    if (activeGift) {
+      const newUnlocked = [...new Set([...unlockedLevelsRef.current, activeGift.id])];
+      setUnlockedLevels(newUnlocked);
+      localStorage.setItem('unlocked_levels_v4', JSON.stringify(newUnlocked));
+      syncGlobalUnlockedLevels(newUnlocked);
+    }
+
     if (activeGift && activeGift.id === 1) {
        const isWebUnlocked = localStorage.getItem('web_unlocked_v4') === 'true';
        if (!isWebUnlocked) {
