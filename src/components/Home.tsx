@@ -28,6 +28,33 @@ const Heart8Bit = ({ className = "w-16 h-16" }) => (
   </svg>
 );
 
+const AirplanePixel = ({ className = "w-16 h-16" }) => (
+  <svg viewBox="0 0 32 32" fill="currentColor" className={className} shapeRendering="crispEdges">
+    <rect x="4" y="14" width="22" height="6" />
+    <rect x="26" y="16" width="2" height="4" />
+    <rect x="28" y="16" width="2" height="2" />
+    <rect x="4" y="8" width="4" height="6" />
+    <rect x="2" y="8" width="2" height="4" />
+    <rect x="12" y="6" width="4" height="8" />
+    <rect x="16" y="8" width="2" height="6" />
+    <rect x="12" y="20" width="6" height="4" />
+    <rect x="14" y="24" width="4" height="2" />
+    <rect x="22" y="16" width="2" height="2" fill="white" />
+    <rect x="18" y="16" width="2" height="2" fill="white" />
+    <rect x="14" y="16" width="2" height="2" fill="white" />
+  </svg>
+);
+
+const CloudPixel = ({ className = "w-12 h-8" }) => (
+  <svg viewBox="0 0 24 16" fill="currentColor" className={className} shapeRendering="crispEdges">
+    <rect x="4" y="8" width="16" height="8" />
+    <rect x="2" y="10" width="2" height="6" />
+    <rect x="20" y="10" width="2" height="6" />
+    <rect x="6" y="4" width="10" height="4" />
+    <rect x="8" y="2" width="6" height="2" />
+  </svg>
+);
+
 const StatItem = ({ label, targetValue }: { label: string, targetValue: number }) => {
   const [count, setCount] = useState(0);
 
@@ -58,24 +85,25 @@ const StatItem = ({ label, targetValue }: { label: string, targetValue: number }
 };
 
 export function Home({ onNavigate }: HomeProps) {
-  const [popups, setPopups] = useState<{id: number, text: string, x: number, y: number}[]>([]);
-  const phrases = ["¡Guapa!", "¡Preciosa!", "¡Te amo!", "¡Mi niña!", "¡Bombón!"];
+  const [popups, setPopups] = useState<{id: number, text: string, left: string, top: string, rotation: number, scale: number}[]>([]);
+  const phrases = ["¡Guapa!", "¡Preciosa!", "¡Te amo!", "¡Mi niña!", "¡Bombón!", "¡Diosa!"];
 
   const handleLoveBomb = (e: React.MouseEvent<HTMLButtonElement>) => {
-    const rect = e.currentTarget.getBoundingClientRect();
     
     const newPopup = {
       id: Date.now() + Math.random(),
       text: phrases[Math.floor(Math.random() * phrases.length)],
-      x: Math.random() * (rect.width - 60) + 10,
-      y: Math.random() * (rect.height - 40) + 10
+      left: `${Math.random() * 60 + 20}%`,
+      top: `${Math.random() * 60 + 20}%`,
+      rotation: Math.random() * 40 - 20,
+      scale: Math.random() * 0.4 + 0.9
     };
     
     setPopups(prev => [...prev, newPopup]);
     
     setTimeout(() => {
       setPopups(prev => prev.filter(p => p.id !== newPopup.id));
-    }, 2000);
+    }, 2500);
   };
 
   return (
@@ -148,11 +176,39 @@ export function Home({ onNavigate }: HomeProps) {
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.4, duration: 0.5 }}
-          className="md:col-span-8 bg-white rounded-3xl md:rounded-[32px] shadow-lg shadow-[#FFC8DD]/30 p-6 md:p-8 flex items-center justify-around min-h-[200px]"
+          className="md:col-span-8 bg-gradient-to-tr from-white to-[#BDE0FE]/40 rounded-3xl md:rounded-[32px] shadow-lg shadow-[#FFC8DD]/30 p-6 md:p-8 flex items-center justify-around min-h-[200px] relative overflow-hidden"
         >
-          <StatItem label="Países" targetValue={6} />
-          <StatItem label="Kilómetros" targetValue={4820} />
-          <StatItem label="Aventuras" targetValue={100} />
+          {/* Sky Elements */}
+          <motion.div
+            animate={{ left: ['-20%', '120%'], y: [0, -10, 15, -5, 0] }}
+            transition={{ left: { duration: 12, repeat: Infinity, ease: 'linear' }, y: { duration: 5, repeat: Infinity, ease: 'easeInOut' } }}
+            className="absolute top-[25%] text-[#FFAFCC] opacity-90 z-0 pointer-events-none drop-shadow-md"
+          >
+            <AirplanePixel className="w-16 md:w-24 h-16 md:h-24" />
+          </motion.div>
+
+          <motion.div
+            animate={{ left: ['120%', '-20%'] }}
+            transition={{ duration: 25, repeat: Infinity, ease: 'linear' }}
+            className="absolute top-[10%] text-white z-0 pointer-events-none drop-shadow-sm"
+          >
+            <CloudPixel className="w-16 h-12" />
+          </motion.div>
+          
+          <motion.div
+            animate={{ left: ['120%', '-20%'] }}
+            transition={{ duration: 35, repeat: Infinity, ease: 'linear', delay: 12 }}
+            className="absolute top-[60%] text-white/80 z-0 pointer-events-none drop-shadow-sm"
+          >
+            <CloudPixel className="w-12 h-8" />
+          </motion.div>
+
+          {/* Stats */}
+          <div className="relative z-10 w-full flex items-center justify-around">
+            <StatItem label="Países" targetValue={6} />
+            <StatItem label="Kilómetros" targetValue={4820} />
+            <StatItem label="Aventuras" targetValue={100} />
+          </div>
         </motion.div>
 
         {/* Cell 5: Love Bomb Button */}
@@ -164,7 +220,7 @@ export function Home({ onNavigate }: HomeProps) {
         >
           <button 
             onClick={handleLoveBomb}
-            className="w-24 h-24 bg-[#FFAFCC] hover:bg-[#FFC8DD] text-white rounded-full flex items-center justify-center shadow-md animate-pulse transition-colors relative z-10"
+            className="w-24 h-24 bg-[#FFAFCC] hover:bg-[#FFC8DD] text-white rounded-full flex items-center justify-center shadow-lg shadow-[#FFC8DD]/50 animate-pulse transition-all hover:scale-110 active:scale-95 relative z-10"
           >
             <Heart8Bit className="w-10 h-10" />
           </button>
@@ -173,11 +229,12 @@ export function Home({ onNavigate }: HomeProps) {
             {popups.map(popup => (
               <motion.div
                 key={popup.id}
-                initial={{ opacity: 0, y: popup.y + 20, x: popup.x }}
-                animate={{ opacity: 1, y: popup.y - 40, x: popup.x }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 1.5, ease: "easeOut" }}
-                className="absolute bg-white border border-[#FFAFCC] text-[#4A3B52] px-3 py-1 rounded-full text-sm font-bold shadow-sm pointer-events-none whitespace-nowrap z-0"
+                initial={{ opacity: 0, y: 20, scale: 0.5, rotate: popup.rotation }}
+                animate={{ opacity: 1, y: -40, scale: popup.scale, rotate: popup.rotation }}
+                exit={{ opacity: 0, y: -80, scale: 0.8 }}
+                transition={{ duration: 2.2, ease: "easeOut" }}
+                style={{ left: popup.left, top: popup.top }}
+                className="absolute bg-white border border-[#FFAFCC] text-[#4A3B52] px-5 py-2 rounded-2xl shadow-lg shadow-[#FFC8DD]/50 text-base md:text-lg font-bold font-serif italic whitespace-nowrap z-0 origin-center pointer-events-none"
               >
                 {popup.text}
               </motion.div>
