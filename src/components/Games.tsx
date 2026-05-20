@@ -119,10 +119,13 @@ export function Games({ onUnlockWeb, onNavigateHome }: GamesProps) {
              transition={{ duration: 1, type: "spring" }}
              className="relative mb-12"
           >
+            <div
+               className="absolute inset-0 rounded-full shadow-[0_0_80px_rgba(255,139,167,0.5)] -z-10 opacity-60"
+            />
             <motion.div
-               animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.6, 0.3] }}
+               animate={{ scale: [1, 1.15, 1], opacity: [0.3, 0.6, 0.3] }}
                transition={{ repeat: Infinity, duration: 4, ease: "easeInOut" }}
-               className="absolute inset-0 bg-[#FF8BA7] rounded-full blur-[80px] -z-10"
+               className="absolute inset-[-10px] bg-pink-100/50 rounded-full -z-20"
             />
             <div className="w-64 h-64 bg-white shadow-xl shadow-pink-100/50 border border-pink-50 rounded-full flex items-center justify-center">
                <motion.div
@@ -355,7 +358,7 @@ export function Games({ onUnlockWeb, onNavigateHome }: GamesProps) {
               </button>
 
               <div className="bg-[#FF8BA7]/10 py-12 px-6 relative overflow-hidden border-b border-pink-50">
-                <div className="absolute top-[-20%] left-[-20%] w-[140%] h-[140%] bg-pink-100/50 blur-[60px] rounded-full -z-10" />
+                <div className="absolute top-[-20%] left-[-20%] w-[140%] h-[140%] -z-10 bg-[radial-gradient(ellipse_at_center,rgba(252,211,222,0.8)_0%,transparent_70%)] rounded-full" />
                 <activeGift.icon className="w-20 h-20 text-[#FF8BA7] mx-auto relative z-10 drop-shadow-sm" />
               </div>
 

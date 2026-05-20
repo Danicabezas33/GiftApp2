@@ -80,9 +80,9 @@ export default function App() {
       {unlockedWeb && <Navbar currentSection={currentSection} setCurrentSection={setCurrentSection} />}
       
       <main className={`pb-24 ${unlockedWeb ? 'pt-16' : 'pt-4 md:pt-8'} flex min-h-screen flex-col items-center justify-center relative overflow-hidden`}>
-        <div className="absolute top-0 left-0 w-full h-full pointer-events-none overflow-hidden">
-          <div className="absolute top-[-10%] right-[-10%] w-[50%] h-[50%] bg-pink-100/60 blur-[120px] rounded-full" />
-          <div className="absolute bottom-[-10%] left-[-10%] w-[50%] h-[50%] bg-yellow-100/50 blur-[120px] rounded-full" />
+        <div className="absolute inset-0 pointer-events-none overflow-hidden -z-10">
+          <div className="absolute top-[-20%] right-[-10%] w-[60%] h-[60%] rounded-full bg-[radial-gradient(circle,rgba(252,211,222,0.6)_0%,transparent_70%)]" />
+          <div className="absolute bottom-[-20%] left-[-10%] w-[60%] h-[60%] rounded-full bg-[radial-gradient(circle,rgba(254,240,138,0.4)_0%,transparent_70%)]" />
         </div>
         <AnimatePresence mode="wait">
           {unlockedWeb && currentSection === 'home' && <Home key="home" />}

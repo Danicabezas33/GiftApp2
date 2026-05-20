@@ -82,8 +82,8 @@ export default function Roadmap() {
     
     L.control.zoom({ position: 'bottomright' }).addTo(map);
     
-    // Using a dark themed map for the Zen aesthetic
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+    // Using a ligth themed map for the Zen aesthetic
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
       subdomains: 'abcd',
       maxZoom: 20
@@ -236,8 +236,8 @@ export default function Roadmap() {
           </div>
 
           {/* Mapa */}
-          <div className="w-full lg:flex-1 min-h-[350px] md:min-h-[500px] rounded-[1.5rem] md:rounded-[2rem] overflow-hidden border border-spring-primary/20 relative z-0" style={{ minHeight: '350px' }}>
-            <div ref={mapContainerRef} className="w-full h-full bg-slate-100" style={{ minHeight: '350px' }}></div>
+          <div className="w-full lg:flex-1 h-[350px] md:h-[500px] rounded-[1.5rem] md:rounded-[2rem] overflow-hidden border border-spring-primary/20 relative z-0">
+            <div ref={mapContainerRef} className="absolute inset-0 w-full h-full bg-slate-100 z-0 text-spring-text"></div>
           </div>
         </div>
       </section>
