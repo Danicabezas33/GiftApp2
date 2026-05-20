@@ -96,7 +96,7 @@ export function MinigameCherryBlossom({ onWin }: MinigameCherryProps) {
   return (
     <div 
       ref={containerRef}
-      className={`relative w-full h-[75vh] min-h-[600px] overflow-hidden rounded-2xl shadow-xl transition-colors duration-1000 select-none ${
+      className={`relative w-full h-[70vh] min-h-[400px] max-h-[600px] overflow-hidden rounded-2xl shadow-xl transition-colors duration-1000 select-none ${
         phase === 'season' 
           ? 'bg-gradient-to-b from-sky-400 to-cyan-100'
           : phase === 'bloom' || phase === 'done' 
@@ -342,8 +342,8 @@ export function MinigameCherryBlossom({ onWin }: MinigameCherryProps) {
           {(phase === 'bloom' || phase === 'done') && (
              <motion.div 
                 key="adult"
-                initial={{ scale: 0.8, opacity: 0, rotate: 0 }}
-                animate={{ scale: 1, opacity: 1, rotate: [-0.5, 0.5, -0.5] }}
+                initial={{ scale: 0.6, opacity: 0, rotate: 0 }}
+                animate={{ scale: 0.85, opacity: 1, rotate: [-0.5, 0.5, -0.5] }}
                 transition={{ 
                   scale: { duration: 1.5, type: 'spring' }, 
                   opacity: { duration: 1 },

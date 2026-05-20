@@ -120,14 +120,14 @@ export function Games({ onUnlockWeb, onNavigateHome }: GamesProps) {
              className="relative mb-12"
           >
             <div
-               className="absolute inset-0 rounded-full shadow-[0_0_80px_rgba(255,139,167,0.5)] -z-10 opacity-60"
+               className="absolute inset-[-20px] rounded-full bg-[radial-gradient(circle,rgba(255,139,167,0.2)_0%,transparent_70%)] -z-10"
             />
             <motion.div
-               animate={{ scale: [1, 1.15, 1], opacity: [0.3, 0.6, 0.3] }}
-               transition={{ repeat: Infinity, duration: 4, ease: "easeInOut" }}
-               className="absolute inset-[-10px] bg-pink-100/50 rounded-full -z-20"
+               animate={{ opacity: [0.3, 0.8, 0.3], scale: [0.95, 1.05, 0.95] }}
+               transition={{ repeat: Infinity, duration: 3, ease: "easeInOut" }}
+               className="absolute inset-[-10px] bg-pink-100/40 rounded-full -z-20"
             />
-            <div className="w-64 h-64 bg-white shadow-xl shadow-pink-100/50 border border-pink-50 rounded-full flex items-center justify-center">
+            <div className="w-64 h-64 bg-white border border-pink-50 rounded-full flex items-center justify-center relative shadow-sm">
                <motion.div
                   animate={{ rotate: 360 }}
                   transition={{ repeat: Infinity, duration: 30, ease: "linear" }}
@@ -211,14 +211,24 @@ export function Games({ onUnlockWeb, onNavigateHome }: GamesProps) {
                     </div>
                   )}
 
-                  <div className={`w-20 h-20 rounded-full flex items-center justify-center mb-6 transition-all duration-500 ${
+                  <div className={`w-20 h-20 rounded-full flex items-center justify-center mb-6 transition-all duration-500 relative overflow-hidden ${
                     isCompleted 
                       ? 'bg-pink-50 text-[#FF8BA7] group-hover:bg-[#FF8BA7] group-hover:text-white shadow-inner group-hover:shadow-[0_0_30px_rgba(255,139,167,0.4)]' 
                       : isActive
                         ? 'bg-white/20 text-white'
                         : 'bg-slate-200/50 text-slate-400'
                   }`}>
-                    <gift.icon className={`w-10 h-10 transition-transform duration-500 ${(isCompleted || isActive) ? 'group-hover:scale-110' : ''}`} />
+                    {isCompleted && (
+                      <img 
+                        src={`/regalo${gift.id}.jpg`} 
+                        alt={gift.title} 
+                        className="absolute inset-0 w-full h-full object-cover z-10 transition-opacity duration-300 opacity-90 group-hover:opacity-100"
+                        onError={(e) => { 
+                          (e.target as HTMLImageElement).style.display = 'none'; 
+                        }}
+                      />
+                    )}
+                    <gift.icon className={`relative z-0 w-10 h-10 transition-transform duration-500 ${(isCompleted || isActive) ? 'group-hover:scale-110' : ''}`} />
                   </div>
                   
                   <h3 className={`text-2xl font-serif font-bold mb-2 ${

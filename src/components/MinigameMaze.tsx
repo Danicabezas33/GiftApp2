@@ -158,7 +158,9 @@ export function MinigameMaze({ onWin }: MinigameMazeProps) {
     };
 
     const handleTouchEnd = (e: TouchEvent | MouseEvent) => {
-      e.preventDefault();
+      if (isTouching && e.cancelable) {
+        e.preventDefault();
+      }
       isTouching = false;
     };
 
