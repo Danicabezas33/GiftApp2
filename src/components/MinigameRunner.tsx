@@ -52,6 +52,7 @@ export function MinigameRunner({ onWin }: MinigameRunnerProps) {
     let currentRunTimeMs = 0;
 
     let particles: { x: number; y: number; vx: number; vy: number; life: number; maxLife: number; size: number }[] = [];
+    let lastReportedTime = 30;
 
     // Background parallax offsets
     let bgOffsets = [0, 0, 0];
@@ -213,7 +214,11 @@ export function MinigameRunner({ onWin }: MinigameRunnerProps) {
       if (isPlaying) {
         currentRunTimeMs += dt;
         const remaining = Math.max(0, 30 - currentRunTimeMs);
-        setTimeLeft(Math.ceil(remaining));
+        const ceilRemaining = Math.ceil(remaining);
+        if (ceilRemaining !== lastReportedTime) {
+           setTimeLeft(ceilRemaining);
+           lastReportedTime = ceilRemaining;
+        }
 
         if (remaining <= 0) {
           setIsPlayedAndWon();

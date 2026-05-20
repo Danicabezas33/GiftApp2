@@ -1,17 +1,13 @@
-import { useState, useEffect, useCallback, lazy, Suspense } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { AnimatePresence } from 'motion/react';
 import Navbar from './components/Navbar';
 import Home from './components/Home';
-// 1. Quitamos la importación normal de Roadmap
-// import Roadmap from './components/Roadmap';
+import Roadmap from './components/Roadmap';
 import Memories from './components/Memories';
 import Gallery from './components/Gallery';
 import Games from './components/Games';
 import MusicPlayer from './components/MusicPlayer';
 import MobileScanner from './components/MobileScanner';
-
-// 2. Importamos Roadmap de forma dinámica y perezosa (Lazy Load)
-const Roadmap = lazy(() => import('./components/Roadmap'));
 
 export default function App() {
   const [currentSection, setCurrentSection] = useState('games');
@@ -90,18 +86,7 @@ export default function App() {
         </div>
         <AnimatePresence mode="wait">
           {unlockedWeb && currentSection === 'home' && <Home key="home" />}
-          
-          {/* 3. Envolvemos Roadmap en Suspense para manejar el estado de carga */}
-          {unlockedWeb && currentSection === 'roadmap' && (
-            <Suspense fallback={
-              <div className="w-full flex items-center justify-center h-[500px]">
-                <p className="text-[#D1495B] font-serif animate-pulse text-xl">Cargando mapa...</p>
-              </div>
-            }>
-              <Roadmap key="roadmap" />
-            </Suspense>
-          )}
-
+          {unlockedWeb && currentSection === 'roadmap' && <Roadmap key="roadmap" />}
           {unlockedWeb && currentSection === 'memories' && <Memories key="memories" />}
           {unlockedWeb && currentSection === 'gallery' && <Gallery key="gallery" />}
           {currentSection === 'games' && <Games key="games" onUnlockWeb={handleUnlockWeb} onNavigateHome={handleNavigateHome} />}
