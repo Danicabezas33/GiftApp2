@@ -88,6 +88,22 @@ export function Home({ onNavigate }: HomeProps) {
   const [popups, setPopups] = useState<{id: number, text: string, left: string, top: string, rotation: number, scale: number}[]>([]);
   const phrases = ["¡Guapa!", "¡Preciosa!", "¡Te amo!", "¡Mi niña!", "¡Bombón!", "¡Diosa!"];
 
+  const loadedPhotos = Object.keys(import.meta.glob('/public/photos/home/*.{jpg,jpeg,png,webp,avif,gif}')).map(path => path.replace('/public', ''));
+  const photos = loadedPhotos.length > 0 ? loadedPhotos : [
+    "https://raw.githubusercontent.com/Danicabezas33/GiftApp2/main/public/photos/home.jpg",
+    "https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=800&q=80"
+  ];
+  
+  const [currentPhotoIndex, setCurrentPhotoIndex] = useState(0);
+
+  useEffect(() => {
+    if (photos.length <= 1) return;
+    const interval = setInterval(() => {
+      setCurrentPhotoIndex((prev) => (prev + 1) % photos.length);
+    }, 5000); // Change photo every 5 seconds
+    return () => clearInterval(interval);
+  }, [photos.length]);
+
   const handleLoveBomb = (e: React.MouseEvent<HTMLButtonElement>) => {
     
     const newPopup = {
@@ -122,14 +138,21 @@ export function Home({ onNavigate }: HomeProps) {
           transition={{ delay: 0.1, duration: 0.5 }}
           className="md:col-span-7 md:row-span-2 bg-white rounded-3xl md:rounded-[32px] shadow-lg shadow-[#FFC8DD]/50 overflow-hidden relative min-h-[300px] md:min-h-full group"
         >
-          <img 
-            src="https://raw.githubusercontent.com/Danicabezas33/GiftApp2/main/public/photos/home.jpg" 
-            onError={(e) => {
-              (e.target as HTMLImageElement).src = "https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=800&q=80"
-            }}
-            alt="Nosotros" 
-            className="w-full h-full object-cover transform hover:scale-105 transition-transform duration-[2000ms]"
-          />
+          <AnimatePresence mode="popLayout">
+            <motion.img 
+              key={currentPhotoIndex}
+              src={photos[currentPhotoIndex]} 
+              onError={(e) => {
+                (e.target as HTMLImageElement).src = "https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=800&q=80"
+              }}
+              alt="Nosotros" 
+              initial={{ opacity: 0, scale: 1.05 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 1.5, ease: "easeInOut" }}
+              className="absolute inset-0 w-full h-full object-cover"
+            />
+          </AnimatePresence>
         </motion.div>
 
         {/* Cell 2: Letter - spans 5 columns */}
@@ -182,7 +205,7 @@ export function Home({ onNavigate }: HomeProps) {
           <motion.div
             animate={{ left: ['-20%', '120%'], y: [0, -10, 15, -5, 0] }}
             transition={{ left: { duration: 12, repeat: Infinity, ease: 'linear' }, y: { duration: 5, repeat: Infinity, ease: 'easeInOut' } }}
-            className="absolute top-[25%] text-[#FFAFCC] opacity-90 z-0 pointer-events-none drop-shadow-md"
+            className="absolute top-[25%] text-[#CDB4DB] opacity-90 z-0 pointer-events-none drop-shadow-md"
           >
             <AirplanePixel className="w-16 md:w-24 h-16 md:h-24" />
           </motion.div>
@@ -216,7 +239,7 @@ export function Home({ onNavigate }: HomeProps) {
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.5, duration: 0.5 }}
-          className="md:col-span-4 bg-white rounded-3xl md:rounded-[32px] shadow-lg shadow-[#FFC8DD]/30 p-6 md:p-8 flex flex-col items-center justify-center min-h-[200px] relative overflow-hidden"
+          className="md:col-start-5 md:col-span-4 bg-white rounded-3xl md:rounded-[32px] shadow-lg shadow-[#FFC8DD]/30 p-6 md:p-8 flex flex-col items-center justify-center min-h-[200px] relative overflow-hidden"
         >
           <button 
             onClick={handleLoveBomb}
@@ -240,27 +263,6 @@ export function Home({ onNavigate }: HomeProps) {
               </motion.div>
             ))}
           </AnimatePresence>
-        </motion.div>
-
-        {/* Cell 6: CTA Button - Now spans 8 cols */}
-        <motion.div 
-          initial={{ y: 20, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ delay: 0.6, duration: 0.5 }}
-          className="md:col-span-8 bg-white rounded-3xl md:rounded-[32px] shadow-lg shadow-[#FFC8DD]/30 min-h-[200px] overflow-hidden"
-        >
-          <button 
-            onClick={() => onNavigate && onNavigate('games')}
-            className="w-full h-full flex flex-col items-center justify-center p-6 md:p-8 group relative bg-[#FFAFCC] hover:bg-[#FFC8DD] transition-colors"
-          >
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.2),transparent)] opacity-0 group-hover:opacity-100 transition-opacity"></div>
-            
-            <div className="w-16 h-16 bg-white text-[#FFAFCC] rounded-full flex items-center justify-center mb-4 shadow-sm animate-pulse group-hover:scale-110 transition-transform">
-              <Play className="w-6 h-6 ml-1" fill="currentColor" />
-            </div>
-            <span className="font-sans font-semibold text-xl text-white drop-shadow-sm relative z-10">Empezar Gincana</span>
-            <span className="font-sans text-white/80 mt-1 relative z-10 transition-colors uppercase tracking-widest text-xs font-bold">Nivel 1</span>
-          </button>
         </motion.div>
 
       </div>
