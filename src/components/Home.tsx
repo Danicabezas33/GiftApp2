@@ -55,7 +55,7 @@ const CloudPixel = ({ className = "w-12 h-8" }) => (
   </svg>
 );
 
-const StatItem = ({ label, targetValue }: { label: string, targetValue: number }) => {
+const StatItem = ({ label, targetValue }: { label: string, targetValue: number | string}) => {
   const [count, setCount] = useState(0);
 
   useEffect(() => {
@@ -86,7 +86,7 @@ const StatItem = ({ label, targetValue }: { label: string, targetValue: number }
 
 export function Home({ onNavigate }: HomeProps) {
   const [popups, setPopups] = useState<{id: number, text: string, left: string, top: string, rotation: number, scale: number}[]>([]);
-  const phrases = ["¡Guapa!", "¡Preciosa!", "¡Te amo!", "¡Mi niña!", "¡Bombón!", "¡Diosa!"];
+  const phrases = ["¡Guapa!", "¡Preciosa!", "¡Te amo!", "¡Mi niña!", "¡Pivón!", "¡Diosa!", "¡Písame!", "¡Reinona!"];
 
   const handleLoveBomb = (e: React.MouseEvent<HTMLButtonElement>) => {
     
@@ -150,10 +150,10 @@ export function Home({ onNavigate }: HomeProps) {
               Cada día a tu lado ha sido un regalo, lleno de risas, aprendizajes y un amor que no deja de crecer.
             </p>
             <p className="font-sans text-base lg:text-lg leading-relaxed font-normal text-slate-700">
-              No me imagino mi vida sin ti, eres mi compañera, mi mejor amiga y el gran amor de mi vida. He creado esta pequeña página para recordar algunos de nuestros mejores momentos y celebrar todo lo que hemos construido juntos.
+              No me imagino mi vida sin ti, eres mi compañera, mi mejor amiga y el amor de mi vida. He creado esta web para recordar algunos de nuestros mejores momentos y celebrar todo lo que hemos vivido juntos.
             </p>
             <p className="font-sans font-medium text-[#4A3B52] pt-2">
-              Te amo con todo mi corazón.
+              Te amo con todo mi ser.
             </p>
           </div>
         </motion.div>
@@ -205,9 +205,9 @@ export function Home({ onNavigate }: HomeProps) {
 
           {/* Stats */}
           <div className="relative z-10 w-full flex items-center justify-around">
-            <StatItem label="Países" targetValue={6} />
-            <StatItem label="Kilómetros" targetValue={4820} />
-            <StatItem label="Aventuras" targetValue={100} />
+            <StatItem label="Países" targetValue={4} />
+            <StatItem label="Gordito/Gordita enviados" targetValue={8754} />
+            <StatItem label="Stickers de Stitch enamorado" targetValue="∞" />
           </div>
         </motion.div>
 
