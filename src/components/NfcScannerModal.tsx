@@ -48,7 +48,7 @@ export function NfcScannerModal({ levelId, onComplete }: { levelId: number, onCo
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="fixed inset-0 z-50 bg-white/90 backdrop-blur-xl flex flex-col items-center justify-center p-6 text-[#5F4B66] overflow-hidden"
+      className="fixed inset-0 z-50 bg-white/95 flex flex-col items-center justify-center p-6 text-[#5F4B66] overflow-hidden"
     >
       <div className="relative w-64 h-64 md:w-80 md:h-80 flex flex-col items-center justify-center mb-10">
         

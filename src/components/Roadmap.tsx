@@ -236,8 +236,8 @@ export default function Roadmap() {
           </div>
 
           {/* Mapa */}
-          <div className="flex-1 h-[350px] md:h-[500px] rounded-[1.5rem] md:rounded-[2rem] overflow-hidden border border-spring-primary/20 relative z-0">
-            <div ref={mapContainerRef} className="w-full h-full absolute inset-0 z-0"></div>
+          <div className="w-full lg:flex-1 min-h-[350px] md:min-h-[500px] rounded-[1.5rem] md:rounded-[2rem] overflow-hidden border border-spring-primary/20 relative z-0" style={{ minHeight: '350px' }}>
+            <div ref={mapContainerRef} className="w-full h-full bg-slate-100" style={{ minHeight: '350px' }}></div>
           </div>
         </div>
       </section>
