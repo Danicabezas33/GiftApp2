@@ -88,22 +88,6 @@ export function Home({ onNavigate }: HomeProps) {
   const [popups, setPopups] = useState<{id: number, text: string, left: string, top: string, rotation: number, scale: number}[]>([]);
   const phrases = ["¡Guapa!", "¡Preciosa!", "¡Te amo!", "¡Mi niña!", "¡Bombón!", "¡Diosa!"];
 
-  const loadedPhotos = Object.keys(import.meta.glob('/public/photos/home/*.{jpg,jpeg,png,webp,avif,gif}')).map(path => path.replace('/public', ''));
-  const photos = loadedPhotos.length > 0 ? loadedPhotos : [
-    "https://raw.githubusercontent.com/Danicabezas33/GiftApp2/main/public/photos/home.jpg",
-    "https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=800&q=80"
-  ];
-  
-  const [currentPhotoIndex, setCurrentPhotoIndex] = useState(0);
-
-  useEffect(() => {
-    if (photos.length <= 1) return;
-    const interval = setInterval(() => {
-      setCurrentPhotoIndex((prev) => (prev + 1) % photos.length);
-    }, 5000); // Change photo every 5 seconds
-    return () => clearInterval(interval);
-  }, [photos.length]);
-
   const handleLoveBomb = (e: React.MouseEvent<HTMLButtonElement>) => {
     
     const newPopup = {
@@ -138,21 +122,14 @@ export function Home({ onNavigate }: HomeProps) {
           transition={{ delay: 0.1, duration: 0.5 }}
           className="md:col-span-7 md:row-span-2 bg-white rounded-3xl md:rounded-[32px] shadow-lg shadow-[#FFC8DD]/50 overflow-hidden relative min-h-[300px] md:min-h-full group"
         >
-          <AnimatePresence mode="popLayout">
-            <motion.img 
-              key={currentPhotoIndex}
-              src={photos[currentPhotoIndex]} 
-              onError={(e) => {
-                (e.target as HTMLImageElement).src = "https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=800&q=80"
-              }}
-              alt="Nosotros" 
-              initial={{ opacity: 0, scale: 1.05 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 1.5, ease: "easeInOut" }}
-              className="absolute inset-0 w-full h-full object-cover"
-            />
-          </AnimatePresence>
+          <video 
+            src="https://raw.githubusercontent.com/Danicabezas33/GiftApp2/main/public/photos/home/video-home.mp4"
+            autoPlay 
+            loop 
+            muted 
+            playsInline 
+            className="absolute inset-0 w-full h-full object-cover"
+          />
         </motion.div>
 
         {/* Cell 2: Letter - spans 5 columns */}
