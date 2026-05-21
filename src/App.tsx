@@ -80,9 +80,18 @@ export default function App() {
       {unlockedWeb && <Navbar currentSection={currentSection} setCurrentSection={setCurrentSection} />}
       
       <main className={`pb-24 ${unlockedWeb ? 'pt-16' : 'pt-4 md:pt-8'} flex min-h-screen flex-col items-center justify-center relative overflow-hidden`}>
-        <div className="absolute inset-0 pointer-events-none overflow-hidden -z-10">
-          <div className="absolute top-[-20%] right-[-10%] w-[60%] h-[60%] rounded-full bg-[radial-gradient(circle,rgba(255,200,221,0.6)_0%,transparent_70%)]" />
-          <div className="absolute bottom-[-20%] left-[-10%] w-[60%] h-[60%] rounded-full bg-[radial-gradient(circle,rgba(189,224,254,0.4)_0%,transparent_70%)]" />
+        <div className="absolute inset-0 pointer-events-none overflow-hidden -z-10 bg-[#FFF5F8]">
+          <div 
+            className="absolute inset-0 opacity-[0.12] mix-blend-multiply bg-cover bg-center transition-all duration-1000"
+            style={{ 
+              backgroundImage: "url('https://raw.githubusercontent.com/Danicabezas33/GiftApp2/main/public/bg-grid.jpg')",
+              filter: "blur(2px)" 
+            }}
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-[#FFF5F8]/90 via-[#FFF5F8]/60 to-[#FFF5F8]/90" />
+          <div className="absolute inset-0 bg-[#FFC8DD]/5 mix-blend-overlay" />
+          <div className="absolute top-[-20%] right-[-10%] w-[60%] h-[60%] rounded-full bg-[radial-gradient(circle,rgba(255,200,221,0.5)_0%,transparent_70%)] mix-blend-multiply" />
+          <div className="absolute bottom-[-20%] left-[-10%] w-[60%] h-[60%] rounded-full bg-[radial-gradient(circle,rgba(205,180,219,0.3)_0%,transparent_70%)] mix-blend-multiply" />
         </div>
         <AnimatePresence mode="wait">
           {unlockedWeb && currentSection === 'home' && <Home key="home" onNavigate={setCurrentSection} />}

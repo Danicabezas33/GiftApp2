@@ -4,6 +4,21 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>¡Felices 5 años mi amor!</title>
+    <script>
+      if (typeof window !== 'undefined' && window.fetch) {
+        var originalFetch = window.fetch;
+        try {
+          Object.defineProperty(window, 'fetch', {
+            configurable: true,
+            enumerable: true,
+            get: function() { return originalFetch; },
+            set: function(val) { console.warn('Ignoring window.fetch reassignment'); }
+          });
+        } catch (e) {
+          console.warn('Could not redefine window.fetch');
+        }
+      }
+    </script>
   </head>
   <body>
     <div id="root"></div>
