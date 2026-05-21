@@ -80,9 +80,24 @@ export default function App() {
       {unlockedWeb && <Navbar currentSection={currentSection} setCurrentSection={setCurrentSection} />}
       
       <main className={`pb-24 ${unlockedWeb ? 'pt-16' : 'pt-4 md:pt-8'} flex min-h-screen flex-col items-center justify-center relative overflow-hidden`}>
-        <div className="absolute inset-0 pointer-events-none overflow-hidden -z-10">
-          <div className="absolute top-[-20%] right-[-10%] w-[60%] h-[60%] rounded-full bg-[radial-gradient(circle,rgba(255,200,221,0.6)_0%,transparent_70%)]" />
-          <div className="absolute bottom-[-20%] left-[-10%] w-[60%] h-[60%] rounded-full bg-[radial-gradient(circle,rgba(189,224,254,0.4)_0%,transparent_70%)]" />
+        <div className="absolute inset-0 pointer-events-none overflow-hidden -z-10 bg-[#FFF5F8]">
+          {/* Collage de fotos */}
+          <div 
+            className="absolute inset-0 opacity-30 mix-blend-luminosity bg-cover bg-center transition-all duration-1000"
+            style={{ 
+              backgroundImage: "url('https://raw.githubusercontent.com/Danicabezas33/GiftApp2/main/public/bg-grid.jpg')"
+            }}
+          />
+          
+          {/* Tinte rosado encima del collage para integrarlo con la paleta de colores */}
+          <div className="absolute inset-0 bg-[#FFAFCC] mix-blend-color opacity-30" />
+          
+          {/* Gradiente para suavizar bordes y que no compita con el contenido */}
+          <div className="absolute inset-0 bg-gradient-to-b from-[#FFF5F8] via-[#FFF5F8]/70 to-[#FFF5F8]" />
+          
+          {/* Destellos de color / orbes */}
+          <div className="absolute top-[-20%] right-[-10%] w-[60%] h-[60%] rounded-full bg-[radial-gradient(circle,rgba(255,200,221,0.7)_0%,transparent_70%)] mix-blend-multiply" />
+          <div className="absolute bottom-[-20%] left-[-10%] w-[60%] h-[60%] rounded-full bg-[radial-gradient(circle,rgba(205,180,219,0.5)_0%,transparent_70%)] mix-blend-multiply" />
         </div>
         <AnimatePresence mode="wait">
           {unlockedWeb && currentSection === 'home' && <Home key="home" onNavigate={setCurrentSection} />}
