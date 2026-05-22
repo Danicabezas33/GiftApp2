@@ -80,17 +80,14 @@ export default function App() {
       <div className="fixed inset-0 pointer-events-none overflow-hidden -z-10 bg-[#FFF5F8]">
         {/* Fondo */}
         <div 
-          className="absolute inset-0 opacity-30 mix-blend-luminosity bg-cover bg-center transition-all duration-1000"
+          className="absolute inset-0 opacity-100 bg-cover bg-center transition-all duration-1000"
           style={{ 
-            backgroundImage: "url('https://raw.githubusercontent.com/Danicabezas33/GiftApp2/main/public/home/bg.jpg')"
+            backgroundImage: "url('/home/bg.jpg')"
           }}
         />
         
-        {/* Tinte rosado encima para integrarlo con la paleta de colores */}
-        <div className="absolute inset-0 bg-[#FFAFCC] mix-blend-color opacity-30" />
-        
-        {/* Gradiente para suavizar bordes y que no compita con el contenido */}
-        <div className="absolute inset-0 bg-gradient-to-b from-[#FFF5F8]/80 via-[#FFF5F8]/60 to-[#FFF5F8]/90" />
+        {/* Tinte rosado muy suave para asegurar lectura de texto si la imagen es oscura, pero se deja transparente casi */}
+        <div className="absolute inset-0 bg-[#FFF5F8]/20" />
         
         {/* Destellos de color / orbes */}
         <div className="absolute top-[-20%] right-[-10%] w-[60%] h-[60%] rounded-full bg-[radial-gradient(circle,rgba(255,200,221,0.7)_0%,transparent_70%)] mix-blend-multiply" />
