@@ -88,10 +88,10 @@ const StatItem = ({ label, targetValue }: { label: string, targetValue: number |
 
   return (
     <div className="flex flex-col items-center">
-      <span className="text-5xl font-bold text-[#FFAFCC] mb-1">
+      <span className="text-5xl font-bold text-[#F26A8D] mb-1">
         {count}
       </span>
-      <span className="text-xs uppercase font-medium tracking-widest text-[#CDB4DB]">
+      <span className="text-xs uppercase font-medium tracking-widest text-[#880D1E]/70">
         {label}
       </span>
     </div>
@@ -134,7 +134,7 @@ export function Home({ onNavigate }: HomeProps) {
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.1, duration: 0.5 }}
-          className="md:col-span-7 md:row-span-2 bg-white rounded-3xl md:rounded-[32px] shadow-lg shadow-[#FFC8DD]/50 overflow-hidden relative min-h-[300px] md:min-h-full group"
+          className="md:col-span-7 md:row-span-2 bg-white rounded-3xl md:rounded-[32px] shadow-lg shadow-[#F49CBB]/40 overflow-hidden relative min-h-[300px] md:min-h-full group"
         >
           <video 
             src="https://raw.githubusercontent.com/Danicabezas33/GiftApp2/main/public/home/video-home.mp4"
@@ -151,11 +151,11 @@ export function Home({ onNavigate }: HomeProps) {
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.2, duration: 0.5 }}
-          className="md:col-span-5 md:row-span-2 bg-white rounded-3xl md:rounded-[32px] shadow-lg shadow-[#FFC8DD]/50 p-8 md:p-10 flex flex-col justify-center relative overflow-hidden"
+          className="md:col-span-5 md:row-span-2 bg-white rounded-3xl md:rounded-[32px] shadow-lg shadow-[#F49CBB]/40 p-8 md:p-10 flex flex-col justify-center relative overflow-hidden"
         >
-          <div className="absolute -top-10 -right-10 text-[#FFC8DD]/20 text-9xl">❤️</div>
+          <div className="absolute -top-10 -right-10 text-[#F49CBB]/20 text-9xl">❤️</div>
           
-          <h1 className="font-serif tracking-tight text-4xl lg:text-5xl font-extralight text-[#4A3B52] mb-6 relative z-10">
+          <h1 className="font-serif tracking-tight text-4xl lg:text-5xl font-extralight text-[#880D1E] mb-6 relative z-10">
             Felices 5 años,<br />mi niña preciosa
           </h1>
           
@@ -166,7 +166,7 @@ export function Home({ onNavigate }: HomeProps) {
             <p className="font-sans text-base lg:text-lg leading-relaxed font-normal text-slate-700">
               No me imagino mi vida sin ti, eres mi compañera, mi mejor amiga y el amor de mi vida. He creado esta web para recordar algunos de nuestros mejores momentos y celebrar todo lo que hemos vivido juntos.
             </p>
-            <p className="font-sans font-medium text-[#4A3B52] pt-2">
+            <p className="font-sans font-medium text-[#880D1E] pt-2">
               Te amo con todo mi ser.
             </p>
           </div>
@@ -177,12 +177,12 @@ export function Home({ onNavigate }: HomeProps) {
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.3, duration: 0.5 }}
-          className="md:col-span-4 bg-white rounded-3xl md:rounded-[32px] shadow-lg shadow-[#FFC8DD]/50 p-6 md:p-8 flex flex-col items-center justify-center min-h-[200px]"
+          className="md:col-span-4 bg-white rounded-3xl md:rounded-[32px] shadow-lg shadow-[#F49CBB]/40 p-6 md:p-8 flex flex-col items-center justify-center min-h-[200px]"
         >
-          <CalendarHeart className="w-8 h-8 text-[#A2D2FF] mb-3 opacity-90" />
-          <span className="text-5xl lg:text-6xl font-serif text-[#4A3B52] tracking-tighter mb-1">1826</span>
-          <span className="font-sans text-slate-500 tracking-widest text-xs uppercase font-medium mb-1">Días Juntos</span>
-          <span className="font-serif text-[#CDB4DB] text-lg">5 Años de Amor</span>
+          <CalendarHeart className="w-8 h-8 text-[#CBEEF3] mb-3 opacity-90" />
+          <span className="text-5xl lg:text-6xl font-serif text-[#F26A8D] tracking-tighter mb-1">1826</span>
+          <span className="font-sans tracking-widest text-xs uppercase font-medium mb-1 text-[#880D1E]/70">Días Juntos</span>
+          <span className="font-serif text-[#F49CBB] text-lg">5 Años de Amor</span>
         </motion.div>
 
         {/* Cell 4: Stats */}
@@ -190,13 +190,13 @@ export function Home({ onNavigate }: HomeProps) {
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.4, duration: 0.5 }}
-          className="md:col-span-8 bg-gradient-to-tr from-[#F0F8FF] to-[#BDE0FE] rounded-3xl md:rounded-[32px] shadow-lg shadow-[#FFC8DD]/30 p-6 md:p-8 flex items-center justify-around min-h-[200px] relative overflow-hidden"
+          className="md:col-span-8 bg-gradient-to-tr from-[#CBEEF3]/60 to-[#F49CBB]/60 bg-white/40 backdrop-blur-sm rounded-3xl md:rounded-[32px] shadow-xl shadow-[#F49CBB]/50 p-6 md:p-8 flex items-center justify-around min-h-[200px] relative overflow-hidden border border-[#F49CBB]/60"
         >
           {/* Sky Elements */}
           <motion.div
             animate={{ left: ['-20%', '120%'], y: [0, -10, 15, -5, 0] }}
             transition={{ left: { duration: 12, repeat: Infinity, ease: 'linear' }, y: { duration: 5, repeat: Infinity, ease: 'easeInOut' } }}
-            className="absolute top-[25%] text-[#9D84A3] opacity-90 z-0 pointer-events-none drop-shadow-md"
+            className="absolute top-[25%] text-[#F49CBB] opacity-80 z-0 pointer-events-none drop-shadow-md"
           >
             <AirplanePixel className="w-16 md:w-24 h-16 md:h-24" />
           </motion.div>
@@ -230,13 +230,13 @@ export function Home({ onNavigate }: HomeProps) {
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.5, duration: 0.5 }}
-          className="md:col-start-5 md:col-span-4 bg-white rounded-3xl md:rounded-[32px] shadow-lg shadow-[#FFC8DD]/30 p-6 md:p-8 flex flex-col items-center justify-center min-h-[200px] relative overflow-hidden"
+          className="md:col-start-5 md:col-span-4 bg-white rounded-3xl md:rounded-[32px] shadow-lg shadow-[#F49CBB]/40 p-6 md:p-8 flex flex-col items-center justify-center min-h-[200px] relative overflow-hidden"
         >
           <button 
             onClick={handleLoveBomb}
-            className="w-24 h-24 bg-[#FFAFCC] hover:bg-[#FFC8DD] text-white rounded-full flex items-center justify-center shadow-lg shadow-[#FFC8DD]/50 animate-pulse transition-all hover:scale-110 active:scale-95 relative z-10"
+            className="w-24 h-24 bg-[#DD2D4A] hover:bg-[#F26A8D] text-white rounded-full flex items-center justify-center shadow-lg shadow-[#F49CBB]/40 animate-pulse transition-all hover:scale-110 active:scale-95 relative z-10"
           >
-            <Heart8Bit className="w-10 h-10" />
+            <Heart8Bit className="w-10 h-10 text-[#DD2D4A]" />
           </button>
           
           <AnimatePresence>
@@ -248,7 +248,7 @@ export function Home({ onNavigate }: HomeProps) {
                 exit={{ opacity: 0, y: -80, x: "-50%", scale: 0.8 }}
                 transition={{ duration: 2.2, ease: "easeOut" }}
                 style={{ left: popup.left, top: popup.top }}
-                className="absolute bg-white border border-[#FFAFCC] text-[#4A3B52] px-5 py-2 rounded-2xl shadow-lg shadow-[#FFC8DD]/50 text-base md:text-lg font-bold font-serif italic whitespace-nowrap z-0 origin-center pointer-events-none"
+                className="absolute bg-white border border-[#F49CBB] text-[#880D1E] px-5 py-2 rounded-2xl shadow-lg shadow-[#F49CBB]/40 text-base md:text-lg font-bold font-serif italic whitespace-nowrap z-0 origin-center pointer-events-none"
               >
                 {popup.text}
               </motion.div>

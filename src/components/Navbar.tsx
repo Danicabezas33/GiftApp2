@@ -16,9 +16,9 @@ export function Navbar({ currentSection, setCurrentSection }: NavbarProps) {
   ];
 
   return (
-    <nav className="fixed top-0 left-0 w-full bg-white/80 backdrop-blur-xl z-50 border-b border-[#FFC8DD]/50 shadow-sm shadow-[#FFC8DD]/30">
+    <nav className="fixed top-0 left-0 w-full bg-white/80 backdrop-blur-xl z-50 border-b border-[#F49CBB]/50 shadow-sm shadow-[#F49CBB]/30">
       <div className="max-w-4xl mx-auto px-4 h-16 flex items-center justify-between">
-        <div className="text-xl md:text-2xl font-script font-bold text-[#4A3B52] drop-shadow-sm cursor-pointer" onClick={() => setCurrentSection('home')}>
+        <div className="text-xl md:text-2xl font-script font-bold text-[#880D1E] drop-shadow-sm cursor-pointer" onClick={() => setCurrentSection('home')}>
           ¡Felices 5 Años mi niña!
         </div>
         <div className="hidden md:flex space-x-2">
@@ -28,14 +28,14 @@ export function Navbar({ currentSection, setCurrentSection }: NavbarProps) {
               onClick={() => setCurrentSection(tab.id)}
               className={`px-5 py-2 rounded-full text-sm font-medium transition-all duration-500 flex items-center gap-2 relative group ${
                 currentSection === tab.id
-                  ? 'text-[#4A3B52]'
-                  : 'text-[#4A3B52]/60 hover:text-[#4A3B52]'
+                  ? 'text-[#DD2D4A]'
+                  : 'text-slate-500 hover:text-[#DD2D4A]'
               }`}
             >
               {currentSection === tab.id && (
                 <motion.div
                   layoutId="navGlow"
-                  className="absolute inset-0 bg-[#FFAFCC]/10 rounded-full blur-sm -z-10"
+                  className="absolute inset-0 bg-[#DD2D4A]/5 rounded-full blur-sm -z-10"
                 />
               )}
               <tab.icon className={`w-4 h-4 transition-transform duration-500 ${currentSection === tab.id ? 'scale-110' : 'group-hover:scale-110'}`} />
@@ -43,7 +43,7 @@ export function Navbar({ currentSection, setCurrentSection }: NavbarProps) {
               {currentSection === tab.id && (
                 <motion.div 
                   layoutId="activeTabIndicator"
-                  className="absolute bottom-[-16px] left-1/2 -translate-x-1/2 w-1.5 h-1.5 bg-[#FFAFCC] rounded-full shadow-[0_0_8px_rgba(255,139,167,0.8)]"
+                  className="absolute bottom-[-16px] left-1/2 -translate-x-1/2 w-1.5 h-1.5 bg-[#DD2D4A] rounded-full shadow-[0_0_8px_rgba(221,45,74,0.8)]"
                 />
               )}
             </button>
@@ -56,15 +56,15 @@ export function Navbar({ currentSection, setCurrentSection }: NavbarProps) {
               onClick={() => setCurrentSection(tab.id)}
               className={`p-3 rounded-full transition-all duration-300 relative ${
                 currentSection === tab.id
-                  ? 'text-[#4A3B52] bg-[#FFF0F5]'
-                  : 'text-[#4A3B52]/60 hover:text-[#4A3B52] hover:bg-[#FFF0F5]/50'
+                  ? 'text-[#DD2D4A] bg-[#F49CBB]/20'
+                  : 'text-slate-500 hover:text-[#DD2D4A] hover:bg-[#F49CBB]/10'
               }`}
             >
               <tab.icon className={`w-5 h-5 ${currentSection === tab.id ? 'scale-110' : ''}`} />
               {currentSection === tab.id && (
                 <motion.div 
                   layoutId="activeTabIndicatorMob"
-                  className="absolute bottom-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 bg-[#FFAFCC] rounded-full"
+                  className="absolute bottom-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 bg-[#DD2D4A] rounded-full"
                 />
               )}
             </button>
