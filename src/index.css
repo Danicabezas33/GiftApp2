@@ -6,12 +6,12 @@
   --font-serif: "Playfair Display", ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
   --font-script: "Great Vibes", cursive;
   
-  --color-spring-bg: #FFF5F7;
+  --color-spring-bg: #FFF5F8;
   --color-spring-card: #FFFFFF;
-  --color-spring-primary: #FF8BA7;
-  --color-spring-secondary: #D1495B;
-  --color-spring-text: #5F4B66;
-  --color-spring-text-muted: #9D84A3;
+  --color-spring-primary: #DD2D4A;
+  --color-spring-secondary: #880D1E;
+  --color-spring-text: #334155;
+  --color-spring-text-muted: #64748b;
 }
 
 @keyframes marquee {

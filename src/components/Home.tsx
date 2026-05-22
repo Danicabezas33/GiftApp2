@@ -190,7 +190,7 @@ export function Home({ onNavigate }: HomeProps) {
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.4, duration: 0.5 }}
-          className="md:col-span-8 bg-gradient-to-tr from-[#CBEEF3]/60 to-[#F49CBB]/60 bg-white/40 backdrop-blur-sm rounded-3xl md:rounded-[32px] shadow-xl shadow-[#F49CBB]/50 p-6 md:p-8 flex items-center justify-around min-h-[200px] relative overflow-hidden border border-[#F49CBB]/60"
+          className="md:col-span-8 bg-gradient-to-tr from-[#CBEEF3]/40 to-[#F49CBB]/40 bg-white/90 backdrop-blur-sm rounded-3xl md:rounded-[32px] shadow-xl shadow-[#F49CBB]/50 p-6 md:p-8 flex items-center justify-around min-h-[200px] relative overflow-hidden border border-[#F49CBB]/60"
         >
           {/* Sky Elements */}
           <motion.div

@@ -184,7 +184,7 @@ export default function Roadmap() {
               key={i} 
               className="mb-12 md:mb-16 ml-6 md:ml-12 relative"
             >
-              <div className="absolute w-4 h-4 md:w-5 md:h-5 bg-spring-primary rounded-full top-8 md:top-12 -left-[33px] md:-left-[59px] shadow-[0_0_15px_rgba(255,139,167,0.6)] border-2 border-white z-10"></div>
+              <div className="absolute w-4 h-4 md:w-5 md:h-5 bg-spring-primary rounded-full top-8 md:top-12 -left-[33px] md:-left-[59px] shadow-[0_0_15px_rgba(221,45,74,0.6)] border-2 border-white z-10"></div>
               
               <div className="glass p-1 md:p-1.5 rounded-[1.5rem] md:rounded-[2rem] overflow-hidden flex flex-col md:flex-row gap-0 md:gap-4 items-stretch group hover:border-spring-primary/30 transition-all duration-500 shadow-sm hover:shadow-md">
                 <div className="p-6 md:p-10 flex-1 flex flex-col justify-center">
@@ -224,10 +224,10 @@ export default function Roadmap() {
                 key={year}
                 onClick={() => setActiveYear(year)}
                 className={`
-                  px-6 py-3 md:px-8 md:py-4 rounded-xl md:rounded-2xl font-bold text-base md:text-lg transition-all duration-500 shrink-0 lg:shrink lg:flex-none whitespace-nowrap border
+                  px-6 py-3 whitespace-nowrap text-lg font-bold transition-all duration-300 rounded-full shadow-sm border
                   ${activeYear === year 
-                    ? 'bg-spring-primary text-white border-spring-primary shadow-[0_4px_15px_rgba(255,139,167,0.4)]' 
-                    : 'bg-spring-bg text-spring-text-muted hover:text-spring-text hover:bg-white border-spring-primary/10'}
+                    ? 'bg-[#DD2D4A] text-white border-[#DD2D4A] shadow-md shadow-[#DD2D4A]/30 transform scale-105' 
+                    : 'bg-white text-[#880D1E]/80 border-[#F49CBB]/50 hover:bg-[#F49CBB]/20 hover:text-[#880D1E]'}
                 `}
               >
                 {year}

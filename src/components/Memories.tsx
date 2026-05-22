@@ -68,18 +68,20 @@ export function Memories() {
       exit={{ opacity: 0 }}
       className="w-full max-w-7xl mx-auto py-20 px-4 mt-8"
     >
-      <h2 className="text-5xl md:text-7xl font-script text-center text-[#4A3B52] mb-6 drop-shadow-sm">Nuestros Recuerdos</h2>
-      <p className="text-center text-[#CDB4DB] font-serif text-lg mb-16">Un viaje a través de nuestras mejores fotos.</p>
+      <h2 className="text-5xl md:text-7xl font-script text-center text-[#880D1E] mb-6 drop-shadow-sm">Nuestros Recuerdos</h2>
+      <div className="text-center mb-16">
+        <p className="text-[#880D1E] font-serif text-xl font-medium drop-shadow-sm bg-white/30 inline-block px-4 py-1 rounded-full">Un viaje a través de nuestras mejores fotos.</p>
+      </div>
       
       <div className="flex flex-wrap justify-center gap-4 mb-16">
         {(['1', '2', '3', '4', '5'] as const).map(year => (
           <button
             key={year}
             onClick={() => setActiveTab(year)}
-            className={`px-8 py-3 rounded-2xl font-bold transition-all duration-500 border border-[#FFC8DD]/30 ${
+            className={`px-6 py-3 whitespace-nowrap text-lg font-bold transition-all duration-300 rounded-full shadow-sm border ${
               activeTab === year 
-                ? 'bg-[#FFAFCC] text-white shadow-[0_4px_15px_rgba(255,139,167,0.4)]' 
-                : 'bg-white shadow-sm text-[#CDB4DB] hover:text-[#4A3B52]'
+                ? 'bg-[#DD2D4A] text-white border-[#DD2D4A] shadow-md shadow-[#DD2D4A]/30 transform scale-105' 
+                : 'bg-white text-[#880D1E]/80 border-[#F49CBB]/50 hover:bg-[#F49CBB]/20 hover:text-[#880D1E]'
             }`}
           >
             Año {year}
@@ -89,13 +91,13 @@ export function Memories() {
 
       <div className="min-h-[400px]">
         {loading ? (
-          <div className="flex flex-col items-center justify-center p-20 text-[#FFAFCC]">
+          <div className="flex flex-col items-center justify-center p-20 text-[#DD2D4A]">
              <Loader2 className="w-12 h-12 animate-spin mb-6 opacity-60" />
              <p className="animate-pulse font-serif tracking-widest text-sm uppercase opacity-40">Cargando memorias...</p>
           </div>
         ) : error ? (
-           <div className="py-12 px-8 text-center bg-white rounded-[2rem] border border-[#FFC8DD]/30 shadow-xl shadow-[#FFC8DD]/50 max-w-xl mx-auto">
-             <p className="font-bold text-[#4A3B52] mb-3">Algo salió mal</p>
+           <div className="py-12 px-8 text-center bg-white rounded-[2rem] border border-[#F49CBB]/30 shadow-xl shadow-[#F49CBB]/50 max-w-xl mx-auto">
+             <p className="font-bold text-[#880D1E] mb-3">Algo salió mal</p>
              <p className="text-sm text-pink-900/60 leading-relaxed">{error}</p>
            </div>
         ) : (
@@ -116,10 +118,10 @@ export function Memories() {
                     setSelectedMemory(item);
                     setCurrentImageIndex(0);
                   }}
-                  className="bg-white rounded-[2.5rem] overflow-hidden shadow-lg shadow-[#FFC8DD]/40 border border-[#FFC8DD]/30 hover:border-[#FFC8DD] transition-all duration-500 cursor-pointer group"
+                  className="bg-white rounded-[2.5rem] overflow-hidden shadow-lg shadow-[#F49CBB]/40 border border-[#F49CBB]/30 hover:border-[#F49CBB] transition-all duration-500 cursor-pointer group"
                 >
                   <div className="h-80 overflow-hidden relative">
-                    <div className="absolute inset-0 bg-[#FFC8DD]/10 group-hover:bg-transparent transition-colors z-10" />
+                    <div className="absolute inset-0 bg-[#F49CBB]/10 group-hover:bg-transparent transition-colors z-10" />
                     <img 
                       src={item.images[0]} 
                       onError={handleImageError}
@@ -128,7 +130,7 @@ export function Memories() {
                     />
                   </div>
                   <div className="p-8 text-center bg-[#FFF5F8]/50">
-                    <p className="text-[#4A3B52] font-serif font-medium text-xl leading-snug">{item.text}</p>
+                    <p className="text-[#880D1E] font-serif font-medium text-xl leading-snug">{item.text}</p>
                   </div>
                 </motion.div>
               ))}
@@ -150,17 +152,17 @@ export function Memories() {
               initial={{ scale: 0.9, y: 20 }}
               animate={{ scale: 1, y: 0 }}
               exit={{ scale: 0.9, y: 20 }}
-              className="bg-white rounded-[3rem] overflow-hidden shadow-2xl shadow-[#FFC8DD]/50 max-w-5xl w-full flex flex-col md:flex-row relative max-h-[90vh] border border-[#FFC8DD]/30"
+              className="bg-white rounded-[3rem] overflow-hidden shadow-2xl shadow-[#F49CBB]/50 max-w-5xl w-full flex flex-col md:flex-row relative max-h-[90vh] border border-[#F49CBB]/30"
               onClick={e => e.stopPropagation()}
             >
               <button 
                 onClick={() => setSelectedMemory(null)}
-                className="absolute top-6 right-6 text-[#CDB4DB] hover:text-[#4A3B52] transition-colors z-20"
+                className="absolute top-6 right-6 text-[#880D1E]/70 hover:text-[#880D1E] transition-colors z-20"
               >
                 <X className="w-8 h-8" />
               </button>
               
-              <div className="w-full md:w-3/5 h-[300px] md:h-auto shrink-0 relative group bg-[#FFF0F5] overflow-hidden">
+              <div className="w-full md:w-3/5 h-[300px] md:h-auto shrink-0 relative group bg-[#F49CBB]/20 overflow-hidden">
                 <AnimatePresence mode="wait">
                   <motion.div
                     key={currentImageIndex}
@@ -197,7 +199,7 @@ export function Memories() {
                         e.stopPropagation();
                         setCurrentImageIndex(prev => (prev - 1 + selectedMemory.images.length) % selectedMemory.images.length);
                       }}
-                      className="absolute left-6 top-1/2 -translate-y-1/2 bg-white/40 hover:bg-white/80 text-[#4A3B52] p-3 rounded-full backdrop-blur-md opacity-0 group-hover:opacity-100 transition-all duration-300"
+                      className="absolute left-6 top-1/2 -translate-y-1/2 bg-white/40 hover:bg-white/80 text-[#880D1E] p-3 rounded-full backdrop-blur-md opacity-0 group-hover:opacity-100 transition-all duration-300"
                     >
                       <ChevronLeft className="w-8 h-8" />
                     </button>
@@ -206,7 +208,7 @@ export function Memories() {
                         e.stopPropagation();
                         setCurrentImageIndex(prev => (prev + 1) % selectedMemory.images.length);
                       }}
-                      className="absolute right-6 top-1/2 -translate-y-1/2 bg-white/40 hover:bg-white/80 text-[#4A3B52] p-3 rounded-full backdrop-blur-md opacity-0 group-hover:opacity-100 transition-all duration-300"
+                      className="absolute right-6 top-1/2 -translate-y-1/2 bg-white/40 hover:bg-white/80 text-[#880D1E] p-3 rounded-full backdrop-blur-md opacity-0 group-hover:opacity-100 transition-all duration-300"
                     >
                       <ChevronRight className="w-8 h-8" />
                     </button>
@@ -214,7 +216,7 @@ export function Memories() {
                       {selectedMemory.images.map((_: any, idx: number) => (
                         <div 
                           key={idx} 
-                          className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${idx === currentImageIndex ? 'bg-[#FFAFCC] scale-125 shadow-[0_2px_5px_rgba(255,139,167,0.5)]' : 'bg-white/60 shadow-sm'}`} 
+                          className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${idx === currentImageIndex ? 'bg-[#DD2D4A] scale-125 shadow-[0_2px_5px_rgba(221,45,74,0.5)]' : 'bg-white/60 shadow-sm'}`} 
                         />
                       ))}
                     </div>
@@ -223,15 +225,15 @@ export function Memories() {
               </div>
               <div className="w-full md:w-2/5 flex-1 min-h-0 overflow-y-auto bg-white">
                 <div className="p-6 md:p-14 flex flex-col min-h-full h-fit">
-                  <h3 className="text-2xl md:text-4xl font-serif font-bold text-[#4A3B52] mb-6 md:mb-8 pr-10">{selectedMemory.text}</h3>
+                  <h3 className="text-2xl md:text-4xl font-serif font-bold text-[#880D1E] mb-6 md:mb-8 pr-10">{selectedMemory.text}</h3>
                   <div className="relative group">
-                    <div className="absolute -left-4 md:-left-6 top-0 bottom-0 w-0.5 md:w-1 bg-[#FFC8DD] rounded-full group-hover:bg-[#FFAFCC] transition-colors duration-500" />
-                    <p className="text-[#4A3B52]/80 text-lg md:text-xl leading-relaxed whitespace-pre-line italic font-serif">
+                    <div className="absolute -left-4 md:-left-6 top-0 bottom-0 w-0.5 md:w-1 bg-[#F49CBB] rounded-full group-hover:bg-[#DD2D4A] transition-colors duration-500" />
+                    <p className="text-[#880D1E]/80 text-lg md:text-xl leading-relaxed whitespace-pre-line italic font-serif">
                       "{selectedMemory.detail}"
                     </p>
                   </div>
                   <div className="mt-8 md:mt-12 flex justify-end mt-auto pt-4 opacity-40">
-                    <Heart className="w-8 h-8 md:w-10 md:h-10 text-[#FFAFCC] fill-[#FFC8DD]" />
+                    <Heart className="w-8 h-8 md:w-10 md:h-10 text-[#DD2D4A] fill-[#F49CBB]" />
                   </div>
                 </div>
               </div>
