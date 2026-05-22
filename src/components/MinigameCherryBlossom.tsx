@@ -27,15 +27,15 @@ export function MinigameCherryBlossom({ onWin }: MinigameCherryProps) {
     { top: 130, left: 295 },
     { top: 60, left: 250 },
     { top: 85, left: 325 },
-    { top: 30, left: 220 },
+    { top: 40, left: 220 },
     { top: 35, left: 290 },
-    { top: 155, left: 15 },
-    { top: 80, left: 25 },
-    { top: 55, left: -5 },
-    { top: 35, left: 95 },
-    { top: 20, left: 40 },
-    { top: 15, left: 125 },
-    { top: -20, left: 195 }, 
+    { top: 155, left: 25 },
+    { top: 80, left: 35 },
+    { top: 55, left: 20 },
+    { top: 40, left: 95 },
+    { top: 35, left: 55 },
+    { top: 30, left: 125 },
+    { top: 25, left: 195 }, 
     { top: 100, left: 160 },
     { top: 210, left: 75 },  
     { top: 195, left: 245 }, 
@@ -96,7 +96,7 @@ export function MinigameCherryBlossom({ onWin }: MinigameCherryProps) {
   return (
     <div 
       ref={containerRef}
-      className={`relative w-full h-[400px] overflow-hidden rounded-2xl shadow-xl transition-colors duration-1000 select-none ${
+      className={`relative w-full h-[520px] overflow-hidden rounded-2xl shadow-xl transition-colors duration-1000 select-none ${
         phase === 'season' 
           ? 'bg-gradient-to-b from-sky-400 to-cyan-100'
           : phase === 'bloom' || phase === 'done' 
@@ -193,7 +193,7 @@ export function MinigameCherryBlossom({ onWin }: MinigameCherryProps) {
                       rotate: Math.random() * 360
                     }}
                     transition={{ repeat: Infinity, duration: 4 + Math.random() * 5, ease: 'linear', delay: Math.random() * 5 }}
-                    className="absolute w-5 h-5 bg-[#FFC8DD]/80 rounded-full blur-[1px]"
+                    className="absolute w-5 h-5 bg-[#F49CBB]/80 rounded-full blur-[1px]"
                     style={{ borderRadius: '50% 0 50% 50%' }}
                   />
               ))}
@@ -256,7 +256,7 @@ export function MinigameCherryBlossom({ onWin }: MinigameCherryProps) {
             background: phase === 'plant' || phase === 'water' || phase === 'intro' ? 'linear-gradient(to bottom, #3f3f46, #27272a)' : 
                             phase === 'season' ? `linear-gradient(to bottom, rgba(74, 222, 128, ${seasonProgress/100}), rgba(34, 197, 94, ${seasonProgress/100}))` : 'linear-gradient(to bottom, #4ade80, #22c55e)'
         }}
-        className="absolute bottom-0 w-full h-[32%] z-0 border-t border-white/10 shadow-[0_-15px_40px_rgba(0,0,0,0.2)]" 
+        className="absolute bottom-0 w-full h-[25%] z-0 border-t border-white/10 shadow-[0_-15px_40px_rgba(0,0,0,0.2)]" 
       />
 
       {/* Intro Overlay */}
@@ -268,7 +268,7 @@ export function MinigameCherryBlossom({ onWin }: MinigameCherryProps) {
             exit={{ opacity: 0 }}
             className="absolute inset-0 z-50 bg-black/60 backdrop-blur-sm flex flex-col items-center justify-center p-6 text-center"
           >
-            <h3 className="font-serif text-4xl md:text-5xl text-[#CDB4DB] mb-6 font-bold drop-shadow-md tracking-wide">El Árbol de la Vida</h3>
+            <h3 className="font-serif text-4xl md:text-5xl text-[#880D1E]/70 mb-6 font-bold drop-shadow-md tracking-wide">El Árbol de la Vida</h3>
             <p className="text-white/90 mb-10 text-xl max-w-md font-light leading-relaxed">
               Toda gran historia tiene un comienzo.<br/> Planta la semilla de nuestro futuro y acompáñala a crecer a través del tiempo.
             </p>
@@ -289,7 +289,7 @@ export function MinigameCherryBlossom({ onWin }: MinigameCherryProps) {
       />
 
       {/* Tree states */}
-      <div className="absolute bottom-[30%] left-1/2 -translate-x-1/2 z-20 flex flex-col items-center justify-end pointer-events-none">
+      <div className="absolute bottom-[10%] left-1/2 -translate-x-1/2 z-20 flex flex-col items-center justify-end pointer-events-none">
         <AnimatePresence>
           {phase === 'water' && (
              <motion.div 
@@ -343,7 +343,7 @@ export function MinigameCherryBlossom({ onWin }: MinigameCherryProps) {
              <motion.div 
                 key="adult"
                 initial={{ scale: 0.6, opacity: 0, rotate: 0 }}
-                animate={{ scale: 0.85, opacity: 1, rotate: [-0.5, 0.5, -0.5] }}
+                animate={{ scale: 0.75, opacity: 1, rotate: [-0.5, 0.5, -0.5] }}
                 transition={{ 
                   scale: { duration: 1.5, type: 'spring' }, 
                   opacity: { duration: 1 },
@@ -358,7 +358,7 @@ export function MinigameCherryBlossom({ onWin }: MinigameCherryProps) {
                        initial={{ opacity: 0, scale: 0.8 }}
                        animate={{ opacity: 1, scale: 1 }}
                        transition={{ duration: 2 }}
-                       className="absolute -top-[50px] -left-[100px] w-[500px] h-[400px] bg-[#FFAFCC]/30 rounded-full blur-3xl pointer-events-none mix-blend-screen"
+                       className="absolute -top-[50px] -left-[100px] w-[500px] h-[400px] bg-[#DD2D4A]/30 rounded-full blur-3xl pointer-events-none mix-blend-screen"
                     />
                   )}
                 </AnimatePresence>
@@ -403,12 +403,12 @@ export function MinigameCherryBlossom({ onWin }: MinigameCherryProps) {
                            <motion.div
                              animate={{
                                  scale: isBloomed ? 1.6 : 1,
-                                 backgroundColor: isBloomed ? '#FFAFCC' : '#3f6212', // pink-200 vs lime-800
+                                 backgroundColor: isBloomed ? '#DD2D4A' : '#3f6212', // pink-200 vs lime-800
                                  rotate: isBloomed ? Math.random() * 90 - 45 : 0,
                                  borderRadius: isBloomed ? '0 50% 50% 50%' : '50%',
                              }}
                              transition={{ type: 'spring', bounce: 0.6 }}
-                             className={`w-10 h-10 shadow-lg border-2 relative origin-center flex items-center justify-center ${isBloomed ? 'border-[#FFAFCC]' : 'border-lime-950/50'} z-10`}
+                             className={`w-10 h-10 shadow-lg border-2 relative origin-center flex items-center justify-center ${isBloomed ? 'border-[#DD2D4A]' : 'border-lime-950/50'} z-10`}
                            >
                               {isBloomed && (
                                   <>
@@ -416,10 +416,10 @@ export function MinigameCherryBlossom({ onWin }: MinigameCherryProps) {
                                     <div className="w-2 h-2 bg-yellow-300 rounded-full z-10" />
                                     
                                     {/* Petal accents */}
-                                    <div className="absolute -top-1 w-3 h-3 bg-[#FFC8DD] rounded-full opacity-80" />
-                                    <div className="absolute -bottom-1 w-3 h-3 bg-[#FFC8DD] rounded-full opacity-80" />
-                                    <div className="absolute -left-1 w-3 h-3 bg-[#FFC8DD] rounded-full opacity-80" />
-                                    <div className="absolute -right-1 w-3 h-3 bg-[#FFC8DD] rounded-full opacity-80" />
+                                    <div className="absolute -top-1 w-3 h-3 bg-[#F49CBB] rounded-full opacity-80" />
+                                    <div className="absolute -bottom-1 w-3 h-3 bg-[#F49CBB] rounded-full opacity-80" />
+                                    <div className="absolute -left-1 w-3 h-3 bg-[#F49CBB] rounded-full opacity-80" />
+                                    <div className="absolute -right-1 w-3 h-3 bg-[#F49CBB] rounded-full opacity-80" />
                                   </>
                               )}
                            </motion.div>
@@ -460,7 +460,7 @@ export function MinigameCherryBlossom({ onWin }: MinigameCherryProps) {
 
       {/* Phase 2: Watering Can */}
       {phase === 'water' && (
-          <div className="absolute bottom-[20%] right-[10%] flex flex-col items-center z-40">
+          <div className="absolute bottom-[10%] right-[10%] flex flex-col items-center z-40">
              <button
                onPointerDown={() => { isWateringRef.current = true; }}
                onPointerUp={() => { isWateringRef.current = false; }}
@@ -503,7 +503,7 @@ export function MinigameCherryBlossom({ onWin }: MinigameCherryProps) {
 
       {/* Phase 3: Seasons slider */}
       {phase === 'season' && (
-          <div className="absolute bottom-[20%] left-1/2 -translate-x-1/2 w-[90%] max-w-md bg-white/90 p-8 rounded-[2rem] shadow-2xl backdrop-blur-xl flex flex-col items-center z-40 border border-white/50">
+          <div className="absolute bottom-[4%] left-1/2 -translate-x-1/2 w-[92%] max-w-sm bg-white/95 p-4 md:p-5 rounded-[1.5rem] shadow-xl backdrop-blur-md flex flex-col items-center z-40 border border-white/50">
              <div className="flex justify-between w-full text-stone-600 mb-6 px-4">
                  <div className="flex flex-col items-center text-sky-500 gap-2">
                      <Snowflake size={28} />
@@ -541,7 +541,7 @@ export function MinigameCherryBlossom({ onWin }: MinigameCherryProps) {
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.9 }}
-              className="absolute bottom-[10%] w-full text-center pointer-events-none z-40"
+              className="absolute bottom-[4%] w-full text-center pointer-events-none z-40"
             >
                <span className="bg-white/90 px-8 py-4 rounded-full shadow-[0_10px_30px_rgba(225,29,72,0.2)] text-rose-600 font-bold border border-rose-200/50 inline-flex items-center gap-3 backdrop-blur-md text-lg tracking-wide">
                    <Heart size={20} className="text-rose-400" />
@@ -577,7 +577,7 @@ export function MinigameCherryBlossom({ onWin }: MinigameCherryProps) {
                     initial={{ y: 20, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
                     transition={{ delay: 0.8, duration: 1 }}
-                    className="text-4xl md:text-6xl font-script text-[#CDB4DB] mb-8 drop-shadow-xl"
+                    className="text-4xl md:text-6xl font-script text-[#880D1E]/70 mb-8 drop-shadow-xl"
                   >
                     Nuestra historia ha florecido
                   </motion.h2>
@@ -590,7 +590,7 @@ export function MinigameCherryBlossom({ onWin }: MinigameCherryProps) {
                     <p className="text-xl text-white/95 font-serif font-medium leading-relaxed drop-shadow-sm mb-4">
                        Tu recompensa real te espera...
                     </p>
-                    <p className="text-2xl md:text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-[#FFAFCC] via-rose-300 to-[#FFC8DD] drop-shadow-sm leading-tight">
+                    <p className="text-2xl md:text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-[#DD2D4A] via-rose-300 to-[#F49CBB] drop-shadow-sm leading-tight">
                        ¡Vamos a construir nuestro propio Ciruelo en Flor juntos!
                     </p>
                   </motion.div>

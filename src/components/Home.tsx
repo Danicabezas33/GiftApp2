@@ -236,7 +236,7 @@ export function Home({ onNavigate }: HomeProps) {
             onClick={handleLoveBomb}
             className="w-24 h-24 bg-[#DD2D4A] hover:bg-[#F26A8D] text-white rounded-full flex items-center justify-center shadow-lg shadow-[#F49CBB]/40 animate-pulse transition-all hover:scale-110 active:scale-95 relative z-10"
           >
-            <Heart8Bit className="w-10 h-10 text-[#DD2D4A]" />
+            <Heart8Bit className="w-10 h-10 text-white" />
           </button>
           
           <AnimatePresence>

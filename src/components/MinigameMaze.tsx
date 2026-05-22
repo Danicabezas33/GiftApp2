@@ -115,8 +115,8 @@ export function MinigameMaze({ onWin }: MinigameMazeProps) {
       vx: 0,
       vy: 0,
       radius: Math.min(cellW, cellH) * 0.35,
-      lightRadius: 100,
-      maxLight: 140
+      lightRadius: 160,
+      maxLight: 190
     };
 
     let sparks: { x: number; y: number; vx: number; vy: number; life: number; maxLife: number }[] = [];
@@ -221,8 +221,8 @@ export function MinigameMaze({ onWin }: MinigameMazeProps) {
         player.x += player.vx * dt;
         player.y += player.vy * dt;
 
-        // Light mechanics: decreases by 2% of max per second
-        player.lightRadius -= player.maxLight * 0.02 * dt;
+        // Light mechanics: decreases by 1.1% of max per second
+        player.lightRadius -= player.maxLight * 0.011 * dt;
         if (player.lightRadius <= 15) {
            setIsLost(true);
            return;
@@ -313,7 +313,7 @@ export function MinigameMaze({ onWin }: MinigameMazeProps) {
 
       // ====== DRAW ======
       // Floor
-      ctx.fillStyle = '#0a0a0a';
+      ctx.fillStyle = '#150508';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
       ctx.save();
@@ -326,13 +326,13 @@ export function MinigameMaze({ onWin }: MinigameMazeProps) {
       }
 
       ctx.beginPath();
-      ctx.arc(player.x, player.y, actualRadius * 1.5, 0, Math.PI * 2);
+      ctx.arc(player.x, player.y, actualRadius * 2.8, 0, Math.PI * 2);
       ctx.clip();
 
       for (let r = 0; r < ROWS; r++) {
          for (let c = 0; c < COLS; c++) {
             if (levelMap[r][c] === 1) {
-               ctx.fillStyle = '#222';
+               ctx.fillStyle = '#3d050d';
                ctx.fillRect(c * cellW, r * cellH, cellW, cellH);
                if (pattern) {
                   ctx.globalAlpha = 0.15;
@@ -340,8 +340,8 @@ export function MinigameMaze({ onWin }: MinigameMazeProps) {
                   ctx.fillRect(c * cellW, r * cellH, cellW, cellH);
                   ctx.globalAlpha = 1.0;
                }
-               ctx.strokeStyle = '#000';
-               ctx.lineWidth = 2;
+               ctx.strokeStyle = 'rgba(244, 156, 187, 0.4)';
+               ctx.lineWidth = 1.5;
                ctx.strokeRect(c * cellW, r * cellH, cellW, cellH);
             } else if (levelMap[r][c] === 2) {
                ctx.fillStyle = '#fff';
@@ -434,10 +434,10 @@ export function MinigameMaze({ onWin }: MinigameMazeProps) {
       ctx.globalCompositeOperation = 'source-over';
       const gradient = ctx.createRadialGradient(player.x, player.y, actualRadius * 0.2, player.x, player.y, actualRadius);
       gradient.addColorStop(0, 'rgba(0,0,0,0)');
-      gradient.addColorStop(0.6, 'rgba(0,0,0,0.6)');
-      gradient.addColorStop(1, 'rgba(0,0,0,0.98)');
+      gradient.addColorStop(0.6, 'rgba(21, 5, 8, 0.55)');
+      gradient.addColorStop(1, 'rgba(21, 5, 8, 0.82)');
       
-      ctx.fillStyle = 'rgba(0,0,0,0.98)';
+      ctx.fillStyle = 'rgba(21, 5, 8, 0.82)';
       // Top rect
       ctx.fillRect(0, 0, canvas.width, Math.max(0, player.y - actualRadius));
       // Bottom rect

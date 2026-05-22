@@ -36,7 +36,7 @@ export function Games({ onUnlockWeb, onNavigateHome }: GamesProps) {
   }, [unlockedLevels]);
 
   const [revealedGift, setRevealedGift] = useState<number | null>(null);
-  const [modalPhase, setModalPhase] = useState<'none' | 'minigame' | 'scratch' | 'nfc' | 'web_unlocked'>('none');
+  const [modalPhase, setModalPhase] = useState<'none' | 'minigame' | 'scratch' | 'nfc' | 'web_unlocked' | 'all_completed'>('none');
   const [incomingLevelId, setIncomingLevelId] = useState<number | null>(null);
 
   useEffect(() => {
@@ -79,7 +79,15 @@ export function Games({ onUnlockWeb, onNavigateHome }: GamesProps) {
   };
 
   const handleMinigameWin = () => {
-    setModalPhase('scratch');
+    if (activeGift && activeGift.id === 5) {
+      const newUnlocked = [...new Set([...unlockedLevelsRef.current, 5])];
+      setUnlockedLevels(newUnlocked);
+      localStorage.setItem('unlocked_levels_v4', JSON.stringify(newUnlocked));
+      syncGlobalUnlockedLevels(newUnlocked);
+      setModalPhase('all_completed');
+    } else {
+      setModalPhase('scratch');
+    }
   };
 
   const handleScratchComplete = () => {
@@ -127,13 +135,13 @@ export function Games({ onUnlockWeb, onNavigateHome }: GamesProps) {
                transition={{ repeat: Infinity, duration: 3, ease: "easeInOut" }}
                className="absolute inset-[-10px] bg-[#F49CBB]/40 rounded-full -z-20"
             />
-            <div className="w-64 h-64 bg-white border border-[#F49CBB]/30 rounded-full flex items-center justify-center relative shadow-sm">
+            <div className="w-64 h-64 bg-white border border-[#F49CBB]/30 rounded-full flex items-center justify-center relative shadow-sm overflow-hidden">
                <motion.div
                   animate={{ rotate: 360 }}
                   transition={{ repeat: Infinity, duration: 30, ease: "linear" }}
-                  className="absolute inset-4 rounded-full border border-dashed border-[#DD2D4A]/40"
+                  className="absolute inset-4 rounded-full border border-dashed border-[#DD2D4A]/40 z-10 pointer-events-none"
                />
-               <RadioReceiver className="w-24 h-24 text-[#DD2D4A]/80" strokeWidth={1} />
+               <img src="https://raw.githubusercontent.com/Danicabezas33/GiftApp2/main/public/photos/nfc-1.jpg" alt="Gift NFC" className="w-full h-full object-cover rounded-full" />
             </div>
           </motion.div>
           
@@ -329,6 +337,42 @@ export function Games({ onUnlockWeb, onNavigateHome }: GamesProps) {
           </motion.div>
         )}
 
+        {modalPhase === 'all_completed' && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[120] bg-white/95 backdrop-blur-md flex flex-col items-center justify-center p-6 text-center"
+          >
+            <motion.div
+              initial={{ scale: 0.8, y: 20 }}
+              animate={{ scale: 1, y: 0 }}
+              className="bg-white p-12 md:p-16 rounded-[3rem] shadow-2xl shadow-[#F49CBB]/50 max-w-lg w-full relative overflow-hidden border border-[#F49CBB]/30 flex flex-col items-center"
+            >
+              <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-[#DD2D4A] to-[#880D1E]" />
+              <div className="text-6xl mb-6 animate-bounce">🏆🎉</div>
+              <h2 className="text-4xl md:text-5xl font-script font-bold mb-6 text-[#880D1E]">
+                ¡Enhorabuena, mi niña!
+              </h2>
+              <p className="text-2xl text-rose-600 font-bold mb-4 font-serif">
+                ¡Has completado todos los Minijuegos!
+              </p>
+              <p className="text-lg text-slate-600 mb-10 font-serif leading-relaxed">
+                ¡Superaste todas las pruebas! Disfruta de todos tus regalos con una sonrisa gigante. ¡Cinco años de felicidad a tu lado! ❤️
+              </p>
+              <button
+                onClick={() => {
+                  setModalPhase('none');
+                  setRevealedGift(null);
+                }}
+                className="w-full py-5 bg-[#DD2D4A] text-white rounded-2xl font-bold text-xl hover:scale-[1.02] active:scale-95 transition-all shadow-[0_4px_15px_rgba(221,45,74,0.4)]"
+              >
+                Disfrutar los regalos
+              </button>
+            </motion.div>
+          </motion.div>
+        )}
+
         {revealedGift && activeGift && modalPhase === 'scratch' && (
           <ScratchCard
             tipoRegalo={activeGift.title}
@@ -347,10 +391,6 @@ export function Games({ onUnlockWeb, onNavigateHome }: GamesProps) {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-white/95"
-            onClick={() => {
-              setRevealedGift(null);
-              setModalPhase('none');
-            }}
           >
             <motion.div
               initial={{ scale: 0.9, y: 20 }}
