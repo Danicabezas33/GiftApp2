@@ -24,21 +24,21 @@ export function MinigameCherryBlossom({ onWin }: MinigameCherryProps) {
   };
 
   const budPositions = [
-    { top: 130, left: 295 },
-    { top: 60, left: 250 },
-    { top: 85, left: 325 },
-    { top: 40, left: 220 },
-    { top: 35, left: 290 },
-    { top: 155, left: 25 },
-    { top: 80, left: 35 },
-    { top: 55, left: 20 },
-    { top: 40, left: 95 },
-    { top: 35, left: 55 },
-    { top: 30, left: 125 },
-    { top: 25, left: 195 }, 
-    { top: 100, left: 160 },
-    { top: 210, left: 75 },  
-    { top: 195, left: 245 }, 
+    { top: 130, left: 300 },
+    { top: 60, left: 260 },
+    { top: 85, left: 330 },
+    { top: 20, left: 230 },
+    { top: 40, left: 290 },
+    { top: 155, left: 15 },
+    { top: 80, left: 25 },
+    { top: 55, left: -10 },
+    { top: 25, left: 85 },
+    { top: 85, left: 75 },
+    { top: 30, left: 145 },
+    { top: 10, left: 185 }, 
+    { top: 100, left: 150 },
+    { top: 180, left: 80 },  
+    { top: 200, left: 255 }, 
   ];
   const TOTAL_BUDS = budPositions.length;
 
@@ -577,7 +577,7 @@ export function MinigameCherryBlossom({ onWin }: MinigameCherryProps) {
                     initial={{ y: 20, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
                     transition={{ delay: 0.8, duration: 1 }}
-                    className="text-4xl md:text-6xl font-script text-[#880D1E]/70 mb-8 drop-shadow-xl"
+                    className="text-3xl md:text-5xl font-script text-rose-200 mb-6 drop-shadow-xl"
                   >
                     Nuestra historia ha florecido
                   </motion.h2>
@@ -585,12 +585,12 @@ export function MinigameCherryBlossom({ onWin }: MinigameCherryProps) {
                     initial={{ y: 20, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
                     transition={{ delay: 1.5, duration: 1 }}
-                    className="bg-white/10 p-8 rounded-3xl border border-white/20 backdrop-blur-sm"
+                    className="bg-black/40 p-6 rounded-2xl border border-white/10 backdrop-blur-md"
                   >
-                    <p className="text-xl text-white/95 font-serif font-medium leading-relaxed drop-shadow-sm mb-4">
+                    <p className="text-lg md:text-xl text-stone-200 font-serif font-medium leading-relaxed drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)] mb-3">
                        Tu recompensa real te espera...
                     </p>
-                    <p className="text-2xl md:text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-[#DD2D4A] via-rose-300 to-[#F49CBB] drop-shadow-sm leading-tight">
+                    <p className="text-xl md:text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-pink-300 to-rose-200 drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)] leading-tight">
                        ¡Vamos a construir nuestro propio Ciruelo en Flor juntos!
                     </p>
                   </motion.div>
