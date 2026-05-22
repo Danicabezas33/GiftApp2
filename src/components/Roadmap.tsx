@@ -1,5 +1,6 @@
-import { motion } from 'motion/react';
+import { motion, AnimatePresence } from 'motion/react';
 import { useState, useEffect, useRef } from 'react';
+import { Maximize2, X } from 'lucide-react';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 
@@ -72,6 +73,7 @@ export default function Roadmap() {
   const mapContainerRef = useRef<HTMLDivElement>(null);
   const layerGroupRef = useRef<L.LayerGroup | null>(null);
   const [activeYear, setActiveYear] = useState('2021');
+  const [expandedVideo, setExpandedVideo] = useState<number | null>(null);
 
   useEffect(() => {
     if (!mapContainerRef.current) return;
@@ -194,7 +196,7 @@ export default function Roadmap() {
                   <h3 className="text-xl md:text-3xl font-bold text-spring-text mt-1 mb-2 md:mb-4 group-hover:text-spring-primary transition-colors duration-500">{m.title}</h3>
                   <p className="text-spring-text-muted text-sm md:text-lg leading-relaxed">{m.desc}</p>
                 </div>
-                <div className="w-full md:w-[240px] lg:w-[320px] h-48 md:h-auto shrink-0 relative bg-spring-bg overflow-hidden rounded-xl md:rounded-2xl flex items-center justify-center border border-spring-primary/10">
+                <div className="w-full md:w-[240px] lg:w-[320px] h-48 md:h-auto shrink-0 relative bg-spring-bg overflow-hidden rounded-xl md:rounded-2xl flex items-center justify-center border border-spring-primary/10 group/vid">
                   <video
                     src={`https://raw.githubusercontent.com/Danicabezas33/GiftApp2/main/public/videos/year${i + 1}.mp4`}
                     autoPlay loop muted playsInline
@@ -206,6 +208,13 @@ export default function Roadmap() {
                   <div className="absolute inset-0 flex flex-col items-center justify-center p-4 text-center text-spring-text-muted/30 z-0 text-sm font-medium">
                     <span>Recuerdo en video</span>
                   </div>
+                  <button
+                    onClick={() => setExpandedVideo(i)}
+                    className="absolute z-20 m-auto w-12 h-12 bg-black/40 hover:bg-black/60 backdrop-blur-sm rounded-full flex items-center justify-center text-white opacity-0 group-hover/vid:opacity-100 transition-opacity shadow-lg"
+                    aria-label="Expandir video"
+                  >
+                    <Maximize2 className="w-6 h-6" />
+                  </button>
                 </div>
               </div>
             </motion.div>
@@ -241,6 +250,38 @@ export default function Roadmap() {
           </div>
         </div>
       </section>
+
+      <AnimatePresence>
+        {expandedVideo !== null && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[100] bg-black/95 backdrop-blur-md flex items-center justify-center p-4 md:p-8"
+            onClick={() => setExpandedVideo(null)}
+          >
+            <button
+              onClick={() => setExpandedVideo(null)}
+              className="absolute top-4 right-4 md:top-8 md:right-8 z-[110] p-3 bg-white/10 hover:bg-white/20 rounded-full text-white transition-colors"
+            >
+              <X className="w-8 h-8" />
+            </button>
+            <motion.div
+              initial={{ scale: 0.95, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.95, opacity: 0 }}
+              className="relative max-w-5xl w-full max-h-[90vh] rounded-3xl overflow-hidden h-full flex items-center justify-center"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <video
+                src={`https://raw.githubusercontent.com/Danicabezas33/GiftApp2/main/public/videos/year${expandedVideo + 1}.mp4`}
+                autoPlay controls playsInline
+                className="max-w-full max-h-full object-contain rounded-2xl shadow-xl"
+              />
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </motion.div>
   );
 }
