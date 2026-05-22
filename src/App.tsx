@@ -8,6 +8,7 @@ import Gallery from './components/Gallery';
 import Games from './components/Games';
 import MusicPlayer from './components/MusicPlayer';
 import MobileScanner from './components/MobileScanner';
+import bgUrl from '../public/home/bg.jpg';
 
 export default function App() {
   const [currentSection, setCurrentSection] = useState('games');
@@ -76,18 +77,15 @@ export default function App() {
   }
 
   return (
-    <div className="relative min-h-screen bg-[#FFF5F8] text-[#4A3B52] selection:bg-[#FFAFCC]/30 selection:text-[#4A3B52]">
-      <div className="fixed inset-0 pointer-events-none overflow-hidden -z-10 bg-[#FFF5F8]">
+    <div className="relative min-h-screen text-[#4A3B52] selection:bg-[#FFAFCC]/30 selection:text-[#4A3B52]">
+      <div className="fixed inset-0 pointer-events-none overflow-hidden z-0 bg-transparent">
         {/* Fondo */}
         <div 
           className="absolute inset-0 opacity-100 bg-cover bg-center transition-all duration-1000"
           style={{ 
-            backgroundImage: "url('/home/bg.jpg')"
+            backgroundImage: `url(${bgUrl})`
           }}
         />
-        
-        {/* Tinte rosado muy suave para asegurar lectura de texto si la imagen es oscura, pero se deja transparente casi */}
-        <div className="absolute inset-0 bg-[#FFF5F8]/20" />
         
         {/* Destellos de color / orbes */}
         <div className="absolute top-[-20%] right-[-10%] w-[60%] h-[60%] rounded-full bg-[radial-gradient(circle,rgba(255,200,221,0.7)_0%,transparent_70%)] mix-blend-multiply" />
@@ -96,7 +94,7 @@ export default function App() {
 
       {unlockedWeb && <Navbar currentSection={currentSection} setCurrentSection={setCurrentSection} />}
       
-      <main className={`pb-24 ${unlockedWeb ? 'pt-16' : 'pt-4 md:pt-8'} flex flex-col items-center justify-center relative overflow-hidden`}>
+      <main className={`pb-24 ${unlockedWeb ? 'pt-16' : 'pt-4 md:pt-8'} flex flex-col items-center justify-center relative z-10 overflow-hidden`}>
         <AnimatePresence mode="wait">
           {unlockedWeb && currentSection === 'home' && <Home key="home" onNavigate={setCurrentSection} />}
           {unlockedWeb && currentSection === 'roadmap' && <Roadmap key="roadmap" />}
