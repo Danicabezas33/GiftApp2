@@ -76,29 +76,23 @@ export function Gallery() {
       className="w-full max-w-6xl mx-auto py-20 px-4 mt-8"
     >
       <div className="text-center mb-16">
-        <h2 className="text-5xl md:text-7xl font-script text-[#4A3B52] mb-6 drop-shadow-sm">Galería de Recuerdos</h2>
-        <p className="text-[#CDB4DB] font-serif text-lg">Nuestros momentos capturados</p>
+        <h2 className="text-5xl md:text-7xl font-script text-[#880D1E] mb-6 drop-shadow-sm">Galería de Recuerdos</h2>
+        <p className="text-[#880D1E] font-serif text-xl font-medium drop-shadow-sm bg-white/30 inline-block px-4 py-1 rounded-full">Nuestros momentos capturados</p>
       </div>
 
       {/* Selector de Años / Pestañas Minimalista */}
-      <div className="flex justify-center mb-16 w-full overflow-x-auto gap-4 md:gap-10 px-4 scrollbar-hide">
+      <div className="flex justify-center mb-16 w-full overflow-x-auto gap-4 md:gap-10 px-4 scrollbar-hide py-2">
         {YEARS.map((year, index) => (
           <button
             key={year}
             onClick={() => setCurrentYear(year)}
-            className={`pb-4 px-6 whitespace-nowrap text-lg font-medium transition-all duration-500 relative ${
+            className={`px-6 py-3 whitespace-nowrap text-lg font-bold transition-all duration-300 rounded-full shadow-sm border ${
               currentYear === year 
-                ? 'text-[#FFAFCC]' 
-                : 'text-[#CDB4DB] hover:text-[#4A3B52]'
+                ? 'bg-[#DD2D4A] text-white border-[#DD2D4A] shadow-md shadow-[#DD2D4A]/30 transform scale-105' 
+                : 'bg-white text-[#880D1E]/80 border-[#F49CBB]/50 hover:bg-[#F49CBB]/20 hover:text-[#880D1E]'
             }`}
           >
             Año {index + 1}
-            {currentYear === year && (
-              <motion.div 
-                layoutId="activeTabGallery" 
-                className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#FFAFCC] rounded-full shadow-[0_0_8px_rgba(255,139,167,0.8)]" 
-              />
-            )}
           </button>
         ))}
       </div>
@@ -106,17 +100,17 @@ export function Gallery() {
       {/* Contenedor de la Galería */}
       <div className="min-h-[400px]">
         {loading ? (
-          <div className="flex flex-col items-center justify-center p-20 text-[#FFAFCC]">
+          <div className="flex flex-col items-center justify-center p-20 text-[#DD2D4A]">
              <Loader2 className="w-12 h-12 animate-spin mb-6 opacity-60" />
              <p className="animate-pulse font-serif tracking-widest text-sm uppercase opacity-60">Buscando memorias...</p>
           </div>
         ) : error ? (
-           <div className="py-12 px-8 text-center bg-white shadow-xl shadow-[#FFC8DD]/50 rounded-[2rem] border border-[#FFC8DD]/30 max-w-xl mx-auto">
-             <p className="font-bold text-[#4A3B52] mb-3">Algo salió mal</p>
+           <div className="py-12 px-8 text-center bg-white shadow-xl shadow-[#F49CBB]/50 rounded-[2rem] border border-[#F49CBB]/30 max-w-xl mx-auto">
+             <p className="font-bold text-[#880D1E] mb-3">Algo salió mal</p>
              <p className="text-sm text-pink-900/60 leading-relaxed">{error}</p>
            </div>
         ) : images.length === 0 ? (
-          <div className="py-20 text-center text-[#CDB4DB] bg-white/50 rounded-[2.5rem] border border-[#FFC8DD]/30 shadow-sm">
+          <div className="py-20 text-center text-[#880D1E]/70 bg-white/50 rounded-[2.5rem] border border-[#F49CBB]/30 shadow-sm">
             <Images className="w-16 h-16 mx-auto mb-6 opacity-30" strokeWidth={1} />
             <p className="font-serif italic text-lg">Aún no hay archivos en esta carpeta...</p>
           </div>
@@ -131,7 +125,7 @@ export function Gallery() {
                   animate={{ opacity: 1, scale: 1 }}
                   key={media.name} 
                   onClick={() => setSelectedMedia(media)}
-                  className="group relative rounded-3xl overflow-hidden shadow-lg shadow-[#FFC8DD]/40 border border-[#FFC8DD]/30 aspect-[4/3] bg-white cursor-pointer"
+                  className="group relative rounded-3xl overflow-hidden shadow-lg shadow-[#F49CBB]/40 border border-[#F49CBB]/30 aspect-[4/3] bg-white cursor-pointer"
                 >
                   {video ? (
                     <>
@@ -177,7 +171,7 @@ export function Gallery() {
             onClick={() => setSelectedMedia(null)}
           >
             <button 
-              className="absolute top-8 right-8 p-3 bg-[#FFF0F5] hover:bg-[#FFC8DD] rounded-full text-[#CDB4DB] hover:text-[#4A3B52] transition-all duration-300 shadow-sm"
+              className="absolute top-8 right-8 p-3 bg-[#F49CBB]/20 hover:bg-[#F26A8D] rounded-full text-[#880D1E]/70 hover:text-[#880D1E] transition-all duration-300 shadow-sm"
               onClick={(e) => { e.stopPropagation(); setSelectedMedia(null); }}
             >
               <X className="w-8 h-8" />
@@ -188,20 +182,20 @@ export function Gallery() {
               exit={{ scale: 0.9, opacity: 0 }}
               className="relative max-w-6xl max-h-[90vh] w-full flex items-center justify-center p-4"
             >
-              <div className="absolute inset-0 bg-[#FFAFCC]/10 blur-[100px] rounded-full pointer-events-none" />
+              <div className="absolute inset-0 bg-[#DD2D4A]/10 blur-[100px] rounded-full pointer-events-none" />
               {isVideo(selectedMedia.name) ? (
                 <video 
                   src={selectedMedia.download_url} 
                   controls 
                   autoPlay
-                  className="max-w-full max-h-[80vh] rounded-3xl shadow-2xl shadow-[#FFC8DD]/50 border border-[#FFC8DD]/30 pointer-events-auto"
+                  className="max-w-full max-h-[80vh] rounded-3xl shadow-2xl shadow-[#F49CBB]/50 border border-[#F49CBB]/30 pointer-events-auto"
                   onClick={(e) => e.stopPropagation()}
                 />
               ) : (
                 <img 
                   src={selectedMedia.download_url} 
                   alt={selectedMedia.name}
-                  className="max-w-full max-h-[80vh] object-contain rounded-3xl shadow-2xl shadow-[#FFC8DD]/50 border border-[#FFC8DD]/30 pointer-events-auto"
+                  className="max-w-full max-h-[80vh] object-contain rounded-3xl shadow-2xl shadow-[#F49CBB]/50 border border-[#F49CBB]/30 pointer-events-auto"
                   onClick={(e) => e.stopPropagation()}
                 />
               )}
