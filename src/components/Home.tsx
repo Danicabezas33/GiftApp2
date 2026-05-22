@@ -88,10 +88,10 @@ const StatItem = ({ label, targetValue }: { label: string, targetValue: number |
 
   return (
     <div className="flex flex-col items-center">
-      <span className="text-5xl font-bold text-[#F26A8D] mb-1">
+      <span className="text-5xl font-bold text-[#0284C7] mb-1">
         {count}
       </span>
-      <span className="text-xs uppercase font-medium tracking-widest text-[#880D1E]/70">
+      <span className="text-xs uppercase font-medium tracking-widest text-sky-950/70">
         {label}
       </span>
     </div>
@@ -190,13 +190,13 @@ export function Home({ onNavigate }: HomeProps) {
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.4, duration: 0.5 }}
-          className="md:col-span-8 bg-gradient-to-tr from-[#CBEEF3]/40 to-[#F49CBB]/40 bg-white/90 backdrop-blur-sm rounded-3xl md:rounded-[32px] shadow-xl shadow-[#F49CBB]/50 p-6 md:p-8 flex items-center justify-around min-h-[200px] relative overflow-hidden border border-[#F49CBB]/60"
+          className="md:col-span-8 bg-gradient-to-tr from-[#CBEEF3]/80 via-sky-100/90 to-sky-200/90 backdrop-blur-sm rounded-3xl md:rounded-[32px] shadow-xl shadow-sky-200/50 p-6 md:p-8 flex items-center justify-around min-h-[200px] relative overflow-hidden border border-sky-300/60"
         >
           {/* Sky Elements */}
           <motion.div
             animate={{ left: ['-20%', '120%'], y: [0, -10, 15, -5, 0] }}
             transition={{ left: { duration: 12, repeat: Infinity, ease: 'linear' }, y: { duration: 5, repeat: Infinity, ease: 'easeInOut' } }}
-            className="absolute top-[25%] text-[#F49CBB] opacity-80 z-0 pointer-events-none drop-shadow-md"
+            className="absolute top-[25%] text-sky-400 opacity-90 z-0 pointer-events-none drop-shadow-md"
           >
             <AirplanePixel className="w-16 md:w-24 h-16 md:h-24" />
           </motion.div>
