@@ -29,7 +29,7 @@ export function Navbar({ currentSection, setCurrentSection }: NavbarProps) {
               className={`px-5 py-2 rounded-full text-sm font-medium transition-all duration-500 flex items-center gap-2 relative group ${
                 currentSection === tab.id
                   ? 'text-[#4A3B52]'
-                  : 'text-[#CDB4DB] hover:text-[#4A3B52]'
+                  : 'text-[#4A3B52]/60 hover:text-[#4A3B52]'
               }`}
             >
               {currentSection === tab.id && (
@@ -57,7 +57,7 @@ export function Navbar({ currentSection, setCurrentSection }: NavbarProps) {
               className={`p-3 rounded-full transition-all duration-300 relative ${
                 currentSection === tab.id
                   ? 'text-[#4A3B52] bg-[#FFF0F5]'
-                  : 'text-[#CDB4DB] hover:text-[#4A3B52] hover:bg-slate-50'
+                  : 'text-[#4A3B52]/60 hover:text-[#4A3B52] hover:bg-[#FFF0F5]/50'
               }`}
             >
               <tab.icon className={`w-5 h-5 ${currentSection === tab.id ? 'scale-110' : ''}`} />

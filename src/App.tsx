@@ -77,19 +77,25 @@ export default function App() {
   }
 
   return (
-    <div className="relative min-h-screen text-[#4A3B52] selection:bg-[#FFAFCC]/30 selection:text-[#4A3B52]">
-      <div className="fixed inset-0 pointer-events-none overflow-hidden z-0 bg-transparent">
-        {/* Fondo */}
+    <div className="relative min-h-screen bg-[#FFF5F8] text-[#4A3B52] selection:bg-[#FFAFCC]/30 selection:text-[#4A3B52]">
+      <div className="fixed inset-0 pointer-events-none overflow-hidden z-0 bg-[#FFF5F8]">
+        {/* Fondo con desenfoque suave y transparencia */}
         <div 
-          className="absolute inset-0 opacity-100 bg-cover bg-center transition-all duration-1000"
+          className="absolute inset-0 opacity-60 bg-cover bg-center transition-all duration-1000 scale-105"
           style={{ 
             backgroundImage: `url(${bgUrl})`
           }}
         />
         
-        {/* Destellos de color / orbes */}
-        <div className="absolute top-[-20%] right-[-10%] w-[60%] h-[60%] rounded-full bg-[radial-gradient(circle,rgba(255,200,221,0.7)_0%,transparent_70%)] mix-blend-multiply" />
-        <div className="absolute bottom-[-20%] left-[-10%] w-[60%] h-[60%] rounded-full bg-[radial-gradient(circle,rgba(205,180,219,0.5)_0%,transparent_70%)] mix-blend-multiply" />
+        {/* Tinte rosado muy suave para asegurar la paleta de colores */}
+        <div className="absolute inset-0 bg-[#FFAFCC]/10 mix-blend-color" />
+        
+        {/* Gradiente protector radial para suavizar bordes sin crear lineas en el centro */}
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_20%,#FFF5F8_100%)] opacity-50" />
+        
+        {/* Destellos de color / orbes sutiles */}
+        <div className="absolute top-[-20%] right-[-10%] w-[60%] h-[60%] rounded-full bg-[radial-gradient(circle,rgba(255,200,221,0.4)_0%,transparent_70%)] mix-blend-multiply" />
+        <div className="absolute bottom-[-20%] left-[-10%] w-[60%] h-[60%] rounded-full bg-[radial-gradient(circle,rgba(205,180,219,0.3)_0%,transparent_70%)] mix-blend-multiply" />
       </div>
 
       {unlockedWeb && <Navbar currentSection={currentSection} setCurrentSection={setCurrentSection} />}

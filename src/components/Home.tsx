@@ -190,13 +190,13 @@ export function Home({ onNavigate }: HomeProps) {
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.4, duration: 0.5 }}
-          className="md:col-span-8 bg-gradient-to-tr from-white to-[#BDE0FE]/40 rounded-3xl md:rounded-[32px] shadow-lg shadow-[#FFC8DD]/30 p-6 md:p-8 flex items-center justify-around min-h-[200px] relative overflow-hidden"
+          className="md:col-span-8 bg-gradient-to-tr from-[#F0F8FF] to-[#BDE0FE] rounded-3xl md:rounded-[32px] shadow-lg shadow-[#FFC8DD]/30 p-6 md:p-8 flex items-center justify-around min-h-[200px] relative overflow-hidden"
         >
           {/* Sky Elements */}
           <motion.div
             animate={{ left: ['-20%', '120%'], y: [0, -10, 15, -5, 0] }}
             transition={{ left: { duration: 12, repeat: Infinity, ease: 'linear' }, y: { duration: 5, repeat: Infinity, ease: 'easeInOut' } }}
-            className="absolute top-[25%] text-[#CDB4DB] opacity-90 z-0 pointer-events-none drop-shadow-md"
+            className="absolute top-[25%] text-[#9D84A3] opacity-90 z-0 pointer-events-none drop-shadow-md"
           >
             <AirplanePixel className="w-16 md:w-24 h-16 md:h-24" />
           </motion.div>
