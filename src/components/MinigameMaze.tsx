@@ -325,10 +325,6 @@ export function MinigameMaze({ onWin }: MinigameMazeProps) {
           actualRadius *= (1 - transitionAmount);
       }
 
-      ctx.beginPath();
-      ctx.arc(player.x, player.y, actualRadius * 1.5, 0, Math.PI * 2);
-      ctx.clip();
-
       for (let r = 0; r < ROWS; r++) {
          for (let c = 0; c < COLS; c++) {
             if (levelMap[r][c] === 1) {
@@ -434,10 +430,10 @@ export function MinigameMaze({ onWin }: MinigameMazeProps) {
       ctx.globalCompositeOperation = 'source-over';
       const gradient = ctx.createRadialGradient(player.x, player.y, actualRadius * 0.2, player.x, player.y, actualRadius);
       gradient.addColorStop(0, 'rgba(0,0,0,0)');
-      gradient.addColorStop(0.6, 'rgba(21, 5, 8, 0.7)');
-      gradient.addColorStop(1, 'rgba(21, 5, 8, 0.99)');
+      gradient.addColorStop(0.6, 'rgba(15, 2, 5, 0.8)');
+      gradient.addColorStop(1, 'rgba(15, 2, 5, 1)');
       
-      ctx.fillStyle = 'rgba(21, 5, 8, 0.99)';
+      ctx.fillStyle = 'rgba(15, 2, 5, 1)';
       // Top rect
       ctx.fillRect(0, 0, canvas.width, Math.max(0, player.y - actualRadius));
       // Bottom rect
