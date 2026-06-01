@@ -1,14 +1,13 @@
 import { useState, useEffect, useCallback } from 'react';
 import { AnimatePresence } from 'motion/react';
 import Navbar from './components/Navbar';
-import Home from './components/Home';
+import Home from './components/home';
 import Roadmap from './components/Roadmap';
 import Memories from './components/Memories';
 import Gallery from './components/Gallery';
 import Games from './components/Games';
 import MusicPlayer from './components/MusicPlayer';
 import MobileScanner from './components/MobileScanner';
-import bgUrl from '../public/home/bg.jpg';
 
 export default function App() {
   const [currentSection, setCurrentSection] = useState('games');
@@ -83,7 +82,7 @@ export default function App() {
         <div 
           className="absolute inset-0 opacity-60 bg-cover bg-center transition-all duration-1000 scale-105"
           style={{ 
-            backgroundImage: `url(${bgUrl})`
+            backgroundImage: "url('/home/bg.jpg')"
           }}
         />
         
