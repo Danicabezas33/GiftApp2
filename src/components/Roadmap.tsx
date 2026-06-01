@@ -1,6 +1,6 @@
 import { motion, AnimatePresence } from 'motion/react';
 import { useState, useEffect, useRef } from 'react';
-import { Maximize2, X } from 'lucide-react';
+import { Maximize2, X, Play } from 'lucide-react';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 
@@ -61,12 +61,60 @@ const routesByYear: Record<string, LocationInfo[]> = {
 };
 
 const milestones = [
-  { year: 'Año 1', title: 'Donde empezó todo', desc: 'Nuestra primera cita, los primeros mensajes y el primer "Te amo". Descubriendo el mundo el uno del otro.' },
-  { year: 'Año 2', title: 'Aventuras juntos', desc: 'Nuestros primeros viajes largos. Aprendimos a convivir y a ser un verdadero equipo ante cualquier resto.' },
-  { year: 'Año 3', title: 'Creciendo', desc: 'Nuevos trabajos, nuevas metas. Apoyándonos en todo momento para ser nuestras mejores versiones.' },
-  { year: 'Año 4', title: 'Hogar', desc: 'Compartiendo más que tiempo, compartiendo una vida. Las pequeñas rutinas que hacen de cada día algo especial.' },
-  { year: 'Año 5', title: 'El presente brillante', desc: 'Celebrando nuestro quinto aniversario con el corazón lleno de recuerdos y mirando hacia un futuro juntos.' }
+  { 
+    year: 'Año 1', 
+    title: 'Donde empezó todo', 
+    desc: 'Nuestra primera cita, los primeros mensajes y el primer "Te amo". Descubriendo el mundo el uno del otro.',
+    youtubeUrl: 'https://youtu.be/hM5nLahoC4E'
+  },
+  { 
+    year: 'Año 2', 
+    title: 'Aventuras juntos', 
+    desc: 'Nuestros primeros viajes largos. Aprendimos a convivir y a ser un verdadero equipo ante cualquier resto.',
+    youtubeUrl: 'https://youtu.be/G7e2fP6PH_4'
+  },
+  { 
+    year: 'Año 3', 
+    title: 'Creciendo', 
+    desc: 'Nuevos trabajos, nuevas metas. Apoyándonos en todo momento para ser nuestras mejores versiones.',
+    youtubeUrl: 'https://youtu.be/K_o8NBY7mgg'
+  },
+  { 
+    year: 'Año 4', 
+    title: 'Hogar', 
+    desc: 'Compartiendo más que tiempo, compartiendo una vida. Las pequeñas rutinas que hacen de cada día algo especial.',
+    youtubeUrl: 'https://youtu.be/l0Y5xsfUUNU'
+  },
+  { 
+    year: 'Año 5', 
+    title: 'El presente brillante', 
+    desc: 'Celebrando nuestro quinto aniversario con el corazón lleno de recuerdos y mirando hacia un futuro juntos.',
+    youtubeUrl: 'https://youtu.be/vTnnbdDEw9w'
+  }
 ];
+
+function getYouTubeId(url: string): string {
+  if (!url) return '';
+  const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+  const match = url.match(regExp);
+  return (match && match[2].length === 11) ? match[2] : '';
+}
+
+function getYouTubeEmbedUrl(url: string): string {
+  const videoId = getYouTubeId(url);
+  if (videoId) {
+    return `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1`;
+  }
+  return url;
+}
+
+function getYouTubeThumbnail(url: string): string {
+  const videoId = getYouTubeId(url);
+  if (videoId) {
+    return `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
+  }
+  return '';
+}
 
 export default function Roadmap() {
   const mapRef = useRef<L.Map | null>(null);
@@ -196,24 +244,25 @@ export default function Roadmap() {
                   <h3 className="text-xl md:text-3xl font-bold text-spring-text mt-1 mb-2 md:mb-4 group-hover:text-spring-primary transition-colors duration-500">{m.title}</h3>
                   <p className="text-spring-text-muted text-sm md:text-lg leading-relaxed">{m.desc}</p>
                 </div>
-                <div className="w-full md:w-[240px] lg:w-[320px] h-48 md:h-auto shrink-0 relative bg-spring-bg overflow-hidden rounded-xl md:rounded-2xl flex items-center justify-center border border-spring-primary/10 group/vid">
-                  <video
-                    src={`https://raw.githubusercontent.com/Danicabezas33/GiftApp2/main/public/videos/year${i + 1}.mp4`}
-                    autoPlay loop muted playsInline
-                    className="absolute inset-0 w-full h-full object-cover z-10 opacity-80 group-hover:opacity-100 transition-opacity duration-1000"
-                    onError={(e) => {
-                      (e.target as HTMLVideoElement).style.opacity = '0';
-                    }}
+                <div 
+                  onClick={() => setExpandedVideo(i)}
+                  className="w-full md:w-[240px] lg:w-[320px] h-48 md:h-auto min-h-[192px] shrink-0 relative bg-spring-bg overflow-hidden rounded-xl md:rounded-2xl flex items-center justify-center border border-spring-primary/10 cursor-pointer group/vid shadow-inner"
+                >
+                  <img
+                    src={getYouTubeThumbnail(m.youtubeUrl)}
+                    alt={m.title}
+                    referrerPolicy="no-referrer"
+                    className="absolute inset-0 w-full h-full object-cover z-10 opacity-95 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700"
                   />
+                  <div className="absolute inset-0 bg-black/10 group-hover/vid:bg-black/35 transition-colors duration-500 z-[11]" />
                   <div className="absolute inset-0 flex flex-col items-center justify-center p-4 text-center text-spring-text-muted/30 z-0 text-sm font-medium">
-                    <span>Recuerdo en video</span>
+                    <span>Recuerdo en YouTube</span>
                   </div>
                   <button
-                    onClick={() => setExpandedVideo(i)}
-                    className="absolute z-20 m-auto w-12 h-12 bg-black/40 hover:bg-black/60 backdrop-blur-sm rounded-full flex items-center justify-center text-white opacity-0 group-hover/vid:opacity-100 transition-opacity shadow-lg"
-                    aria-label="Expandir video"
+                    className="absolute z-20 m-auto w-14 h-14 bg-[#DD2D4A]/90 hover:bg-[#DD2D4A] text-white rounded-full flex items-center justify-center shadow-lg transition-all duration-300 transform group-hover/vid:scale-110"
+                    aria-label="Abrir video de YouTube"
                   >
-                    <Maximize2 className="w-6 h-6" />
+                    <Play className="w-6 h-6 fill-white ml-0.5" />
                   </button>
                 </div>
               </div>
@@ -270,13 +319,16 @@ export default function Roadmap() {
               initial={{ scale: 0.95, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.95, opacity: 0 }}
-              className="relative max-w-5xl w-full max-h-[90vh] rounded-3xl overflow-hidden h-full flex items-center justify-center"
+              className="relative max-w-5xl w-full aspect-video rounded-2xl md:rounded-3xl overflow-hidden bg-black shadow-2xl border border-white/10"
               onClick={(e) => e.stopPropagation()}
             >
-              <video
-                src={`https://raw.githubusercontent.com/Danicabezas33/GiftApp2/main/public/videos/year${expandedVideo + 1}.mp4`}
-                autoPlay controls playsInline
-                className="max-w-full max-h-full object-contain rounded-2xl shadow-xl"
+              <iframe
+                src={getYouTubeEmbedUrl(milestones[expandedVideo].youtubeUrl)}
+                title={milestones[expandedVideo].title}
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowFullScreen
+                className="w-full h-full"
               />
             </motion.div>
           </motion.div>
