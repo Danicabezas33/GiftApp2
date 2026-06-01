@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { AnimatePresence } from 'motion/react';
 import Navbar from './components/Navbar';
-import Home from './components/Home';
+import Home from './components/home';
 import Roadmap from './components/Roadmap';
 import Memories from './components/Memories';
 import Gallery from './components/Gallery';
