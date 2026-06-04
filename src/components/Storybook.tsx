@@ -81,7 +81,7 @@ const storyBooks = [
       },
       {
         title: "El Patio de Recreo",
-        text: "Enero de 2024 marcó un hito en la leyenda: su mudanza a Madrid. El viaje en el tren de hierro fue una epopeya, pues el joven caballero ardía con una fiebre de 39.5. Aunque la vida en la gran ciudad fue una montaña escarpada para él, estuvo llena de momentos luminosos: ",
+        text: "Enero de 2024 marcó un hito en la leyenda: su mudanza a Madrid. El viaje en el tren de hierro fue una epopeya, pues el joven caballero ardía con una fiebre de 39.5. Aunque la vida en la gran ciudad fue una montaña escarpada para él, estuvo llena de momentos luminosos, como los serenos paseos por el Prado, los brindis en su bar de la esquina, las expediciones semanales a los mercados del supermercado Dia, el gran banquete en el restaurante griego, sus primeras cabalgadas juntos en corceles eléctricos (Lime) y bicicletas, la maravillosa exposición de Disney, los dulces festines comprando Manolitos, y las exploraciones en el Jardín Botánico y el majestuoso Acuario.",
          imageUrl: "/storybook/year3/3.jpg"
       },
       {
