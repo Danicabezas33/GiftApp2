@@ -10,22 +10,22 @@ const storyBooks = [
       {
         title: "El Despertar de la Magia",
         text: "Érase una vez dos jóvenes de 19 años que cruzaron sus destinos. Todo empezó con un '¡Feliz cumpleaños, guapo!'.",
-        imageUrl: "https://images.unsplash.com/photo-1515694346937-94d85e41e6f0?w=800&q=80"
+        imageUrl: "/storybook/year1/1.jpg"
       },
       {
         title: "Primeros Pasos",
         text: "Su primera cita fue bajo la lluvia en un McDonald's y la tercera cita trajo su primer beso.",
-        imageUrl: "https://images.unsplash.com/photo-1555529902-5261145633bf?w=800&q=80"
+        imageUrl: "/storybook/year1/2.jpg"
       },
       {
         title: "Aventuras",
         text: "Viajaron a Granada y sobrevivieron a la maldición del toque de queda.",
-        imageUrl: "https://images.unsplash.com/photo-1543881525-4c030366fbca?w=800&q=80"
+        imageUrl: "/storybook/year1/3.jpg"
       },
       {
         title: "La Gran Prueba",
         text: "Pero llegó la Gran Prueba: ella partió a Polonia. Tras meses de distancia, se reencontraron mágicamente en Berlín y pasaron su primera Navidad juntos.",
-         imageUrl: "https://images.unsplash.com/photo-1560930950-5cc20e80e392?w=800&q=80"
+         imageUrl: "/storybook/year1/4.jpg"
       }
     ]
   },
@@ -36,22 +36,22 @@ const storyBooks = [
       {
         title: "El Escudo de los Osos",
         text: "Descubrieron que el agua moja en Torremolinos y exploraron Cazorla.",
-         imageUrl: "https://images.unsplash.com/photo-1518182170546-076616fdcbdd?w=800&q=80"
+         imageUrl: "/storybook/year2/1.jpg"
       },
       {
         title: "Batallas",
         text: "Fue un año de batallas contra la ansiedad y el estrés, pero descubrieron que juntos eran invencibles.",
-         imageUrl: "https://images.unsplash.com/photo-1506126279646-a697353d3166?w=800&q=80"
+         imageUrl: "/storybook/year2/2.jpg"
       },
       {
         title: "Nuestra Armadura",
         text: "Se protegieron con dos ponchos de ositos a juego que se convirtieron en su armadura.",
-         imageUrl: "https://images.unsplash.com/photo-1542204165-65bf26472b9b?w=800&q=80"
+         imageUrl: "/storybook/year2/3.jpg"
       },
       {
         title: "Celebrando el Amor",
         text: "Viajaron a Sevilla, se hicieron fotos en el Palacio de Cristal de Madrid y celebraron su amor con un UNO personalizado.",
-         imageUrl: "https://images.unsplash.com/photo-1558231221-50e82c5e5ba2?w=800&q=80"
+         imageUrl: "/storybook/year2/4.jpg"
       }
     ]
   },
@@ -62,22 +62,22 @@ const storyBooks = [
       {
         title: "La Ciudad de los Sueños",
         text: "Viajaron a París y cumplieron el sueño de ver la Torre Eiffel.",
-         imageUrl: "https://images.unsplash.com/photo-1502602898657-3e907a5ea82c?w=800&q=80"
+         imageUrl: "/storybook/year3/1.jpg"
       },
       {
         title: "Aventura Madrileña",
         text: "En enero de 2024, la gran aventura comenzó: se mudaron a Madrid.",
-         imageUrl: "https://images.unsplash.com/photo-1539037116277-4db20889f2d4?w=800&q=80"
+         imageUrl: "/storybook/year3/2.jpg"
       },
       {
         title: "El Patio de Recreo",
         text: "Convirtieron la ciudad en su patio de recreo, desde el Museo del Prado hasta paseos en bicicletas Lime.",
-         imageUrl: "https://images.unsplash.com/photo-1559828557-0fc5be3868cd?w=800&q=80"
+         imageUrl: "/storybook/year3/3.jpg"
       },
       {
         title: "Vibra y Misterio",
         text: "Vieron Aladdin, fueron a la boda de su prima, vibraron con Eladio Carrión y resolvieron misterios con un Cluedo único.",
-         imageUrl: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=800&q=80"
+         imageUrl: "/storybook/year3/4.jpg"
       }
     ]
   },
@@ -88,22 +88,22 @@ const storyBooks = [
        {
         title: "Manjares y Relax",
         text: "Descubrieron los manjares de Sushishom y se relajaron en un spa en Granada.",
-         imageUrl: "https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=800&q=80"
+         imageUrl: "/storybook/year4/1.jpg"
       },
       {
         title: "Superando la Distancia",
         text: "Ella tuvo que volver sola a Madrid, pero el amor superó de nuevo la distancia con infinitas videollamadas.",
-         imageUrl: "https://images.unsplash.com/photo-1616422237000-a299ebf4e698?w=800&q=80"
+         imageUrl: "/storybook/year4/2.jpg"
       },
       {
         title: "Paraíso Encontrado",
         text: "Hallaron su paraíso en una cabaña en El Gastor con vistas a la montaña.",
-         imageUrl: "https://images.unsplash.com/photo-1449844908441-8829872d2607?w=800&q=80"
+         imageUrl: "/storybook/year4/3.jpg"
       },
       {
         title: "Nuevo Destino",
         text: "Finalmente, el destino sopló a su favor y se mudaron juntos a Marbella, cerca del mar.",
-         imageUrl: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&q=80"
+         imageUrl: "/storybook/year4/4.jpg"
       }
     ]
   },
@@ -114,22 +114,22 @@ const storyBooks = [
        {
         title: "El Jardín de las Flores",
         text: "Marbella fue su época dorada. Una casa con piscina, mascotas vecinas, y un jardín lleno de girasoles que cuidaron con mimo.",
-         imageUrl: "https://images.unsplash.com/photo-1470509037663-253afd7f0f51?w=800&q=80"
+         imageUrl: "/storybook/year5/1.jpg"
       },
       {
         title: "Arte y Comida",
         text: "Fueron a la exposición de Van Gogh y comieron en Big Boss.",
-         imageUrl: "https://images.unsplash.com/photo-1577080838634-117564d262ed?w=800&q=80"
+         imageUrl: "/storybook/year5/2.jpg"
       },
       {
         title: "Viajes de Ensueño",
         text: "Y viajaron a la majestuosa Praga y la romántica Budapest.",
-         imageUrl: "https://images.unsplash.com/photo-1549877452-9c387ad69d8a?w=800&q=80"
+         imageUrl: "/storybook/year5/3.jpg"
       },
       {
         title: "Amor Puro",
         text: "Superaron todas las pruebas para forjar un amor puro, maduro y real que sigue floreciendo.",
-         imageUrl: "https://images.unsplash.com/photo-1518133910546-b6c2fb7d79e3?w=800&q=80"
+         imageUrl: "/storybook/year5/4.jpg"
       }
     ]
   }
