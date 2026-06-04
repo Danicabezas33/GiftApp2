@@ -10,37 +10,37 @@ const storyBooks = [
       {
         title: "El Despertar de la Magia",
         text: "Todo comenzó en la fortaleza del mejor amigo de nuestro héroe, cuya hermana resultó ser la futura princesa de este cuento. Al cruzar sus miradas, una chispa invisible iluminó la estancia, pero como en las grandes leyendas, el tiempo debía seguir su curso. Se siguieron a través de los pergaminos mágicos de las redes sociales, y el silencio reinó durante meses hasta el día del cumpleaños del joven. Un mensaje cruzó el reino: \"¡Feliz cumpleñaños guapo!\". Aquel fue el conjuro que lo inició todo.",
-        imageUrl: "/storybook/year1/1.jpg"
+        imageUrl: "/storybook/year1/1.png"
       },
       {
         title: "Primeros Pasos",
         text: "Días después, el joven caballero la invitó a pasear por el Bulevar. Tras horas de risas y confidencias, se refugiaron en una taberna del centro, donde el destino decidió poner a prueba su sentido del humor: un viento huracanado azotaba las calles, un peculiar juglar a su lado imitaba sonidos de animales sin cesar, y una tormenta repentina los empapó. Terminaron banqueteando en el castillo de los Arcos Dorados (McDonald's) antes de que él la escoltara sana y salva a su torre.",
-        imageUrl: "/storybook/year1/2.jpg"
+        imageUrl: "/storybook/year1/2.png"
       },
       {
         title: "Primeros Pasos",
         text: "La segunda cita tuvo lugar en las nobles tierras de Baeza. Durante la cena, él, con audacia, le confesó que una de las salsas sabía a culo de mono, desatando las carcajadas de la princesa. Esa misma noche bajo las estrellas, nació una frase legendaria: \"¿Qué más besos quieres?\".",
-        imageUrl: "/storybook/year1/3.jpg"
+        imageUrl: "/storybook/year1/3.png"
       },
       {
         title: "Primeros Pasos",
         text: "En su tercer encuentro, tras una tarde de ensueño, llegó el momento esperado. Con un tímido \"Te puedo dar otra cosa\", sus labios se unieron en su primer beso. Los meses siguientes fueron de paseos por los bancos del reino, luchando contra la oscura maldición del \"toque de queda\", que los obligaba a separarse cruelmente a las once de la noche.",
-        imageUrl: "/storybook/year1/4.jpg"
+        imageUrl: "/storybook/year1/4.png"
       },
       {
         title: "Aventuras",
         text: "Pronto llegó su primera expedición juntos a Granada, un lugar que se convertiría en un refugio recurrente. Y así, el 20 de junio de 2021, en lo alto de un majestuoso castillo, él le pidió oficialmente que fuera su compañera de vida. Aquel verano quedó grabado en un pergamino visual (un vídeo) donde él la sostenía en el aire con sus piernas, tumbados sobre el césped, riendo a carcajadas.",
-        imageUrl: "/storybook/year1/5.jpg"
+        imageUrl: "/storybook/year1/5.png"
       },
       {
         title: "La Gran Prueba",
         text: "Viajaron a las costas de La Carihuela, que desde entonces fue nombrada su playa favorita, y a Torre del Mar con la familia real de ella. En agosto, una sombra amenazó con arruinar su verano: la temida plaga (el Covid). La tristeza los invadió, pero el oráculo (la prueba) dio negativo, y pudieron cabalgar juntos hacia la playa. ",
-         imageUrl: "/storybook/year1/6.jpg"
+         imageUrl: "/storybook/year1/6.png"
       },
       {
         title: "Aventuras",
         text: "Sin embargo, llegó la primera gran prueba. En septiembre, la princesa partió de Erasmus a las lejanas y frías tierras de Polonia. Fueron meses de oscuridad y añoranza, rotos únicamente por un mágico y apasionado reencuentro en Berlín. El caballero viajó un par de veces más a sus gélidas tierras, hasta que, en Navidad, ella regresó temporalmente para celebrar su primera Nochebuena juntos, llenando sus corazones de luz. Finalmente, en febrero de 2022, la princesa volvió para quedarse, celebrando su regreso en las estancias encantadas del Hotel Loob.",
-        imageUrl: "/storybook/year1/7.jpg"
+        imageUrl: "/storybook/year1/7.png"
       }
     ]
   },
@@ -81,7 +81,7 @@ const storyBooks = [
       },
       {
         title: "El Patio de Recreo",
-        text: "Enero de 2024 marcó un hito en la leyenda: su mudanza a Madrid. El viaje en el tren de hierro fue una epopeya, pues el joven caballero ardía con una fiebre de 39.5. Aunque la vida en la gran ciudad fue una montaña escarpada para él, estuvo llena de momentos luminosos, como los serenos paseos por el Prado, los brindis en su bar de la esquina, las expediciones semanales a los mercados del supermercado Dia, el gran banquete en el restaurante griego, sus primeras cabalgadas juntos en corceles eléctricos (Lime) y bicicletas, la maravillosa exposición de Disney, los dulces festines comprando Manolitos, y las exploraciones en el Jardín Botánico y el majestuoso Acuario.",
+        text: "Enero de 2024 marcó un hito en la leyenda: su mudanza a Madrid. El viaje en el tren de hierro fue una epopeya, pues el joven caballero ardía con una fiebre de 39.5. Aunque la vida en la gran ciudad fue una montaña escarpada para él, estuvo llena de momentos luminosos, como los serenos paseos por el Retiro, los brindis en su bar de la esquina, las expediciones semanales a los mercados Dia, el gran banquete en el restaurante griego, sus primeras cabalgadas juntos en corceles eléctricos (Lime) y bicicletas, la maravillosa exposición de Disney, los dulces festines comprando Manolitos, y las exploraciones en el Jardín Botánico y el majestuoso Acuario.",
          imageUrl: "/storybook/year3/3.jpg"
       },
       {
