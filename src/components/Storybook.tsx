@@ -9,23 +9,38 @@ const storyBooks = [
     pages: [
       {
         title: "El Despertar de la Magia",
-        text: "Érase una vez dos jóvenes de 19 años que cruzaron sus destinos. Todo empezó con un '¡Feliz cumpleaños, guapo!'.",
+        text: "Todo comenzó en la fortaleza del mejor amigo de nuestro héroe, cuya hermana resultó ser la futura princesa de este cuento. Al cruzar sus miradas, una chispa invisible iluminó la estancia, pero como en las grandes leyendas, el tiempo debía seguir su curso. Se siguieron a través de los pergaminos mágicos de las redes sociales, y el silencio reinó durante meses hasta el día del cumpleaños del joven. Un mensaje cruzó el reino: \"¡Feliz cumpleñaños guapo!\". Aquel fue el conjuro que lo inició todo.",
         imageUrl: "/storybook/year1/1.jpg"
       },
       {
         title: "Primeros Pasos",
-        text: "Su primera cita fue bajo la lluvia en un McDonald's y la tercera cita trajo su primer beso.",
+        text: "Días después, el joven caballero la invitó a pasear por el Bulevar. Tras horas de risas y confidencias, se refugiaron en una taberna del centro, donde el destino decidió poner a prueba su sentido del humor: un viento huracanado azotaba las calles, un peculiar juglar a su lado imitaba sonidos de animales sin cesar, y una tormenta repentina los empapó. Terminaron banqueteando en el castillo de los Arcos Dorados (McDonald's) antes de que él la escoltara sana y salva a su torre.",
         imageUrl: "/storybook/year1/2.jpg"
       },
       {
-        title: "Aventuras",
-        text: "Viajaron a Granada y sobrevivieron a la maldición del toque de queda.",
+        title: "Primeros Pasos",
+        text: "La segunda cita tuvo lugar en las nobles tierras de Baeza. Durante la cena, él, con audacia, le confesó que una de las salsas sabía a culo de mono, desatando las carcajadas de la princesa. Esa misma noche bajo las estrellas, nació una frase legendaria: \"¿Qué más besos quieres?\".",
         imageUrl: "/storybook/year1/3.jpg"
       },
       {
+        title: "Primeros Pasos",
+        text: "En su tercer encuentro, tras una tarde de ensueño, llegó el momento esperado. Con un tímido \"Te puedo dar otra cosa\", sus labios se unieron en su primer beso. Los meses siguientes fueron de paseos por los bancos del reino, luchando contra la oscura maldición del \"toque de queda\", que los obligaba a separarse cruelmente a las once de la noche.",
+        imageUrl: "/storybook/year1/4.jpg"
+      },
+      {
+        title: "Aventuras",
+        text: "Pronto llegó su primera expedición juntos a Granada, un lugar que se convertiría en un refugio recurrente. Y así, el 20 de junio de 2021, en lo alto de un majestuoso castillo, él le pidió oficialmente que fuera su compañera de vida. Aquel verano quedó grabado en un pergamino visual (un vídeo) donde él la sostenía en el aire con sus piernas, tumbados sobre el césped, riendo a carcajadas.",
+        imageUrl: "/storybook/year1/5.jpg"
+      },
+      {
         title: "La Gran Prueba",
-        text: "Pero llegó la Gran Prueba: ella partió a Polonia. Tras meses de distancia, se reencontraron mágicamente en Berlín y pasaron su primera Navidad juntos.",
-         imageUrl: "/storybook/year1/4.jpg"
+        text: "Viajaron a las costas de La Carihuela, que desde entonces fue nombrada su playa favorita, y a Torre del Mar con la familia real de ella. En agosto, una sombra amenazó con arruinar su verano: la temida plaga (el Covid). La tristeza los invadió, pero el oráculo (la prueba) dio negativo, y pudieron cabalgar juntos hacia la playa. ",
+         imageUrl: "/storybook/year1/6.jpg"
+      },
+      {
+        title: "Aventuras",
+        text: "Sin embargo, llegó la primera gran prueba. En septiembre, la princesa partió de Erasmus a las lejanas y frías tierras de Polonia. Fueron meses de oscuridad y añoranza, rotos únicamente por un mágico y apasionado reencuentro en Berlín. El caballero viajó un par de veces más a sus gélidas tierras, hasta que, en Navidad, ella regresó temporalmente para celebrar su primera Nochebuena juntos, llenando sus corazones de luz. Finalmente, en febrero de 2022, la princesa volvió para quedarse, celebrando su regreso en las estancias encantadas del Hotel Loob.",
+        imageUrl: "/storybook/year1/7.jpg"
       }
     ]
   },
@@ -35,23 +50,18 @@ const storyBooks = [
     pages: [
       {
         title: "El Escudo de los Osos",
-        text: "Descubrieron que el agua moja en Torremolinos y exploraron Cazorla.",
+        text: "El segundo año comenzó con una expedición a Torremolinos, donde descubrieron una gran verdad del universo: \"este agua moja mucho\". Exploraron los frondosos bosques de Cazorla, y en verano regresaron a Torre del Mar y descubrieron Calahonda.",
          imageUrl: "/storybook/year2/1.jpg"
       },
       {
         title: "Batallas",
-        text: "Fue un año de batallas contra la ansiedad y el estrés, pero descubrieron que juntos eran invencibles.",
+        text: "Pero no todo en los cuentos es luz. Atravesaron un oscuro bosque de dificultades; la princesa luchaba contra el dragón de la ansiedad, y el caballero enfrentaba tormentas en su gremio de trabajo. Sin embargo, su amor fue su escudo. En Navidad, para protegerse del frío, adquirieron dos armaduras a juego: un poncho de ositos que siempre los abrigaría.",
          imageUrl: "/storybook/year2/2.jpg"
       },
       {
         title: "Nuestra Armadura",
-        text: "Se protegieron con dos ponchos de ositos a juego que se convirtieron en su armadura.",
+        text: "Pasaron la Navidad en el piso de la tía de la princesa en Sevilla; aunque los tiempos eran difíciles, aquel castillo les dio fuerzas y lograron sonreír. Tras la tormenta llegó la calma, meses de risas y tonterías que culminaron en marzo de 2023 con un viaje al reino de Madrid, donde capturaron su amor en mágicos retratos frente al Palacio de Cristal. En junio de 2023, asistieron a su primer gran baile nupcial (una boda) juntos. Para coronar sus dos años de historia, él le entregó un artefacto único: un juego de UNO totalmente personalizado.",
          imageUrl: "/storybook/year2/3.jpg"
-      },
-      {
-        title: "Celebrando el Amor",
-        text: "Viajaron a Sevilla, se hicieron fotos en el Palacio de Cristal de Madrid y celebraron su amor con un UNO personalizado.",
-         imageUrl: "/storybook/year2/4.jpg"
       }
     ]
   },
@@ -61,22 +71,22 @@ const storyBooks = [
     pages: [
       {
         title: "La Ciudad de los Sueños",
-        text: "Viajaron a París y cumplieron el sueño de ver la Torre Eiffel.",
+        text: "En julio de 2023, emprendieron la travesía favorita de sus vidas: París. Aunque sus aposentos estaban lejos del centro y tuvieron que correr por las calles adoquinadas casi perdiendo la preciada sudadera del primer aniversario, el caballero cumplió el mayor sueño de su princesa.",
          imageUrl: "/storybook/year3/1.jpg"
       },
       {
         title: "Aventura Madrileña",
-        text: "En enero de 2024, la gran aventura comenzó: se mudaron a Madrid.",
+        text: "En agosto, volvieron a Torre del Mar. Él la guió al mágico Mariposario de Benalmádena, donde las criaturas aladas danzaban a su alrededor mientras de fondo sonaban las melodías del nuevo álbum del bardo Mora. Regresaron a Cazorla, enfrentándose a vientos huracanados y cabras montesas durante una hermosa ruta por el pueblo. En noviembre, la picardía se hizo presente cuando ella descubrió el tesoro oculto de su cumpleaños: el calendario de adviento de Sephora. Diciembre los llevó a Madrid para presenciar la magia de Aladdin en el gran teatro.",
          imageUrl: "/storybook/year3/2.jpg"
       },
       {
         title: "El Patio de Recreo",
-        text: "Convirtieron la ciudad en su patio de recreo, desde el Museo del Prado hasta paseos en bicicletas Lime.",
+        text: "Enero de 2024 marcó un hito en la leyenda: su mudanza a Madrid. El viaje en el tren de hierro fue una epopeya, pues el joven caballero ardía con una fiebre de 39.5. Aunque la vida en la gran ciudad fue una montaña escarpada para él, estuvo llena de momentos luminosos: ",
          imageUrl: "/storybook/year3/3.jpg"
       },
       {
         title: "Vibra y Misterio",
-        text: "Vieron Aladdin, fueron a la boda de su prima, vibraron con Eladio Carrión y resolvieron misterios con un Cluedo único.",
+        text: "Ese año, se vistieron de gala para el segundo baile nupcial (la boda de la prima de ella). En junio, cantaron a pleno pulmón en el concierto de Eladio Carrión. Para celebrar sus tres años, el caballero le entregó un nuevo misterio: un Cluedo personalizado.",
          imageUrl: "/storybook/year3/4.jpg"
       }
     ]
@@ -87,22 +97,22 @@ const storyBooks = [
     pages: [
        {
         title: "Manjares y Relax",
-        text: "Descubrieron los manjares de Sushishom y se relajaron en un spa en Granada.",
+        text: "El viaje de aniversario los llevó a Algarrobo. Aunque el reino estaba lleno de risas, una noche la princesa cayó enferma con una dolorosa aflicción (infección de orina). El caballero, como un verdadero guardián, pasó horas acariciándola en la oscuridad hasta que el dolor cedió y ella pudo dormir.",
          imageUrl: "/storybook/year4/1.jpg"
       },
       {
         title: "Superando la Distancia",
-        text: "Ella tuvo que volver sola a Madrid, pero el amor superó de nuevo la distancia con infinitas videollamadas.",
+        text: "En julio de 2024, descubrieron los exóticos manjares del Sushishom, se purificaron en las aguas termales de un spa en Granada y bebieron mojitos en una pintoresca taberna. Tras pasar por Torre del Mar, viajaron a Cádiz con la familia de él, forjando recuerdos imborrables.",
          imageUrl: "/storybook/year4/2.jpg"
       },
       {
         title: "Paraíso Encontrado",
-        text: "Hallaron su paraíso en una cabaña en El Gastor con vistas a la montaña.",
+        text: "Pero en septiembre, la prueba de la distancia regresó. La princesa se mudó sola a Madrid. Fue una época dura, pero los espejos mágicos (videollamadas) y las constantes visitas mutuas mantuvieron la llama viva. En diciembre de 2024, encontraron su refugio soñado: una cabañita en El Gastor, Cádiz. Aislados del mundo, con vistas a imponentes montañas, descubrieron la que coronaron como la mejor taberna del mundo: La Posada.",
          imageUrl: "/storybook/year4/3.jpg"
       },
       {
         title: "Nuevo Destino",
-        text: "Finalmente, el destino sopló a su favor y se mudaron juntos a Marbella, cerca del mar.",
+        text: "En febrero, probaron el legendario Shifu ramen de Granada. En abril, exploraron el mágico Río Cuadros, que se coronó como su paraje natural favorito, y cocinaron galletas fritas por primera vez con la madre del caballero. Finalmente, el 15 de junio de 2024, emprendieron su segunda gran mudanza hacia el paraíso costero de Marbella, el reino donde más felices han sido.",
          imageUrl: "/storybook/year4/4.jpg"
       }
     ]
@@ -113,22 +123,22 @@ const storyBooks = [
     pages: [
        {
         title: "El Jardín de las Flores",
-        text: "Marbella fue su época dorada. Una casa con piscina, mascotas vecinas, y un jardín lleno de girasoles que cuidaron con mimo.",
+        text: "Los meses en Marbella fueron el apogeo de su cuento. Cada día, él la llevaba y la traía de su labor en su carruaje. Sobrevivieron a una cama que les destrozaba la espalda, pero disfrutaron de un jardín privado con piscina y de la leal compañía del perro y el gato de sus vecinos.",
          imageUrl: "/storybook/year5/1.jpg"
       },
       {
         title: "Arte y Comida",
-        text: "Fueron a la exposición de Van Gogh y comieron en Big Boss.",
+        text: "Sus días estaban llenos de magia: cenas románticas, paseos por Puerto Banús, la belleza de Estepona, noches de cine con su propio proyector mágico, y tranquilos paseos por el Lago de Tortugas. Pero su mayor orgullo era SU JARDÍN DE PLANTAS, rebosante de alegres girasoles y flores preciosas.",
          imageUrl: "/storybook/year5/2.jpg"
       },
       {
         title: "Viajes de Ensueño",
-        text: "Y viajaron a la majestuosa Praga y la romántica Budapest.",
+        text: "Vivieron aventuras cómicas, como el divertido momento de la compra de las tablets, y encontraron el mejor spa de todo el reino. Llenaron el álbum de Stitch, se maravillaron con la exposición de Van Gogh y devoraron sus banquetes favoritos: las hamburguesas BIG BOSS. En octubre de 2025 vibraron en el concierto de Saiko, y en noviembre conquistaron la majestuosa Alhambra. Para su cumpleaños, él la sorprendió con una legendaria tarta de galletas. Ese mismo mes, volaron a la mágica ciudad de Praga junto a los padres de la princesa.",
          imageUrl: "/storybook/year5/3.jpg"
       },
       {
         title: "Amor Puro",
-        text: "Superaron todas las pruebas para forjar un amor puro, maduro y real que sigue floreciendo.",
+        text: "En marzo de 2026, el caballero le entregó un regalo de Reyes Magos inigualable: un viaje a Budapest. Fue, sin duda, una de las expediciones más hermosas de sus vidas, cayendo profundamente enamorados de la ciudad. Y para coronar esta época dorada, el 3 de junio de 2026, saltaron y bailaron en el grandioso concierto de Bad Bunny.",
          imageUrl: "/storybook/year5/4.jpg"
       }
     ]
