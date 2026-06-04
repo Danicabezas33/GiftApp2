@@ -261,19 +261,19 @@ export default function Storybook() {
     );
 
     const ImageContent = () => (
-      <div className={`flex-1 relative h-[50%] md:h-full w-full flex items-center justify-center p-8 md:p-16 z-10 ${isEven ? 'md:pr-16' : 'md:pl-16'}`}>
+      <div className={`flex-1 relative h-[50%] md:h-full w-full flex items-center justify-center p-6 md:p-10 z-10 ${isEven ? 'md:pr-10' : 'md:pl-10'}`}>
         <DecorativeFrame />
         
-        <div className="relative max-w-full max-h-full group flex flex-col items-center">
+        <div className="relative w-[95%] h-[90%] md:h-[95%] group flex flex-col items-center justify-center">
           <img 
             src={getImageUrl(pageData.imageUrl)} 
             alt={pageData.title}
             onError={(e) => {
               console.error("No se pudo cargar la imagen:", e.currentTarget.src);
             }}
-            className="max-h-[35vh] md:max-h-[55vh] object-contain rounded-sm border-[8px] md:border-[12px] border-[#FFFDF9] bg-white shadow-[8px_8px_20px_rgba(136,13,30,0.15),-2px_-2px_10px_rgba(255,255,255,0.8)] filter contrast-[1.05] brightness-[1.02] transition-transform duration-500 group-hover:scale-[1.02] rotate-1 group-hover:rotate-0"
+            className="w-full h-full object-contain rounded-sm border-[4px] md:border-[8px] border-[#FFFDF9] bg-white shadow-[8px_8px_20px_rgba(136,13,30,0.15),-2px_-2px_10px_rgba(255,255,255,0.8)] filter contrast-[1.05] brightness-[1.02] transition-transform duration-500 group-hover:scale-[1.02] rotate-[0.5deg] group-hover:rotate-0"
           />
-          <div className="absolute -bottom-4 md:-bottom-6 left-1/2 -translate-x-1/2 bg-[#FFFDF9] border-y border-[#F49CBB] text-[#880D1E] font-serif px-6 py-2 text-[10px] md:text-xs tracking-widest uppercase shadow-md whitespace-nowrap rounded-sm transition-transform duration-500 group-hover:-translate-y-1 z-20">
+          <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 bg-[#FFFDF9] border-y border-[#F49CBB] text-[#880D1E] font-serif px-4 py-1.5 md:px-6 md:py-2 text-[10px] md:text-xs tracking-widest uppercase shadow-md whitespace-nowrap rounded-sm transition-transform duration-500 group-hover:-translate-y-1 z-20">
             Fig. {index + 1} — {pageData.title}
           </div>
         </div>
@@ -414,3 +414,4 @@ export default function Storybook() {
     </div>
   );
 }
+
