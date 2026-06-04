@@ -248,6 +248,11 @@ export default function Storybook() {
         <img 
           src={getImageUrl(pageData.imageUrl)} 
           alt={pageData.title}
+          onError={(e) => {
+            console.error("No se pudo cargar la imagen:", e.currentTarget.src);
+            // Optionally, we could set a fallback image here
+            // e.currentTarget.src = "https://via.placeholder.com/800x600?text=Imagen+no+encontrada";
+          }}
           className={`w-full h-full object-cover ${!isEven ? 'border-4 border-[#CBEEF3] rounded-2xl shadow-lg' : ''}`}
         />
       </div>
