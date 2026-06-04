@@ -2,12 +2,12 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { ChevronLeft, ChevronRight, Lock } from 'lucide-react';
 
+const GITHUB_BASE = 'https://raw.githubusercontent.com/Danicabezas33/GiftApp2/main/public';
+
 const getImageUrl = (path: string) => {
   if (path.startsWith('http')) return path;
-  const base = import.meta.env.BASE_URL || '/';
-  return `${base}${path.startsWith('/') ? path.slice(1) : path}`;
+  return `${GITHUB_BASE}${path.startsWith('/') ? path : `/${path}`}`;
 };
-
 const storyBooks = [
   {
     year: 1,
