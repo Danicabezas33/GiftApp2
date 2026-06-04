@@ -3,7 +3,7 @@ import { AnimatePresence } from 'motion/react';
 import Navbar from './components/Navbar';
 import Home from './components/home';
 import Roadmap from './components/Roadmap';
-import Memories from './components/Memories';
+import Storybook from './components/Storybook';
 import Gallery from './components/Gallery';
 import Games from './components/Games';
 import MusicPlayer from './components/MusicPlayer';
@@ -103,7 +103,7 @@ export default function App() {
         <AnimatePresence mode="wait">
           {unlockedWeb && currentSection === 'home' && <Home key="home" onNavigate={setCurrentSection} />}
           {unlockedWeb && currentSection === 'roadmap' && <Roadmap key="roadmap" />}
-          {unlockedWeb && currentSection === 'memories' && <Memories key="memories" />}
+          {unlockedWeb && currentSection === 'memories' && <Storybook key="storybook" />}
           {unlockedWeb && currentSection === 'gallery' && <Gallery key="gallery" />}
           {currentSection === 'games' && <Games key="games" onUnlockWeb={handleUnlockWeb} onNavigateHome={handleNavigateHome} />}
         </AnimatePresence>
