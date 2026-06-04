@@ -9,6 +9,7 @@ const getImageUrl = (path: string) => {
   return `${GITHUB_BASE}${path.startsWith('/') ? path : `/${path}`}`;
 };
 
+
 const storyBooks = [
   {
     year: 1,
@@ -198,45 +199,60 @@ export default function Storybook() {
   };
 
   const pageVariants = {
-    initial: (direction: number) => {
-      return {
-        x: direction > 0 ? 1000 : -1000,
-        opacity: 0
-      };
-    },
+    initial: (direction: number) => ({
+      x: direction > 0 ? 1000 : -1000,
+      opacity: 0,
+      scale: 0.95
+    }),
     animate: {
       x: 0,
       opacity: 1,
+      scale: 1,
       transition: {
-        x: { type: 'spring', stiffness: 300, damping: 30 },
-        opacity: { duration: 0.2 }
+        x: { type: 'spring', stiffness: 250, damping: 30 },
+        opacity: { duration: 0.3 },
+        scale: { duration: 0.3 }
       }
     },
-    exit: (direction: number) => {
-      return {
-        x: direction > 0 ? -1000 : 1000,
-        opacity: 0,
-        transition: {
-          x: { type: 'spring', stiffness: 300, damping: 30 },
-          opacity: { duration: 0.2 }
-        }
-      };
-    }
+    exit: (direction: number) => ({
+      x: direction > 0 ? -1000 : 1000,
+      opacity: 0,
+      scale: 0.95,
+      transition: {
+        x: { type: 'spring', stiffness: 250, damping: 30 },
+        opacity: { duration: 0.3 },
+        scale: { duration: 0.3 }
+      }
+    })
   };
+
+  const DecorativeFrame = () => (
+    <div className="absolute inset-4 md:inset-8 border border-[#F49CBB]/40 pointer-events-none z-0">
+      <div className="absolute -top-[3px] -left-[3px] w-[6px] h-[6px] border border-[#880D1E]/40 rounded-full" />
+      <div className="absolute -top-[3px] -right-[3px] w-[6px] h-[6px] border border-[#880D1E]/40 rounded-full" />
+      <div className="absolute -bottom-[3px] -left-[3px] w-[6px] h-[6px] border border-[#880D1E]/40 rounded-full" />
+      <div className="absolute -bottom-[3px] -right-[3px] w-[6px] h-[6px] border border-[#880D1E]/40 rounded-full" />
+    </div>
+  );
 
   const PageContent = ({ index, pageData }: { index: number, pageData: typeof storyBooks[0]['pages'][0] }) => {
     const isEven = index % 2 === 0;
     
     const TextContent = () => (
-      <div className="flex-1 p-8 md:p-12 lg:p-16 flex flex-col justify-center h-[50%] md:h-full">
-        <span className="text-[#F26A8D] font-bold tracking-widest uppercase text-sm mb-4 block">
-          PÁGINA {index + 1}
+      <div className={`flex-1 p-8 md:p-12 lg:p-20 flex flex-col justify-center h-[50%] md:h-full relative z-10 ${isEven ? 'md:pl-16' : 'md:pr-16'}`}>
+        <DecorativeFrame />
+        
+        <span className="text-[#F49CBB] font-bold tracking-[0.2em] uppercase text-xs md:text-sm mb-4 block text-center md:text-left relative z-10 w-fit mx-auto md:mx-0">
+          Capítulo {index + 1}
+          <div className="h-px bg-[#F49CBB]/30 w-full mt-1" />
         </span>
-        <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl text-[#880D1E] mb-6 md:mb-8 leading-tight drop-shadow-sm">
+        
+        <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl text-[#880D1E] mb-6 md:mb-10 leading-tight text-center md:text-left relative z-10 drop-shadow-sm">
           {pageData.title}
         </h2>
-        <div className="text-slate-800 text-base md:text-lg lg:text-xl leading-relaxed text-left">
-          <span className="float-left text-5xl md:text-6xl text-[#DD2D4A] font-serif leading-none pr-3 pt-1">
+        
+        <div className="text-slate-800 text-base md:text-lg lg:text-xl leading-[1.8] text-justify relative z-10 font-medium">
+          <span className="float-left text-6xl md:text-7xl lg:text-8xl text-[#DD2D4A] font-serif leading-[0.8] pr-4 pt-2 mix-blend-multiply drop-shadow-sm">
             {pageData.text.charAt(0)}
           </span>
           {pageData.text.substring(1)}
@@ -245,22 +261,27 @@ export default function Storybook() {
     );
 
     const ImageContent = () => (
-      <div className={`flex-1 relative h-[50%] md:h-full w-full ${!isEven ? 'p-8 md:p-12 pb-0 md:pb-12' : ''}`}>
-        <img 
-          src={getImageUrl(pageData.imageUrl)} 
-          alt={pageData.title}
-          onError={(e) => {
-            console.error("No se pudo cargar la imagen:", e.currentTarget.src);
-            // Optionally, we could set a fallback image here
-            // e.currentTarget.src = "https://via.placeholder.com/800x600?text=Imagen+no+encontrada";
-          }}
-          className={`w-full h-full object-contain ${!isEven ? 'border-4 border-[#CBEEF3] rounded-2xl shadow-lg' : ''}`}
-        />
+      <div className={`flex-1 relative h-[50%] md:h-full w-full flex items-center justify-center p-8 md:p-16 z-10 ${isEven ? 'md:pr-16' : 'md:pl-16'}`}>
+        <DecorativeFrame />
+        
+        <div className="relative max-w-full max-h-full group flex flex-col items-center">
+          <img 
+            src={getImageUrl(pageData.imageUrl)} 
+            alt={pageData.title}
+            onError={(e) => {
+              console.error("No se pudo cargar la imagen:", e.currentTarget.src);
+            }}
+            className="max-h-[35vh] md:max-h-[55vh] object-contain rounded-sm border-[8px] md:border-[12px] border-[#FFFDF9] bg-white shadow-[8px_8px_20px_rgba(136,13,30,0.15),-2px_-2px_10px_rgba(255,255,255,0.8)] filter contrast-[1.05] brightness-[1.02] transition-transform duration-500 group-hover:scale-[1.02] rotate-1 group-hover:rotate-0"
+          />
+          <div className="absolute -bottom-4 md:-bottom-6 left-1/2 -translate-x-1/2 bg-[#FFFDF9] border-y border-[#F49CBB] text-[#880D1E] font-serif px-6 py-2 text-[10px] md:text-xs tracking-widest uppercase shadow-md whitespace-nowrap rounded-sm transition-transform duration-500 group-hover:-translate-y-1 z-20">
+            Fig. {index + 1} — {pageData.title}
+          </div>
+        </div>
       </div>
     );
 
     return (
-      <div className="flex flex-col md:flex-row h-full w-full bg-[#FAF8F5]">
+      <div className="flex flex-col md:flex-row h-full w-full">
         {isEven ? (
           <>
             <ImageContent />
@@ -279,10 +300,10 @@ export default function Storybook() {
   const pagesLength = storyBooks[currentBook].pages.length;
 
   return (
-    <div className="w-full h-full flex-1 flex flex-col items-center p-4 md:p-8 pt-6 relative max-w-7xl mx-auto">
+    <div className="w-full h-full flex-1 flex flex-col items-center p-4 md:p-6 lg:p-8 pt-4 relative max-w-[1400px] mx-auto">
       
       {/* Tabs */}
-      <div className="w-full relative px-4 flex flex-wrap justify-center gap-2 md:gap-4 mb-8">
+      <div className="w-full relative px-4 flex flex-wrap justify-center gap-2 md:gap-4 mb-6 z-30">
          {storyBooks.map((book, idx) => {
             const isLocked = book.year > currentLevel;
             const isActive = idx === currentBook;
@@ -290,7 +311,7 @@ export default function Storybook() {
               <button
                 key={idx}
                 onClick={() => handleTabClick(idx)}
-                className={`relative px-4 py-2 md:px-6 md:py-3 rounded-2xl font-serif text-sm md:text-lg transition-all duration-300 flex items-center gap-2 ${isActive ? 'bg-[#880D1E] text-white shadow-xl scale-105' : 'bg-white text-[#880D1E] hover:bg-[#F49CBB] hover:text-white border border-[#880D1E]/20'}`}
+                className={`relative px-4 py-2 md:px-6 md:py-3 rounded-t-xl rounded-b-sm border-b-4 font-serif text-sm md:text-base font-bold transition-all duration-300 flex items-center gap-2 ${isActive ? 'bg-[#880D1E] text-white border-[#5a0612] shadow-[0_10px_20px_rgba(136,13,30,0.3)] -translate-y-1' : 'bg-white text-[#880D1E] border-[#e2d8cd] hover:bg-[#F49CBB] hover:text-white hover:border-[#DD2D4A] shadow-md'}`}
               >
                 {isLocked && <Lock size={16} className={isActive ? 'text-white' : 'text-[#880D1E] opacity-50'} />}
                 {book.label}
@@ -303,69 +324,93 @@ export default function Storybook() {
       <AnimatePresence>
         {showTooltip && (
           <motion.div 
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.8 }}
-            className="fixed top-24 z-[100] bg-[#880D1E] text-white px-6 py-3 rounded-full flex items-center gap-2 shadow-xl whitespace-nowrap"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            className="fixed top-24 z-[100] bg-[#880D1E] text-white font-serif px-6 py-3 rounded-full flex items-center gap-2 shadow-[0_10px_30px_rgba(136,13,30,0.4)] whitespace-nowrap border-2 border-[#F49CBB]"
           >
             <Lock size={18} />
-            <span>Desbloquea el siguiente nivel para leer este capítulo</span>
+            <span>Desbloquea el siguiente nivel para abrir este libro.</span>
           </motion.div>
         )}
       </AnimatePresence>
       
-      {/* Canvas */}
-      <div className="relative w-full flex flex-col h-[75vh] md:aspect-[16/9] md:h-auto min-h-[500px] bg-[#FAF8F5] rounded-3xl shadow-2xl border-[4px] border-white overflow-hidden">
+      {/* Canvas - The Physical Book */}
+      <div className="relative w-full flex flex-col h-[75vh] md:aspect-[18/11] md:h-auto min-h-[600px] rounded-3xl shadow-[0_30px_60px_rgba(0,0,0,0.4)] overflow-visible z-20">
         
-        {/* Navigation Arrows */}
-        <div className="absolute inset-y-0 left-0 z-50 flex items-center pointer-events-none">
-          <button 
-            onClick={handlePrev}
-            disabled={currentPage === 0}
-            className={`m-2 md:m-4 p-2 md:p-4 rounded-full bg-white/80 shadow-md backdrop-blur-sm pointer-events-auto transition-all ${currentPage === 0 ? 'opacity-0 cursor-default' : 'opacity-100 hover:bg-[#F49CBB] hover:text-white text-[#880D1E]'}`}
-          >
-            <ChevronLeft size={32} />
-          </button>
-        </div>
-        
-        <div className="absolute inset-y-0 right-0 z-50 flex items-center pointer-events-none">
-           <button 
-              onClick={handleNext}
-              disabled={currentPage === pagesLength - 1}
-              className={`m-2 md:m-4 p-2 md:p-4 rounded-full bg-white/80 shadow-md backdrop-blur-sm pointer-events-auto transition-all ${currentPage === pagesLength - 1 ? 'opacity-0 cursor-default' : 'opacity-100 hover:bg-[#F26A8D] hover:text-white text-[#880D1E]'}`}
-            >
-              <ChevronRight size={32} />
-           </button>
+        {/* Book Cover (Leather Backing) */}
+        <div className="absolute inset-0 bg-[#880D1E] rounded-[2rem] shadow-[inset_0_0_40px_rgba(0,0,0,0.6)] border-[4px] md:border-[12px] border-[#5a0612] z-0 overflow-hidden">
+           <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/leather.png')] opacity-40 mix-blend-multiply" />
+           <div className="hidden md:block absolute top-0 bottom-0 left-1/2 w-20 -ml-10 bg-gradient-to-r from-[#4a050e] via-[#750A19] to-[#4a050e] shadow-[inset_0_0_20px_rgba(0,0,0,0.9)]" />
         </div>
 
-        {/* Page Content */}
-        <div className="relative w-full flex-1 overflow-hidden bg-[#FAF8F5]">
-          <AnimatePresence initial={false} custom={direction}>
-            <motion.div
-              key={`${currentBook}-${currentPage}`}
-              custom={direction}
-              variants={pageVariants}
-              initial="initial"
-              animate="animate"
-              exit="exit"
-              className="absolute inset-0 w-full h-full pb-10 md:pb-0"
+        {/* Paper Pages Area */}
+        <div className="absolute inset-2 md:inset-5 lg:inset-8 bg-[#FAF8F5] rounded-xl md:rounded-lg shadow-[inset_0_0_30px_rgba(136,13,30,0.05),0_0_20px_rgba(0,0,0,0.8)] z-10 overflow-hidden flex">
+          
+          {/* Inner Paper Texture */}
+          <div className="absolute inset-0 opacity-[0.6] pointer-events-none" style={{ backgroundImage: "url('https://www.transparenttextures.com/patterns/cream-paper.png')" }} />
+
+          {/* Paper Stack Edges (Right and Left to give thickness) */}
+          <div className="hidden md:block absolute top-[2px] bottom-[2px] right-0 w-4 bg-gradient-to-r from-transparent via-[#f0eadd] to-[#d6caba] rounded-r-lg border-l border-black/5" />
+          <div className="hidden md:block absolute top-[4px] bottom-[4px] right-[2px] w-2 bg-gradient-to-r from-transparent via-[#f0eadd] to-[#d6caba] rounded-r-md border-l border-black/5" />
+          
+          <div className="hidden md:block absolute top-[2px] bottom-[2px] left-0 w-4 bg-gradient-to-l from-transparent via-[#f0eadd] to-[#d6caba] rounded-l-lg border-r border-black/5" />
+          <div className="hidden md:block absolute top-[4px] bottom-[4px] left-[2px] w-2 bg-gradient-to-l from-transparent via-[#f0eadd] to-[#d6caba] rounded-l-md border-r border-black/5" />
+
+          {/* Book Central Fold Line */}
+          <div className="hidden md:block absolute top-0 bottom-0 left-1/2 w-16 -ml-8 bg-gradient-to-r from-transparent via-[rgba(60,20,20,0.1)] to-transparent pointer-events-none z-30 mix-blend-multiply shadow-[inset_1px_0_2px_rgba(255,255,255,0.5)]" />
+          <div className="hidden md:block absolute top-0 bottom-0 left-1/2 w-[2px] -ml-[1px] bg-[rgba(0,0,0,0.12)] pointer-events-none z-30" />
+
+          {/* Navigation Arrows (styled as Ornate Bookmarks/Buttons) */}
+          <div className="absolute inset-y-0 left-0 z-50 flex items-center pointer-events-none">
+            <button 
+              onClick={handlePrev}
+              disabled={currentPage === 0}
+              className={`m-2 md:m-4 p-3 md:p-5 rounded-full bg-[#FAF8F5] border-[3px] border-[#F49CBB] shadow-[0_5px_15px_rgba(136,13,30,0.2)] pointer-events-auto transition-all duration-300 transform group ${currentPage === 0 ? 'opacity-0 scale-90 cursor-default' : 'opacity-100 hover:scale-110 hover:bg-[#880D1E] text-[#880D1E] hover:text-white hover:border-[#880D1E]'}`}
             >
-              <PageContent index={currentPage} pageData={storyBooks[currentBook].pages[currentPage]} />
-            </motion.div>
-          </AnimatePresence>
-        </div>
-        
-        {/* Page indicator bottom */}
-        <div className="absolute bottom-4 left-0 right-0 z-50 flex justify-center gap-3 pointer-events-none">
-           {storyBooks[currentBook].pages.map((_, idx) => (
-             <div 
-                key={idx}
-                className={`h-2 rounded-full transition-all duration-300 ${idx === currentPage ? 'w-10 bg-[#DD2D4A]' : 'w-2 bg-[#F49CBB]'}`}
-             />
-           ))}
+              <ChevronLeft size={32} strokeWidth={2.5} className="group-hover:-translate-x-1 transition-transform" />
+            </button>
+          </div>
+          
+          <div className="absolute inset-y-0 right-0 z-50 flex items-center pointer-events-none">
+            <button 
+                onClick={handleNext}
+                disabled={currentPage === pagesLength - 1}
+                className={`m-2 md:m-4 p-3 md:p-5 rounded-full bg-[#FAF8F5] border-[3px] border-[#F49CBB] shadow-[0_5px_15px_rgba(136,13,30,0.2)] pointer-events-auto transition-all duration-300 transform group ${currentPage === pagesLength - 1 ? 'opacity-0 scale-90 cursor-default' : 'opacity-100 hover:scale-110 hover:bg-[#880D1E] text-[#880D1E] hover:text-white hover:border-[#880D1E]'}`}
+              >
+                <ChevronRight size={32} strokeWidth={2.5} className="group-hover:translate-x-1 transition-transform" />
+            </button>
+          </div>
+
+          {/* Page Content */}
+          <div className="relative w-full flex-1 overflow-hidden z-20">
+            <AnimatePresence initial={false} custom={direction}>
+              <motion.div
+                key={`${currentBook}-${currentPage}`}
+                custom={direction}
+                variants={pageVariants}
+                initial="initial"
+                animate="animate"
+                exit="exit"
+                className="absolute inset-0 w-full h-full pb-8 md:pb-0"
+              >
+                <PageContent index={currentPage} pageData={storyBooks[currentBook].pages[currentPage]} />
+              </motion.div>
+            </AnimatePresence>
+          </div>
+          
+          {/* Page indicator bottom inside the book */}
+          <div className="absolute bottom-4 md:bottom-6 left-0 right-0 z-50 flex justify-center gap-3 pointer-events-none">
+            {storyBooks[currentBook].pages.map((_, idx) => (
+              <div 
+                  key={idx}
+                  className={`h-2 rounded-full transition-all duration-500 shadow-sm ${idx === currentPage ? 'w-12 bg-[#880D1E]' : 'w-2 bg-[#F49CBB]/60'}`}
+              />
+            ))}
+          </div>
+
         </div>
       </div>
     </div>
   );
 }
-
