@@ -8,6 +8,7 @@ const getImageUrl = (path: string) => {
   if (path.startsWith('http')) return path;
   return `${GITHUB_BASE}${path.startsWith('/') ? path : `/${path}`}`;
 };
+
 const storyBooks = [
   {
     year: 1,
@@ -253,7 +254,7 @@ export default function Storybook() {
             // Optionally, we could set a fallback image here
             // e.currentTarget.src = "https://via.placeholder.com/800x600?text=Imagen+no+encontrada";
           }}
-          className={`w-full h-full object-cover ${!isEven ? 'border-4 border-[#CBEEF3] rounded-2xl shadow-lg' : ''}`}
+          className={`w-full h-full object-contain ${!isEven ? 'border-4 border-[#CBEEF3] rounded-2xl shadow-lg' : ''}`}
         />
       </div>
     );
