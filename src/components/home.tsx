@@ -56,7 +56,7 @@ const CloudPixel = ({ className = "w-12 h-8" }) => (
   </svg>
 );
 
-const StatItem = ({ label, targetValue }: { label: string, targetValue: number | string }) => {
+const StatItem = ({ label, targetValue, suffixElement }: { label: string, targetValue: number | string, suffixElement?: React.ReactNode }) => {
   const [count, setCount] = useState<number | string>(0);
 
   useEffect(() => {
@@ -89,8 +89,9 @@ const StatItem = ({ label, targetValue }: { label: string, targetValue: number |
 
   return (
     <div className="flex flex-col items-center">
-      <span className="text-5xl font-bold text-[#0284C7] mb-1">
+      <span className="text-5xl font-bold text-[#0284C7] mb-1 flex items-center justify-center gap-1">
         {count}
+        {suffixElement}
       </span>
       <span className="text-xs uppercase font-medium tracking-widest text-sky-950/70">
         {label}
@@ -227,7 +228,7 @@ export function Home({ onNavigate }: HomeProps) {
               targetValue="∞" 
               suffixElement={
                 <img 
-                  src="https://i.pinimg.com/originals/45/d2/ae/45d2ae3a6aee080a85b32db2269625a1.gif" 
+                  src="https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExdjRsZzF4MmZyMTd6czRya2JyNWpmbjlybTJlcmNqbnk4dWcxZXRmaiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/D9hf5czkOAUMWEMcxl/giphy.gif" 
                   alt="Stitch" 
                   className="w-10 h-10 object-contain ml-1 -mt-2"
                 />
