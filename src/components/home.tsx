@@ -162,13 +162,13 @@ export function Home({ onNavigate }: HomeProps) {
           
           <div className="space-y-4 relative z-10">
             <p className="font-sans text-base lg:text-lg leading-relaxed font-normal text-slate-700">
-              Cada día a tu lado ha sido un regalo, lleno de risas, aprendizajes y un amor que no deja de crecer.
+              Gracias por dejarme disfrutar de todo este tiempo, y por crear juntos una relación basada en el amor, el respeto, la comunicación y el perdón.
             </p>
             <p className="font-sans text-base lg:text-lg leading-relaxed font-normal text-slate-700">
-              No me imagino mi vida sin ti, eres mi compañera, mi mejor amiga y el amor de mi vida. He creado esta web para recordar algunos de nuestros mejores momentos y celebrar todo lo que hemos vivido juntos.
+              Eres el mayo regalo que he tenido jamás, y para este aniversario he creado una web con todo lo que han supuesto estos años maravillosos a tu lado. Espero que te guste y que la disfrutes con una gran sonrisa.
             </p>
             <p className="font-sans font-medium text-[#880D1E] pt-2">
-              Te amo con todo mi ser.
+              Te amo con todo mi alma, por siempre.
             </p>
           </div>
         </motion.div>

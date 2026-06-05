@@ -100,31 +100,31 @@ const milestones = [
   { 
     year: 'Año 1', 
     title: 'Donde empezó todo', 
-    desc: 'Nuestra primera cita, los primeros mensajes y el primer "Te amo". Descubriendo el mundo el uno del otro.',
+    desc: 'Nuestra primera cita, nuestra primeras escapadas, las quedadas en el banco y todo el proceso que pasamos en Erasmus.',
     youtubeUrl: 'https://youtu.be/c237_Hsn1EE'
   },
   { 
     year: 'Año 2', 
     title: 'Aventuras juntos', 
-    desc: 'Nuestros primeros viajes largos. Aprendimos a convivir y a ser un verdadero equipo ante cualquier resto.',
+    desc: 'Nuestros primeros viajes largos. Aprendimos a convivir y a ser un verdadero equipo ante cualquier reto.',
     youtubeUrl: 'https://youtu.be/JCAe__GPXjY'
   },
   { 
     year: 'Año 3', 
     title: 'Creciendo', 
-    desc: 'Nuevos trabajos, nuevas metas. Apoyándonos en todo momento para ser nuestras mejores versiones.',
+    desc: 'Nuestra primera mudanza juntos,, aprendiendo, riendo, disfrutando y creciendo como pareja.',
     youtubeUrl: 'https://youtu.be/QulAC51_fIY'
   },
   { 
     year: 'Año 4', 
-    title: 'Hogar', 
-    desc: 'Compartiendo más que tiempo, compartiendo una vida. Las pequeñas rutinas que hacen de cada día algo especial.',
+    title: 'Fortaleciendo nuestro amor', 
+    desc: 'Un año lleno de aprendizaje, conformando nuestra relación y regalándnos tiempo de calidad y amor.',
     youtubeUrl: 'https://youtu.be/GnDIxPs4BDc'
   },
   { 
     year: 'Año 5', 
-    title: 'El presente brillante', 
-    desc: 'Celebrando nuestro quinto aniversario con el corazón lleno de recuerdos y mirando hacia un futuro juntos.',
+    title: 'El presente y el futuro', 
+    desc: 'Compactamos nuestro amor, viviendo por segunda vez juntos y amándonos de una manera única.',
     youtubeUrl: 'https://youtu.be/SuWDRKo9d0A'
   }
 ];
@@ -310,7 +310,7 @@ export default function Roadmap() {
       className="max-w-4xl mx-auto py-16 px-4 md:py-20 flex flex-col gap-16 md:gap-24 font-serif overflow-x-hidden"
     >
       <section>
-        <h2 className="text-4xl md:text-6xl font-script text-center text-spring-secondary mb-12 md:mb-20 drop-shadow-sm">Nuestra Historia</h2>
+        <h2 className="text-4xl md:text-6xl font-script text-center text-spring-secondary mb-12 md:mb-20 drop-shadow-sm">Paseo Temporal</h2>
         
         <div className="relative border-l-2 border-spring-primary/20 ml-4 md:ml-12">
           {milestones.map((m, i) => (

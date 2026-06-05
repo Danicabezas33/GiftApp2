@@ -9,8 +9,8 @@ interface NavbarProps {
 export function Navbar({ currentSection, setCurrentSection }: NavbarProps) {
   const tabs = [
     { id: 'home', label: 'Inicio', icon: Heart },
-    { id: 'roadmap', label: 'Nuestra Historia', icon: Map },
-    { id: 'memories', label: 'Memorias', icon: ImageIcon },
+    { id: 'roadmap', label: 'Paseo Temporal', icon: Map },
+    { id: 'memories', label: 'Nuestra Historia', icon: ImageIcon },
     { id: 'gallery', label: 'Galería', icon: Images },
     { id: 'games', label: 'Regalos', icon: Gamepad2 },
   ];
