@@ -101,31 +101,31 @@ const milestones = [
     year: 'Año 1', 
     title: 'Donde empezó todo', 
     desc: 'Nuestra primera cita, los primeros mensajes y el primer "Te amo". Descubriendo el mundo el uno del otro.',
-    youtubeUrl: 'https://youtu.be/hM5nLahoC4E'
+    youtubeUrl: 'https://youtu.be/c237_Hsn1EE'
   },
   { 
     year: 'Año 2', 
     title: 'Aventuras juntos', 
     desc: 'Nuestros primeros viajes largos. Aprendimos a convivir y a ser un verdadero equipo ante cualquier resto.',
-    youtubeUrl: 'https://youtu.be/G7e2fP6PH_4'
+    youtubeUrl: 'https://youtu.be/JCAe__GPXjY'
   },
   { 
     year: 'Año 3', 
     title: 'Creciendo', 
     desc: 'Nuevos trabajos, nuevas metas. Apoyándonos en todo momento para ser nuestras mejores versiones.',
-    youtubeUrl: 'https://youtu.be/K_o8NBY7mgg'
+    youtubeUrl: 'https://youtu.be/QulAC51_fIY'
   },
   { 
     year: 'Año 4', 
     title: 'Hogar', 
     desc: 'Compartiendo más que tiempo, compartiendo una vida. Las pequeñas rutinas que hacen de cada día algo especial.',
-    youtubeUrl: 'https://youtu.be/l0Y5xsfUUNU'
+    youtubeUrl: 'https://youtu.be/GnDIxPs4BDc'
   },
   { 
     year: 'Año 5', 
     title: 'El presente brillante', 
     desc: 'Celebrando nuestro quinto aniversario con el corazón lleno de recuerdos y mirando hacia un futuro juntos.',
-    youtubeUrl: 'https://youtu.be/vTnnbdDEw9w'
+    youtubeUrl: 'https://youtu.be/SuWDRKo9d0A'
   }
 ];
 
