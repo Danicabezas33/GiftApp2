@@ -4,19 +4,21 @@ import { Maximize2, X, Play } from 'lucide-react';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 
-// Create a custom pink pin icon
-const customPinkIcon = L.divIcon({
+// Dynamically create a custom pink pin icon with a number
+const getCustomPinkIcon = (index: number) => L.divIcon({
   className: 'custom-pin',
-  html: `<div style="background-color: #ff8ba7; width: 24px; height: 24px; border-radius: 50% 50% 50% 0; border: 2px solid #130f1d; transform: rotate(-45deg); box-shadow: 0 0 10px rgba(255, 139, 167, 0.5);"></div>`,
-  iconSize: [24, 24],
-  iconAnchor: [12, 24],
-  popupAnchor: [0, -26],
+  html: `<div style="background-color: #ff8ba7; width: 28px; height: 28px; border-radius: 50% 50% 50% 0; border: 2px solid #130f1d; transform: rotate(-45deg); box-shadow: 0 0 10px rgba(255, 139, 167, 0.5); display: flex; align-items: center; justify-content: center; position: relative;">
+          <span style="transform: rotate(45deg); display: block; width: 100%; text-align: center; font-weight: bold; font-family: sans-serif; color: #130f1d; font-size: 13px;">${index}</span>
+         </div>`,
+  iconSize: [28, 28],
+  iconAnchor: [14, 28],
+  popupAnchor: [0, -30],
 });
 
 // Create a custom question mark icon for the mystery destination
 const questionIcon = L.divIcon({
   className: 'custom-pin-question',
-  html: `<div style="background-color: #a7a1ff; width: 32px; height: 32px; border-radius: 50%; border: 2px solid #130f1d; display: flex; items-center; justify-center; box-shadow: 0 0 15px rgba(167, 161, 255, 0.5); font-weight: bold; color: #130f1d; font-size: 20px;">?</div>`,
+  html: `<div style="background-color: #a7a1ff; width: 32px; height: 32px; border-radius: 50%; border: 2px solid #130f1d; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 15px rgba(167, 161, 255, 0.5); font-weight: bold; color: #130f1d; font-size: 16px;">?</div>`,
   iconSize: [32, 32],
   iconAnchor: [16, 16],
   popupAnchor: [0, -16],
@@ -134,6 +136,35 @@ export default function Roadmap() {
   const [activeYear, setActiveYear] = useState('2021');
   const [expandedVideo, setExpandedVideo] = useState<number | null>(null);
 
+  // Generates a curved path using Quadratic Bezier between two points
+  const getCurvePoints = (start: [number, number], end: [number, number], index: number, numPoints = 25) => {
+    const points: [number, number][] = [];
+    
+    // Midpoint
+    const midLat = (start[0] + end[0]) / 2;
+    const midLng = (start[1] + end[1]) / 2;
+    
+    // Direction
+    const dLat = end[0] - start[0];
+    const dLng = end[1] - start[1];
+    
+    // Factor logic: alternate offset to prevent overlap on return trips
+    const curveFactor = index % 2 === 0 ? 0.25 : -0.25;
+    
+    // Perpendicular vector for control point
+    const ctrlLat = midLat - dLng * curveFactor;
+    const ctrlLng = midLng + dLat * curveFactor;
+    
+    for (let i = 0; i <= numPoints; i++) {
+      const t = i / numPoints;
+      // Quadratic Bezier interpolation
+      const lat = Math.pow(1 - t, 2) * start[0] + 2 * (1 - t) * t * ctrlLat + Math.pow(t, 2) * end[0];
+      const lng = Math.pow(1 - t, 2) * start[1] + 2 * (1 - t) * t * ctrlLng + Math.pow(t, 2) * end[1];
+      points.push([lat, lng]);
+    }
+    return points;
+  };
+
   useEffect(() => {
     if (!mapContainerRef.current) return;
 
@@ -188,35 +219,58 @@ export default function Roadmap() {
       coordsArray.push(ubicacion.coords);
 
       const isLastPointOf2026 = año === '2026' && index === ubicaciones.length - 1;
-      const markerIcon = isLastPointOf2026 ? questionIcon : customPinkIcon;
+      const markerIcon = isLastPointOf2026 ? questionIcon : getCustomPinkIcon(index + 1);
 
       const marker = L.marker(ubicacion.coords, { icon: markerIcon });
       
       const popupContent = `
         <div class="text-center font-sans p-1">
-          <h3 class="font-bold text-lg text-rose-600 mb-1 leading-tight">${ubicacion.name}</h3>
+          <h3 class="font-bold text-lg text-rose-600 mb-1 leading-tight">${index + 1}. ${ubicacion.name}</h3>
           <p class="text-gray-700 text-sm m-0 leading-snug">${ubicacion.message}</p>
         </div>
       `;
       
       marker.bindPopup(popupContent, {
         closeButton: true,
-        className: 'custom-popup rounded-xl overflow-hidden shadow-lg',
+        className: 'custom-popup rounded-xl overflow-hidden shadow-lg border border-pink-100',
       });
       
-      marker.addTo(layerGroup);
+      // Delay marker appearance for animation effect
+      setTimeout(() => {
+         marker.addTo(layerGroup);
+      }, index * 200);
     });
 
     if (coordsArray.length > 1) {
-      const polyline = L.polyline(coordsArray, {
-        color: '#0ea5e9',
-        weight: 4,
-        dashArray: '8, 8',
-        opacity: 0.8,
+      // Create beautifully curved paths instead of zigzag
+      let curvedPath: [number, number][] = [];
+      for (let i = 0; i < coordsArray.length - 1; i++) {
+        const segmentCurve = getCurvePoints(coordsArray[i], coordsArray[i + 1], i);
+        // exclude first coordinate of next segment to avoid duplicate points
+        if (i > 0) segmentCurve.shift();
+        curvedPath = [...curvedPath, ...segmentCurve];
+      }
+
+      const polylineBg = L.polyline(curvedPath, {
+        color: '#ff8ba7',
+        weight: 6,
+        opacity: 0.2,
         lineCap: 'round',
         lineJoin: 'round'
       });
-      polyline.addTo(layerGroup);
+      
+      const polylineLine = L.polyline(curvedPath, {
+        color: '#DD2D4A',
+        weight: 3,
+        dashArray: '10, 15',
+        opacity: 0.9,
+        lineCap: 'round',
+        lineJoin: 'round',
+        className: 'animated-route'
+      });
+      
+      polylineBg.addTo(layerGroup);
+      polylineLine.addTo(layerGroup);
     }
 
     if (coordsArray.length > 0) {
