@@ -222,7 +222,17 @@ export function Home({ onNavigate }: HomeProps) {
           <div className="relative z-10 w-full flex items-center justify-around">
             <StatItem label="Países" targetValue={4} />
             <StatItem label="Gordito enviados" targetValue={8754} />
-            <StatItem label="Stickers Stitch" targetValue="∞" />
+            <StatItem 
+              label="Stickers Stitch" 
+              targetValue="∞" 
+              suffixElement={
+                <img 
+                  src="https://i.pinimg.com/originals/45/d2/ae/45d2ae3a6aee080a85b32db2269625a1.gif" 
+                  alt="Stitch" 
+                  className="w-10 h-10 object-contain ml-1 -mt-2"
+                />
+              } 
+            />
           </div>
         </motion.div>
 
