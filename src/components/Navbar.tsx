@@ -17,16 +17,16 @@ export function Navbar({ currentSection, setCurrentSection }: NavbarProps) {
 
   return (
     <nav className="fixed top-0 left-0 w-full bg-white/80 backdrop-blur-xl z-50 border-b border-[#F49CBB]/50 shadow-sm shadow-[#F49CBB]/30">
-      <div className="max-w-4xl mx-auto px-4 h-16 flex items-center justify-between">
-        <div className="text-xl md:text-2xl font-script font-bold text-[#880D1E] drop-shadow-sm cursor-pointer" onClick={() => setCurrentSection('home')}>
+      <div className="max-w-6xl mx-auto px-4 lg:px-8 h-16 flex items-center justify-between gap-4">
+        <div className="text-xl md:text-2xl lg:text-3xl font-script font-bold text-[#880D1E] drop-shadow-sm cursor-pointer whitespace-nowrap min-w-fit" onClick={() => setCurrentSection('home')}>
           ¡Felices 5 Años mi niña!
         </div>
-        <div className="hidden md:flex space-x-2">
+        <div className="hidden md:flex space-x-1 lg:space-x-2 overflow-x-auto scrollbar-hide flex-1 justify-end">
           {tabs.map((tab) => (
             <button
               key={tab.id}
               onClick={() => setCurrentSection(tab.id)}
-              className={`px-5 py-2 rounded-full text-sm font-medium transition-all duration-500 flex items-center gap-2 relative group ${
+              className={`px-3 lg:px-5 py-2 rounded-full text-xs lg:text-sm font-medium transition-all duration-500 flex items-center gap-2 relative group whitespace-nowrap ${
                 currentSection === tab.id
                   ? 'text-[#DD2D4A]'
                   : 'text-slate-500 hover:text-[#DD2D4A]'
