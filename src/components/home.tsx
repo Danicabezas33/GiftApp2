@@ -165,7 +165,7 @@ export function Home({ onNavigate }: HomeProps) {
               Gracias por dejarme disfrutar de todo este tiempo, y por crear juntos una relación basada en el amor, el respeto, la comunicación y el perdón.
             </p>
             <p className="font-sans text-base lg:text-lg leading-relaxed font-normal text-slate-700">
-              Eres el mayo regalo que he tenido jamás, y para este aniversario he creado una web con todo lo que han supuesto estos años maravillosos a tu lado. Espero que te guste y que la disfrutes con una gran sonrisa.
+              Eres el mayor regalo que he tenido jamás, y para este aniversario he creado una web con todo lo que han supuesto estos años maravillosos a tu lado. Espero que te guste y que la disfrutes con una gran sonrisa.
             </p>
             <p className="font-sans font-medium text-[#880D1E] pt-2">
               Te amo con todo mi alma, por siempre.
