@@ -91,7 +91,8 @@ const routesByYear: Record<string, LocationInfo[]> = {
   '2026': [
     { name: 'Budapest', coords: [47.4979, 19.0402], message: 'El regalo de Reyes que nos enamoró y uno de los mejores viajes de nuestra vida.' },
     { name: 'Madrid', coords: [40.4168, -3.7038], message: 'Concierto de Bad Bunny.' },
-    { name: 'El Futuro...', coords: [0, 0], message: '¿Cuál será nuestro próximo gran destino? ¡Solo el tiempo lo dirá!' },
+    { name: 'Alhama de Granada', coords: [37.0049, -3.9870], message: 'Nuestro 5to aniversario.' },
+    { name: 'El Futuro...', coords: [40.07598, -14.9864], message: '¿Cuál será nuestro próximo gran destino? ¡Solo el tiempo lo dirá!' },
   ]
 };
 
