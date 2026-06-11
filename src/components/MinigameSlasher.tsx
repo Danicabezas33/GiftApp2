@@ -52,29 +52,38 @@ export function MinigameSlasher({ onWin }: MinigameSlasherProps) {
           const AudioContext = window.AudioContext || (window as any).webkitAudioContext;
           if (!AudioContext) return;
           const audioCtx = new AudioContext();
-          const osc = audioCtx.createOscillator();
-          const filter = audioCtx.createBiquadFilter();
+          
+          // Create a pleasant, ethereal chime using multiple oscillators
+          const osc1 = audioCtx.createOscillator();
+          const osc2 = audioCtx.createOscillator();
+          const osc3 = audioCtx.createOscillator();
           const gain = audioCtx.createGain();
           
-          osc.type = 'sawtooth';
-          osc.frequency.setValueAtTime(60, audioCtx.currentTime);
-          osc.frequency.exponentialRampToValueAtTime(150, audioCtx.currentTime + 0.1);
-          osc.frequency.exponentialRampToValueAtTime(80, audioCtx.currentTime + 0.6);
-          
-          filter.type = 'lowpass';
-          filter.frequency.setValueAtTime(500, audioCtx.currentTime);
-          filter.frequency.linearRampToValueAtTime(3000, audioCtx.currentTime + 0.2);
+          osc1.type = 'sine';
+          osc2.type = 'triangle';
+          osc3.type = 'sine';
+
+          const baseFreq = 440; // A4
+          osc1.frequency.setValueAtTime(baseFreq * 1.5, audioCtx.currentTime); // E5
+          osc2.frequency.setValueAtTime(baseFreq * 2, audioCtx.currentTime);   // A5
+          osc3.frequency.setValueAtTime(baseFreq * 2.5, audioCtx.currentTime); // C#6
 
           gain.gain.setValueAtTime(0, audioCtx.currentTime);
-          gain.gain.linearRampToValueAtTime(0.15, audioCtx.currentTime + 0.05);
-          gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.8);
+          gain.gain.linearRampToValueAtTime(0.3, audioCtx.currentTime + 0.1);
+          gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 1.5);
           
-          osc.connect(filter);
-          filter.connect(gain);
+          osc1.connect(gain);
+          osc2.connect(gain);
+          osc3.connect(gain);
           gain.connect(audioCtx.destination);
           
-          osc.start();
-          osc.stop(audioCtx.currentTime + 0.8);
+          osc1.start();
+          osc2.start();
+          osc3.start();
+          
+          osc1.stop(audioCtx.currentTime + 1.5);
+          osc2.stop(audioCtx.currentTime + 1.5);
+          osc3.stop(audioCtx.currentTime + 1.5);
       } catch(e) {}
     };
 
@@ -705,7 +714,7 @@ export function MinigameSlasher({ onWin }: MinigameSlasherProps) {
         {!isPlaying && glowPower === 0 && !isGameOver && !isWon && (
           <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/60 backdrop-blur-sm z-10">
             <h3 className="font-sans text-2xl text-cyan-400 mb-2 font-bold uppercase tracking-widest drop-shadow-[0_0_10px_rgba(0,255,255,0.8)]">K-Drama City</h3>
-            <p className="text-[#CDB4DB] mb-6 max-w-xs text-center text-sm px-4 shadow-black drop-shadow-md">
+            <p className="text-[#880D1E]/70 mb-6 max-w-xs text-center text-sm px-4 shadow-black drop-shadow-md">
               Desliza tu dedo para destruir los Cristales Oscuros.<br/>Enciende la ciudad.<br/>¡CUIDADO! No cortes los cristales ROJOS.
             </p>
             <button 
@@ -719,9 +728,9 @@ export function MinigameSlasher({ onWin }: MinigameSlasherProps) {
 
         {isWon && (
           <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none z-20">
-             <div className="bg-black/80 backdrop-blur-md px-8 py-6 rounded-xl shadow-[0_0_30px_rgba(255,0,255,0.5)] border border-[#FFC8DD]/300 text-center">
+             <div className="bg-black/80 backdrop-blur-md px-8 py-6 rounded-xl shadow-[0_0_30px_rgba(255,0,255,0.5)] border border-[#F49CBB]/300 text-center">
                 <p className="font-sans uppercase tracking-widest text-2xl text-cyan-400 font-bold mb-2 animate-pulse">¡Ciudad Encendida!</p>
-                <p className="text-[#CDB4DB]">Glow Power 100%</p>
+                <p className="text-[#880D1E]/70">Glow Power 100%</p>
              </div>
           </div>
         )}
@@ -730,7 +739,7 @@ export function MinigameSlasher({ onWin }: MinigameSlasherProps) {
           <div className="absolute top-4 left-4 right-4 pointer-events-none z-10">
              <div className="w-full h-3 bg-gray-900 rounded-full border border-gray-700 overflow-hidden">
                 <div 
-                   className="h-full bg-gradient-to-r from-cyan-400 to-[#FFAFCC] transition-all duration-300 shadow-[0_0_10px_rgba(0,255,255,0.8)]"
+                   className="h-full bg-gradient-to-r from-cyan-400 to-[#DD2D4A] transition-all duration-300 shadow-[0_0_10px_rgba(0,255,255,0.8)]"
                    style={{ width: `${glowPower}%` }}
                 ></div>
              </div>
