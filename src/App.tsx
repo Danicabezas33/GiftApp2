@@ -49,6 +49,21 @@ export default function App() {
       return;
     }
 
+    if (params.has('unlockAll')) {
+      const fullLevels = [1, 2, 3, 4, 5];
+      localStorage.setItem('unlocked_levels_v4', JSON.stringify(fullLevels));
+      import('./firebaseHelper').then(({ syncGlobalUnlockedLevels }) => {
+        syncGlobalUnlockedLevels(fullLevels).then(() => {
+          localStorage.setItem('web_unlocked_v4', 'true');
+          window.location.search = '';
+        }).catch(err => {
+          console.error("Unlock error", err);
+          window.location.search = '';
+        });
+      });
+      return;
+    }
+
     const storedWebUnlocked = localStorage.getItem('web_unlocked_v4') === 'true';
     if (storedWebUnlocked) {
       setUnlockedWeb(true);

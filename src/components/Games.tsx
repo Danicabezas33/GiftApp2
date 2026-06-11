@@ -269,30 +269,7 @@ export function Games({ onUnlockWeb, onNavigateHome }: GamesProps) {
       )}
 
       {unlockedLevels.length > 0 && (
-        <div className="mt-20 flex flex-col sm:flex-row items-center justify-center gap-8">
-          <button
-            onClick={async () => {
-              localStorage.removeItem('unlocked_levels_v4');
-              localStorage.removeItem('web_unlocked_v4');
-              await syncGlobalUnlockedLevels([]);
-              window.location.reload();
-            }}
-            className="text-[#880D1E]/70 hover:text-[#DD2D4A] text-xs font-mono tracking-widest uppercase transition-all duration-300"
-          >
-            Resetear Progreso
-          </button>
-          <button
-            onClick={async () => {
-              const fullLevels = [1,2,3,4,5];
-              localStorage.setItem('unlocked_levels_v4', JSON.stringify(fullLevels));
-              await syncGlobalUnlockedLevels(fullLevels);
-              window.location.reload();
-            }}
-            className="text-[#880D1E]/70 hover:text-[#DD2D4A] text-xs font-mono tracking-widest uppercase transition-all duration-300"
-          >
-            Forzar Desbloqueo
-          </button>
-        </div>
+        <div className="mt-20 h-2"></div>
       )}
 
       <AnimatePresence>
