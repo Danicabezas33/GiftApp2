@@ -29,7 +29,7 @@ export function Games({ onUnlockWeb, onNavigateHome }: GamesProps) {
   const [unlockedLevels, setUnlockedLevels] = useState<number[]>(() => {
     return JSON.parse(localStorage.getItem('unlocked_levels_v4') || '[]');
   });
-
+  
   const unlockedLevelsRef = useRef<number[]>(unlockedLevels);
   useEffect(() => {
     unlockedLevelsRef.current = unlockedLevels;
@@ -50,7 +50,7 @@ export function Games({ onUnlockWeb, onNavigateHome }: GamesProps) {
       if (data && data.levelId && typeof data.levelId === 'number') {
         const id = data.levelId;
         const currentLevels = unlockedLevelsRef.current;
-
+        
         if (id >= 1 && id <= 5 && !currentLevels.includes(id)) {
           // Check order: Must unlock 1 first, then 2, etc.
           const isExpectedOrder = id === 1 || currentLevels.includes(id - 1);
@@ -80,8 +80,21 @@ export function Games({ onUnlockWeb, onNavigateHome }: GamesProps) {
 
   const handleMinigameWin = () => {
     if (activeGift) {
-       // just go to scratch for all cases. The scratch phase checks completion logic.
-       setModalPhase('scratch');
+       if (activeGift.id === 5) {
+         const newUnlocked = [...new Set([...unlockedLevelsRef.current, 5])];
+         setUnlockedLevels(newUnlocked);
+         localStorage.setItem('unlocked_levels_v4', JSON.stringify(newUnlocked));
+         syncGlobalUnlockedLevels(newUnlocked);
+         
+         const isWebUnlocked = localStorage.getItem('web_unlocked_v4') === 'true';
+         if (!isWebUnlocked) {
+             setModalPhase('web_unlocked');
+         } else {
+             setModalPhase('all_completed');
+         }
+       } else {
+         setModalPhase('scratch');
+       }
     }
   };
 
@@ -139,10 +152,10 @@ export function Games({ onUnlockWeb, onNavigateHome }: GamesProps) {
                   transition={{ repeat: Infinity, duration: 30, ease: "linear" }}
                   className="absolute inset-4 rounded-full border border-dashed border-[#DD2D4A]/40 z-10 pointer-events-none"
                />
-               <img src="https://raw.githubusercontent.com/Danicabezas33/GiftApp2/main/public/photos/nfc-1.jpg" alt="Gift NFC" className="w-full h-full object-cover rounded-full" />
+               <img src="https://raw.githubusercontent.com/Danicabezas33/GiftApp2/main/public/photos/nfc-2.jpg" alt="Gift NFC" className="w-full h-full object-cover rounded-full" />
             </div>
           </motion.div>
-
+          
           <motion.div
             initial={{ y: 20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
@@ -156,7 +169,7 @@ export function Games({ onUnlockWeb, onNavigateHome }: GamesProps) {
                 Acerca el primer objeto al escáner NFC para comenzar el viaje...
               </p>
             </div>
-
+            
             <div className="inline-flex items-center gap-5 bg-white shadow-xl shadow-[#F49CBB]/50 py-3 px-8 md:py-4 md:px-10 rounded-full border border-[#F49CBB]/30">
                <div className="flex space-x-1.5">
                   <motion.div animate={{ opacity: [0.2, 1, 0.2], scale: [0.8, 1.2, 0.8] }} transition={{ repeat: Infinity, duration: 2, times: [0, 0.5, 1] }} className="w-2 h-2 bg-[#DD2D4A] rounded-full" />
@@ -171,7 +184,7 @@ export function Games({ onUnlockWeb, onNavigateHome }: GamesProps) {
         <>
           <div className="text-center mb-10 md:mb-16">
             <h2 className="text-4xl md:text-7xl font-script text-[#880D1E] mb-6 drop-shadow-sm">Disfruta de los regalos</h2>
-
+            
             <div className="flex items-center justify-center gap-4 bg-white shadow-xl shadow-[#F49CBB]/50 py-3 px-8 rounded-full max-w-sm mx-auto border border-[#F49CBB]/30 mt-8">
               <motion.div
                 animate={{ scale: [1, 1.2, 1], opacity: [0.4, 0.8, 0.4] }}
@@ -196,8 +209,8 @@ export function Games({ onUnlockWeb, onNavigateHome }: GamesProps) {
                   whileHover={(isCompleted || isActive) ? { y: -8, scale: 1.02 } : {}}
                   onClick={() => isCompleted && abrirNivel(gift.id)}
                   className={`relative overflow-hidden rounded-[2.5rem] p-10 transition-all duration-500 md:min-h-[280px] flex flex-col items-center justify-center text-center border group
-                    ${isCompleted
-                      ? 'bg-white hover:border-[#F49CBB] cursor-pointer shadow-xl shadow-[#F49CBB]/50 border-[#F49CBB]/30'
+                    ${isCompleted 
+                      ? 'bg-white hover:border-[#F49CBB] cursor-pointer shadow-xl shadow-[#F49CBB]/50 border-[#F49CBB]/30' 
                       : isActive
                         ? 'bg-[#DD2D4A] text-white border-[#DD2D4A] shadow-[0_10px_30px_rgba(221,45,74,0.5)] animate-[bounce_3s_infinite] cursor-default'
                         : 'bg-slate-100 opacity-60 text-slate-400 border-slate-200 pointer-events-none'
@@ -220,25 +233,25 @@ export function Games({ onUnlockWeb, onNavigateHome }: GamesProps) {
                   )}
 
                   <div className={`w-20 h-20 rounded-full flex items-center justify-center mb-6 transition-all duration-500 relative overflow-hidden ${
-                    isCompleted
-                      ? 'bg-[#F49CBB]/20 text-[#DD2D4A] group-hover:bg-[#DD2D4A] group-hover:text-white shadow-inner group-hover:shadow-[0_0_30px_rgba(221,45,74,0.4)]'
+                    isCompleted 
+                      ? 'bg-[#F49CBB]/20 text-[#DD2D4A] group-hover:bg-[#DD2D4A] group-hover:text-white shadow-inner group-hover:shadow-[0_0_30px_rgba(221,45,74,0.4)]' 
                       : isActive
                         ? 'bg-white/20 text-white'
                         : 'bg-slate-200/50 text-slate-400'
                   }`}>
                     {isCompleted && (
-                      <img
-                        src={`https://raw.githubusercontent.com/Danicabezas33/GiftApp2/main/public/photos/regalo${gift.id}.jpg`}
-                        alt={gift.title}
+                      <img 
+                        src={`https://raw.githubusercontent.com/Danicabezas33/GiftApp2/main/public/photos/regalo${gift.id === 5 ? 1 : gift.id + 1}.jpg`} 
+                        alt={gift.title} 
                         className="absolute inset-0 w-full h-full object-cover z-10 transition-opacity duration-300 opacity-90 group-hover:opacity-100"
-                        onError={(e) => {
-                          (e.target as HTMLImageElement).style.display = 'none';
+                        onError={(e) => { 
+                          (e.target as HTMLImageElement).style.display = 'none'; 
                         }}
                       />
                     )}
                     <gift.icon className={`relative z-0 w-10 h-10 transition-transform duration-500 ${(isCompleted || isActive) ? 'group-hover:scale-110' : ''}`} />
                   </div>
-
+                  
                   <h3 className={`text-2xl font-serif font-bold mb-2 ${
                     isCompleted ? 'text-[#880D1E]' : isActive ? 'text-white' : 'text-slate-400'
                   }`}>
@@ -249,9 +262,9 @@ export function Games({ onUnlockWeb, onNavigateHome }: GamesProps) {
                   }`}>
                     {isCompleted ? gift.title : isActive ? 'Escanea para desbloquear' : 'Bloqueado'}
                   </p>
-
+                  
                   {isCompleted && (
-                    <motion.div
+                    <motion.div 
                       initial={{ scale: 0 }}
                       animate={{ scale: 1 }}
                       className="mt-4 px-4 py-1 bg-[#DD2D4A]/10 border border-[#DD2D4A]/20 rounded-full text-[10px] text-[#DD2D4A] font-bold uppercase tracking-widest"
@@ -272,14 +285,14 @@ export function Games({ onUnlockWeb, onNavigateHome }: GamesProps) {
 
       <AnimatePresence>
         {modalPhase === 'nfc' && incomingLevelId && (
-          <NfcScannerModal
-            levelId={incomingLevelId}
-            onComplete={handleNfcComplete}
+          <NfcScannerModal 
+            levelId={incomingLevelId} 
+            onComplete={handleNfcComplete} 
           />
         )}
 
         {modalPhase === 'web_unlocked' && (
-          <motion.div
+          <motion.div 
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -348,10 +361,10 @@ export function Games({ onUnlockWeb, onNavigateHome }: GamesProps) {
           </motion.div>
         )}
 
-        {revealedGift && activeGift && modalPhase === 'scratch' && (
+        {revealedGift && activeGift && modalPhase === 'scratch' && activeGift.id !== 5 && (
           <ScratchCard
             tipoRegalo={activeGift.title}
-            imagenRegalo={`https://raw.githubusercontent.com/Danicabezas33/GiftApp2/main/public/photos/nfc-${activeGift.id === 5 ? 'final' : activeGift.id + 1}.jpg`}
+            imagenRegalo={`https://raw.githubusercontent.com/Danicabezas33/GiftApp2/main/public/photos/nfc-${activeGift.id + 1}.jpg`} 
             onClose={() => {
               setRevealedGift(null);
               setModalPhase('none');
@@ -359,7 +372,7 @@ export function Games({ onUnlockWeb, onNavigateHome }: GamesProps) {
             onComplete={handleScratchComplete}
           />
         )}
-
+        
         {revealedGift && activeGift && modalPhase === 'minigame' && (
           <motion.div
             initial={{ opacity: 0 }}
@@ -374,7 +387,7 @@ export function Games({ onUnlockWeb, onNavigateHome }: GamesProps) {
               className="bg-white rounded-[2.5rem] overflow-y-auto shadow-2xl shadow-[#F49CBB]/50 max-w-lg w-full max-h-[95vh] relative border border-[#F49CBB]/30 text-center flex flex-col"
               onClick={e => e.stopPropagation()}
             >
-              <button
+              <button 
                 onClick={() => {
                   setRevealedGift(null);
                   setModalPhase('none');
