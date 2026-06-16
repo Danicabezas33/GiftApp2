@@ -152,7 +152,7 @@ export function Games({ onUnlockWeb, onNavigateHome }: GamesProps) {
                   transition={{ repeat: Infinity, duration: 30, ease: "linear" }}
                   className="absolute inset-4 rounded-full border border-dashed border-[#DD2D4A]/40 z-10 pointer-events-none"
                />
-               <img src="https://raw.githubusercontent.com/Danicabezas33/GiftApp2/main/public/photos/nfc-2.jpg" alt="Gift NFC" className="w-full h-full object-cover rounded-full" />
+               <img src="https://raw.githubusercontent.com/Danicabezas33/GiftApp2/main/public/photos/nfc-1.jpg" alt="Gift NFC" className="w-full h-full object-cover rounded-full" />
             </div>
           </motion.div>
           
