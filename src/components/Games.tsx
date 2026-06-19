@@ -12,11 +12,11 @@ import { MinigameMaze } from './MinigameMaze';
 import { MinigameCherryBlossom } from './MinigameCherryBlossom';
 
 const gifts = [
-  { id: 1, title: 'Regalo 1', icon: Globe, description: 'Supera la primera prueba para desbloquear un paseo virtual a través de nuestra historia.' },
-  { id: 2, title: 'Regalo 2', icon: Waves, description: 'Relajación máxima y desconexión total. Te lo mereces.' },
-  { id: 3, title: 'Regalo 3', icon: Flame, description: 'La intimidad y la calma es la base del alma.' },
-  { id: 4, title: 'Regalo 4', icon: UtensilsCrossed, description: '¡Apila sin parar!.' },
-  { id: 5, title: 'Regalo 5', icon: Sparkles, description: 'Recuerda que siempre debemos cuidarnos adecuadamente.' },
+  { id: 1, title: 'Regalo 1', icon: Waves, description: 'Relajación máxima y desconexión total. Te lo mereces.' },
+  { id: 2, title: 'Regalo 2', icon: Flame, description: 'La intimidad y la calma es la base del alma.' },
+  { id: 3, title: 'Regalo 3', icon: UtensilsCrossed, description: '¡Apila sin parar!.' },
+  { id: 4, title: 'Regalo 4', icon: Sparkles, description: 'Recuerda que siempre debemos cuidarnos adecuadamente.' },
+  { id: 5, title: 'Regalo 5', icon: Globe, description: 'Supera la última prueba para desbloquear un paseo virtual a través de nuestra historia.' },
 ];
 
 interface GamesProps {
@@ -40,8 +40,8 @@ export function Games({ onUnlockWeb, onNavigateHome }: GamesProps) {
   const [incomingLevelId, setIncomingLevelId] = useState<number | null>(null);
 
   useEffect(() => {
-    // 1. Trigger web unlock if levels are open
-    if (unlockedLevelsRef.current.length > 0 && onUnlockWeb) {
+    // 1. Trigger web unlock if level 5 is unlocked
+    if (unlockedLevelsRef.current.includes(5) && onUnlockWeb) {
       onUnlockWeb();
     }
 
@@ -79,14 +79,22 @@ export function Games({ onUnlockWeb, onNavigateHome }: GamesProps) {
   };
 
   const handleMinigameWin = () => {
-    if (activeGift && activeGift.id === 5) {
-      const newUnlocked = [...new Set([...unlockedLevelsRef.current, 5])];
-      setUnlockedLevels(newUnlocked);
-      localStorage.setItem('unlocked_levels_v4', JSON.stringify(newUnlocked));
-      syncGlobalUnlockedLevels(newUnlocked);
-      setModalPhase('all_completed');
-    } else {
-      setModalPhase('scratch');
+    if (activeGift) {
+       if (activeGift.id === 5) {
+         const newUnlocked = [...new Set([...unlockedLevelsRef.current, 5])];
+         setUnlockedLevels(newUnlocked);
+         localStorage.setItem('unlocked_levels_v4', JSON.stringify(newUnlocked));
+         syncGlobalUnlockedLevels(newUnlocked);
+         
+         const isWebUnlocked = localStorage.getItem('web_unlocked_v4') === 'true';
+         if (!isWebUnlocked) {
+             setModalPhase('web_unlocked');
+         } else {
+             setModalPhase('all_completed');
+         }
+       } else {
+         setModalPhase('scratch');
+       }
     }
   };
 
@@ -98,10 +106,13 @@ export function Games({ onUnlockWeb, onNavigateHome }: GamesProps) {
       syncGlobalUnlockedLevels(newUnlocked);
     }
 
-    if (activeGift && activeGift.id === 1) {
+    if (activeGift && activeGift.id === 5) {
        const isWebUnlocked = localStorage.getItem('web_unlocked_v4') === 'true';
        if (!isWebUnlocked) {
            setModalPhase('web_unlocked');
+           return;
+       } else {
+           setModalPhase('all_completed');
            return;
        }
     }
@@ -230,7 +241,7 @@ export function Games({ onUnlockWeb, onNavigateHome }: GamesProps) {
                   }`}>
                     {isCompleted && (
                       <img 
-                        src={`https://raw.githubusercontent.com/Danicabezas33/GiftApp2/main/public/photos/regalo${gift.id}.jpg`} 
+                        src={`https://raw.githubusercontent.com/Danicabezas33/GiftApp2/main/public/photos/regalo${gift.id === 5 ? 1 : gift.id + 1}.jpg`} 
                         alt={gift.title} 
                         className="absolute inset-0 w-full h-full object-cover z-10 transition-opacity duration-300 opacity-90 group-hover:opacity-100"
                         onError={(e) => { 
@@ -350,10 +361,10 @@ export function Games({ onUnlockWeb, onNavigateHome }: GamesProps) {
           </motion.div>
         )}
 
-        {revealedGift && activeGift && modalPhase === 'scratch' && (
+        {revealedGift && activeGift && modalPhase === 'scratch' && activeGift.id !== 5 && (
           <ScratchCard
             tipoRegalo={activeGift.title}
-            imagenRegalo={`https://raw.githubusercontent.com/Danicabezas33/GiftApp2/main/public/photos/nfc-${activeGift.id === 5 ? 'final' : activeGift.id + 1}.jpg`} 
+            imagenRegalo={`https://raw.githubusercontent.com/Danicabezas33/GiftApp2/main/public/photos/nfc-${activeGift.id + 1}.jpg`} 
             onClose={() => {
               setRevealedGift(null);
               setModalPhase('none');
@@ -398,15 +409,15 @@ export function Games({ onUnlockWeb, onNavigateHome }: GamesProps) {
                 <h3 className="text-3xl font-serif font-bold text-[#880D1E] mb-6">Mini-Desafío {activeGift.id}</h3>
                 <div className="mb-10 w-full overflow-hidden flex-1 min-h-[300px]">
                   {activeGift.id === 1 ? (
-                    <MinigameRunner onWin={handleMinigameWin} />
-                  ) : activeGift.id === 2 ? (
                     <MinigameCherryBlossom onWin={handleMinigameWin} />
-                  ) : activeGift.id === 3 ? (
+                  ) : activeGift.id === 2 ? (
                     <MinigameMaze onWin={handleMinigameWin} />
-                  ) : activeGift.id === 4 ? (
+                  ) : activeGift.id === 3 ? (
                     <MinigameSushiStacker onWin={handleMinigameWin} />
-                  ) : activeGift.id === 5 ? (
+                  ) : activeGift.id === 4 ? (
                     <MinigameSlasher onWin={handleMinigameWin} />
+                  ) : activeGift.id === 5 ? (
+                    <MinigameRunner onWin={handleMinigameWin} />
                   ) : (
                     <p className="text-pink-900/50 text-lg leading-relaxed text-center font-serif py-20">
                       Próximamente...
